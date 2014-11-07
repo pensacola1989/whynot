@@ -1,8 +1,8 @@
 <?php namespace Hgy\Test;
 
-use LaravelBook\Ardent\Ardent;
+use Hgy\Core\Entity;
 
-class Test extends Ardent {
+class Test extends Entity {
 	protected $table = 'test';
 
 
