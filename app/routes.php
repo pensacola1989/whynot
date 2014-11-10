@@ -29,3 +29,4 @@ Route::get('/', function()
 	// return View::make('hello');
 });
 Route::get('/test','HomeController@getShow');
+Route::get('/page', 'HomeController@getPage');

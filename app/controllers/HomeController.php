@@ -7,7 +7,7 @@ class HomeController extends BaseController {
 	private $testRepo;
 
 	function __construct(TestRepository $test) {
-		$this->testRepo = $test;
+		$this->TestRepository = $test;
 	}
 	/*
 	|--------------------------------------------------------------------------
@@ -45,5 +45,10 @@ class HomeController extends BaseController {
 		return View::make('hello');
 	}
 
+	public function getPage($count = 5)
+	{
+		$testData =  $this->testRepo->getAllPaginated($count);
+		return $testData;
+	}
 
 }
