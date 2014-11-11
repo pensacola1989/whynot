@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"laravelbook/ardent": "2.*",
-		"mccool/laravel-auto-presenter": "~2.2"
+		"mccool/laravel-auto-presenter": "~2.2",
+		"zizaco/entrust": "1.2.*@dev"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "v1.3.0",
