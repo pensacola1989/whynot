@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTestTable extends Migration {
+class CreateVolinfoValueTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateTestTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('test', function(Blueprint $table)
+		Schema::create('volinfo_value', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('title');
-			$table->text('body');
+            $table->integer('vol_id'); // belongs to which volunteer
+            $table->text('value'); // json format string
 		});
 	}
 
@@ -29,7 +29,7 @@ class CreateTestTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('test');
+		Schema::drop('volinfo_value');
 	}
 
 }

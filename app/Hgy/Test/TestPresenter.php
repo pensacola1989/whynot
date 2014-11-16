@@ -4,8 +4,14 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 
 class TestPresenter extends BasePresenter {
 
+    public function __construct(Test $test)
+    {
+        $this->wrappedObject = $test;
+    }
+
+
 	public function created_at()
 	{
-		return $this->resource->created_at->toFormattedDateString();
+		return $this->wrappedObject->created_at->toFormattedDateString();
 	}
 }

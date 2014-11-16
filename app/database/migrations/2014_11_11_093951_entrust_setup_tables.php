@@ -12,6 +12,13 @@ class EntrustSetupTables extends Migration
      */
     public function up()
     {
+        // Creates the users table
+        Schema::create('users', function ($table) {
+            $table->increments('id')->unsigned();
+            $table->string('password');
+            $table->string('remember_token');
+            $table->timestamps();
+        });
         // Creates the roles table
         Schema::create('roles', function ($table) {
             $table->increments('id')->unsigned();

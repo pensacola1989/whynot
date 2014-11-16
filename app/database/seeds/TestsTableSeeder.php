@@ -2,6 +2,7 @@
 
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
+use Hgy\Test\Test;
 
 class TestsTableSeeder extends Seeder {
 
@@ -12,7 +13,7 @@ class TestsTableSeeder extends Seeder {
 
 		foreach(range(1, 10) as $index)
 		{
-			Hgy\Test\Test::create([
+			Test::create([
 				'name'	=>	str_replace('.', '_', $faker->unique()->name),  
 				'title'	=>	$faker->userName,
 				'email'	=>	$faker->email,

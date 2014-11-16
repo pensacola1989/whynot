@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddOtherToTestTable extends Migration {
+class AddUserDataToUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,9 @@ class AddOtherToTestTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('test', function(Blueprint $table)
+		Schema::table('users', function(Blueprint $table)
 		{
-			$table->string('name');
-			$table->string('email');
+			$table->string('orgName');
 		});
 	}
 
@@ -27,7 +26,7 @@ class AddOtherToTestTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('test', function(Blueprint $table)
+		Schema::table('users', function(Blueprint $table)
 		{
 			
 		});
