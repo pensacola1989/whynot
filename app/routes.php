@@ -13,35 +13,32 @@
 
 Route::get('/', function()
 {
-//    echo 'welcome to laravel !';
-//
-//		// print_r($faker);exit();
-		$faker = Faker\Factory::create('fr_FR');
-
-		foreach(range(1, 10) as $index)
-		{
-			Hgy\Test\Test::create([
-				'name'	=>	str_replace('.', '_', $faker->unique()->name),
-				'title'	=>	$faker->userName,
-                'testname'  =>  $faker->userName,
-				'email'	=>	$faker->email
-			]);
-		}
-	// return View::make('hello');
+    return View::make('home');
 });
 Route::get('/test','HomeController@getShow');
 Route::get('/page', 'HomeController@getPage');
-Route::get('/testacl', function() {
-//    $owner = new Hgy\ACL\Role;
-//    $owner->name = 'Owner';
-//    $owner->save();
-//
-//    $admin = new Hgy\ACL\Role;
-//    $admin->name = 'Admin';
-//    $admin->save();
-    $adminRole = Hgy\ACL\Role::where('name','=','Admin')->first();
-    $user = Hgy\Account\User::where('orgName','=','testOrg')->first();
-//    return Config::get('entrust::role') . '___' .  Config::get('entrust::assigned_roles_table');
-//    return $user->roles;
-//    $user->attachRole($adminRole);
+
+Route::get('/user/login','AuthController@getLogin');
+Route::post('/user/login', 'AuthController@login');
+Route::get('/user/register', 'UserController@register');
+Route::post('/user/register', 'UserController@add');
+
+Route::group(['before'  =>  'auth'], function () {
+    /*
+     * Accounts
+     */
+
+    Route::get('/user/logout','UserController@Logout');
+
+// dashboard
+    Route::get('/user/index', 'UserController@index');
+
+    /*
+     * Activity
+     */
+    Route::get('/activity/show/{userid}', 'ActivityController@index');
+    Route::get('/activity/new', 'ActivityController@new');
+    Route::get('/activity/update', 'ActivityController@edit');
+    Route::post('/activity/add', 'ActivityController@add');
+
 });

@@ -16,6 +16,7 @@ class CreateVolunteerTable extends Migration {
 		Schema::create('volunteer', function(Blueprint $table)
 		{
 			$table->increments('id');
+            $table->tinyInteger('is_verify');
 			$table->timestamps();
 		});
 	}

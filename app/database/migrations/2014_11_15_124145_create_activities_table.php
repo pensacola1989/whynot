@@ -22,7 +22,10 @@ class CreateActivitiesTable extends Migration {
             $table->string('channels'); // example:1,2 or 1,2,3 or 1 (split with ',')
             $table->tinyInteger('can_edit');
             $table->timestamp('end_time');
-            $table->tinyInteger('is_verify');
+            $table->tinyInteger('is_verify'); // verified by the platform
+            $table->integer('attend_num'); //number of attendees
+            $table->integer('approve_num'); //number of approved attendees
+            $table->integer('request_num'); //number of how many people request for the activity
 		});
 	}
 
