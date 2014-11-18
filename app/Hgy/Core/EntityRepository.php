@@ -7,7 +7,7 @@ abstract class EntityRepository {
 
 	protected $model;
 
-	private $errorsMsg;
+	protected  $errorMessage;
 
 	function __construct($model = null) 
 	{
@@ -16,7 +16,7 @@ abstract class EntityRepository {
 
 	public function getErrorMsg()
 	{
-		return $this->errorsMsg;
+		return !empty($this->errorMessage) ? $this->errorMessage : 'error';
 	}
 
 	public function getAllPaginated($count)
