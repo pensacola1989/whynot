@@ -47,7 +47,7 @@ class User extends Entity implements UserInterface, RemindableInterface {
         'u_target_area'         => 'required|between:10,50',
         'u_target_people'       => 'required|between:10,50',
         'u_username'            => 'required|between:10,50',
-        'u_mobile'              => 'required|numeric',
+        'u_mobile'              => 'required|between:10,15',
         'u_other_contact'       => 'required|between:10,50'
 
     );

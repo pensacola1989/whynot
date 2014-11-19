@@ -45,3 +45,41 @@ Route::group(['before'  =>  'auth'], function () {
 
 });
 
+Route::get('/seedACL', function() {
+
+//    add role
+    $org = new Hgy\ACL\Role;
+    $org->name = '公益组织';
+    $org->save();
+
+    $thirdPlatform = new Hgy\ACL\Role;
+    $thirdPlatform->name = '第三方平台';
+    $thirdPlatform->save();
+
+    $globalPlat = new Hgy\ACL\Role();
+    $globalPlat->name = '平台方';
+    $globalPlat->save();
+//    add permision
+    $platformPermission = new Hgy\ACL\Permission;
+    $platformPermission->name = 'manage_platform';
+    $platformPermission->display_name = '平台权限';
+    $platformPermission->save();
+
+    $manageOrg = new Hgy\ACL\Permission;
+    $manageOrg->name = 'manage_org';
+    $manageOrg->display_name = '组织管理';
+    $manageOrg->save();
+
+    $manageVolunteer = new Hgy\ACL\Permission;
+    $manageVolunteer->name = 'manage_volunteer';
+    $manageVolunteer->display_name = '志愿者管理';
+    $manageVolunteer->save();
+
+    $org->perms()->sync(array($manageVolunteer->id));
+    $globalPlat->perms()->sync(array($platformPermission->id));
+//
+//    $u->perms()->sync(array($manageOrg->id,$manageUser->id));
+
+    // return $u->hasRole('Owner') . '----' . $u->hasRole('Admin');
+});
+
