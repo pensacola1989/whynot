@@ -19,16 +19,12 @@ class UserRepository extends EntityRepository {
 
     public function storeData($data)
     {
-
         $user = $this->getNew($data);
-//        $model->password = \Hash::make($model->password);
         $ret = $this->save($user);
-        if(!$ret)
-        {
+        if(!$ret)  {
             $this->errorMessage = $user->errors();
-        }
-        else
-        {
+        } else {
+            $this->_setDefaultRole($user);
             return $user;
         }
     }
@@ -37,4 +33,11 @@ class UserRepository extends EntityRepository {
     {
         return $this->errorMessage;
     }
+
+     private function _setDefaultRole(User $user)
+     {
+        $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
+         $user->attachRole($role);
+     }
+
 }

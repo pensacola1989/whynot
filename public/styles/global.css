@@ -93,7 +93,7 @@ footer {border-top: 1px solid #CACACA;width: 70%;margin: auto;margin-top: 100px;
     right: 0;
     position: absolute;
     height: 100%;
-    overflow: hidden;
+    overflow-y:scroll;
     background-position: 500px 300px;
 }
 
