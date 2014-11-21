@@ -20,17 +20,7 @@ class EntrustSetupTables extends Migration
             $table->timestamps();
             $table->string('orgName');
             $table->string('email');
-            $table->string('u_cp_unit');
-            $table->string('u_pw_industry');
-            $table->string('u_province');
-            $table->string('u_address');
-            $table->integer('u_postcode')->nullable();
-            $table->integer('u_teamsize');
-            $table->string('u_target_area');
-            $table->string('u_target_people');
-            $table->string('u_username');
-            $table->string('u_mobile');
-            $table->string('u_other_contact')->nullable();
+
         });
         // Creates the roles table
         Schema::create('roles', function ($table) {

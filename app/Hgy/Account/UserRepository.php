@@ -34,10 +34,16 @@ class UserRepository extends EntityRepository {
         return $this->errorMessage;
     }
 
+     public function saveUserInfo($uid)
+     {
+
+     }
+
      private function _setDefaultRole(User $user)
      {
         $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
          $user->attachRole($role);
      }
+
 
 }

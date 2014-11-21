@@ -37,18 +37,7 @@ class User extends Entity implements UserInterface, RemindableInterface {
         'orgName'				=> 'required|between:4,16',
         'email'                 => 'required|email',
         'password'              => 'required|alpha_num|between:4,12|confirmed',
-        'password_confirmation' => 'required|alpha_num|between:4,12',
-        'u_cp_unit'             => 'required|between:10,50',
-        'u_pw_industry'         => 'required|between:10,50',
-        'u_province'            => 'required|between:10,50',
-        'u_address'             => 'required|between:10,150',
-        'u_postcode'            => 'numeric',
-        'u_teamsize'            => 'numeric',
-        'u_target_area'         => 'required|between:10,50',
-        'u_target_people'       => 'required|between:10,50',
-        'u_username'            => 'required|between:10,50',
-        'u_mobile'              => 'required|between:10,15',
-        'u_other_contact'       => 'required|between:10,50'
+        'password_confirmation' => 'required|alpha_num|between:4,12'
 
     );
 
@@ -60,6 +49,11 @@ class User extends Entity implements UserInterface, RemindableInterface {
     public function setRememberToken($value)
     {
         $this->remember_token = $value;
+    }
+
+    public function userinfos()
+    {
+        return $this->hasOne('Hgy\Account\UserInfo','uid');
     }
 
     public function getRememberTokenName()

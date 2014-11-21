@@ -1,5 +1,13 @@
 <div class="container">
-    {{ Form::open(array('action'    =>  'UserController@register','method'  =>  'post','class'=>'form-horizontal','role'=>'form')) }}
+    <div class="register_step row">
+      <div class="col-md-4 step_item {{ $step == 1 ? 'current' :'' }}">第一步：注册  <i class="glyphicon glyphicon-chevron-right"></i></div>
+      <div class="col-md-4 step_item {{ $step == 2 ? 'current' :'' }}">第二步：补充信息  <i class="glyphicon glyphicon-chevron-right"></i></div>
+      <div class="col-md-4 step_item {{ $step == 3 ? 'current' :'' }}">第三步：审核信息  <i class="glyphicon glyphicon-chevron-right"></i></div>
+    </div>
+
+      @if($step == 1)
+      {{ Form::open(array('action'    =>  'UserController@register','method'  =>  'post','class'=>'container form-horizontal','role'=>'form')) }}
+
       <div class="form-group">
         {{ Form::label('email','Email',array('class'   =>  'col-sm-2 control-label')) }}
         <div class="col-sm-10">
@@ -24,6 +32,27 @@
             {{ Form::password('password_confirmation',array('class'=>'form-control',"id"=>"inputPassword2", "placeholder"=>"确认密码：")) }}
           </div>
         </div>
+         <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+              {{ Form::checkbox('agree','true') }} 我已阅读
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">
+            <i class="hgy-icon glyphicon glyphicon-user"></i>  下一步  </button>
+            <p style="color:red;">{{ $errors->first() }}</p>
+          </div>
+        </div>
+    {{ Form::close() }}
+        @elseif($step == 2)
+        {{ Form::open(array('action'    =>  array('UserController@register',2,$uid),'method'  =>  'post','class'=>'container form-horizontal','role'=>'form')) }}
+        <input type="hidden" name="step" value="2"/>
         <div class="form-group">
             {{ Form::label('u_cp_unit','主管单位：',array('class'    =>  'col-sm-2 control-label'))  }}
           <div class="col-sm-10">
@@ -92,18 +121,27 @@
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-              <label>
-              {{ Form::checkbox('agree','true') }} 我已阅读
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default"><i class="hgy-icon glyphicon glyphicon-user"></i>注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+            <button type="submit" class="btn btn-primary">
+            <i class="hgy-icon glyphicon glyphicon-user"></i>  下一步  </button>
             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
         </div>
-    {{ Form::close() }}
+            {{ Form::close() }}
+        @elseif(!$is_verify)
+
+        <h3 style="padding-left: 100px;color:#2980B9;">
+            <i class="glyphicon glyphicon-info-sign"></i> &nbsp;&nbsp;
+            您的信息已经提交，请等待审核
+        </h3>
+        @else
+        <h3 style="padding-left: 100px;color:#2980B9;">
+            <p><i class="glyphicon glyphicon-info-sign"></i> &nbsp;&nbsp;您的信息已经审核通过，请直接登录</p>
+            <p>
+                <a href="/user/login" type="submit" class="btn btn-success">
+                <i class="hgy-icon glyphicon glyphicon-user"></i>  登&nbsp;&nbsp;录
+                </a>
+            </p>
+        </h3>
+        @endif
+
 </div>

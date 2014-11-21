@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     {{ HTML::style('/styles/global.css') }}
+    {{ HTML::style('/styles/register.css')  }}
     {{ HTML::style('/styles/tree.css') }}
 </head>
 <body>
@@ -116,5 +117,4 @@
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
 </body>
-<footer>this is the footer</footer>
 </html>

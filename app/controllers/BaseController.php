@@ -31,6 +31,7 @@ class BaseController extends Controller
         return Redirect::to($url, $statusCode);
     }
 
+
     protected function redirectAction($action, $data = [])
     {
         return Redirect::action($action, $data);

@@ -1,0 +1,17 @@
+.container{
+    width:auto;
+}
+.register_step{
+    /*border: 1px solid;*/
+    height: 50px;
+    line-height: 50px;
+    width:80%;
+    text-align: center;
+}
+.step_item{
+    border-bottom: 1px solid #eee;
+}
+.step_item.current{
+    border-bottom: 1px solid #2980B9;
+    color:#2980B9;
+}
