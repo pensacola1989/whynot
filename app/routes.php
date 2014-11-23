@@ -18,17 +18,18 @@ Route::get('/', function()
 Route::get('/test','HomeController@getShow');
 Route::get('/page', 'HomeController@getPage');
 
-Route::get('/user/login','AuthController@getLogin');
+
 Route::post('/user/login', 'AuthController@login');
 
 
 Route::group(['before' => 'guest'], function () {
+    Route::get('/user/login','AuthController@getLogin');
     Route::get('/user/register/{step?}/{uid?}', 'UserController@register');
     Route::post('/user/register/{step?}/{uid?}', 'UserController@add');
 });
 
 Route::group(['before'  =>  'auth'], function () {
-    /*
+    /**
      * Accounts
      */
 
@@ -37,13 +38,18 @@ Route::group(['before'  =>  'auth'], function () {
     // dashboard
     Route::get('/user/index', 'UserController@index');
 
-    /*
+    /**
      * Activity
      */
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
     Route::get('/activity/update', 'ActivityController@edit');
     Route::post('/activity/add', 'ActivityController@add');
+
+    Route::get('/volgroup', 'VolgroupController@GetGroup');
+    Route::get('/volgroup/post/{id?}', 'VolgroupController@PostShow');
+    Route::post('/volgroup/edit', 'VolgroupController@PostEdit');
+    Route::post('/volgroup/post', 'VolgroupController@PostGroup');
 
 });
 

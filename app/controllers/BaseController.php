@@ -55,4 +55,10 @@ class BaseController extends Controller
         }
         return Redirect::to($default);
     }
+
+    public function getCurrentUser()
+    {
+        $user = app::make('Hgy\Account\UserRepository');
+        return $user->requireById(Auth::user()->id);
+    }
 }

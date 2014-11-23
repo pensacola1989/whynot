@@ -56,6 +56,16 @@ class User extends Entity implements UserInterface, RemindableInterface {
         return $this->hasOne('Hgy\Account\UserInfo','uid');
     }
 
+    public function volunteers()
+    {
+        return $this->hasMany('Hgy\Volunteer\Volunteer','org_id');
+    }
+
+    public function volunteerGroup()
+    {
+        return $this->hasMany('Hgy\Volunteer\VolunteerGroup','org_id');
+    }
+
     public function getRememberTokenName()
     {
         return 'remember_token';
