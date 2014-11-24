@@ -10,6 +10,7 @@
     <![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     {{ HTML::style('/styles/global.css') }}
     {{ HTML::style('/styles/register.css')  }}
@@ -116,5 +117,6 @@
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
+@yield('scripts')
 </body>
 </html>

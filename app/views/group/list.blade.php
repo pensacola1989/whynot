@@ -21,7 +21,7 @@
       <td>{{ $g->vol_count }}</td>
       <td>
         <a href="{{ URL::action('VolgroupController@PostShow',['id' => $g->id]) }}" class="glyphicon glyphicon-pencil"></a>
-        <a href="#" class="glyphicon glyphicon-remove"></a>
+        <a href="#" id="{{ $g->id }}" class="glyphicon glyphicon-remove group-delete"></a>
       </td>
     </tr>
     @endforeach
@@ -42,3 +42,24 @@
 </a>
 </div>
 </div>
+@section('scripts')
+<script type="text/javascript">
+
+function deleteGroup(id) {
+    $.post('{{ route('deletegroup') }}',{ id: id })
+    .success(function(info) {
+        alert(info.message);
+        history.go(0);
+    })
+}
+$(function(){
+    $('.group-delete').on('click',function() {
+        var confirmDelete = confirm('确定删除该分组？');
+        if(confirmDelete) {
+            var _id = parseInt($(this).attr('id'));
+            deleteGroup(_id)
+        }
+    });
+});
+</script>
+@stop

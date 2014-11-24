@@ -29,7 +29,7 @@ Route::group(['before' => 'guest'], function () {
 });
 
 Route::group(['before'  =>  'auth'], function () {
-    /**
+    /*
      * Accounts
      */
 
@@ -38,7 +38,7 @@ Route::group(['before'  =>  'auth'], function () {
     // dashboard
     Route::get('/user/index', 'UserController@index');
 
-    /**
+    /*
      * Activity
      */
     Route::get('/activity/show/{userid}', 'ActivityController@index');
@@ -46,11 +46,39 @@ Route::group(['before'  =>  'auth'], function () {
     Route::get('/activity/update', 'ActivityController@edit');
     Route::post('/activity/add', 'ActivityController@add');
 
+    /*
+     * VolunteerGroup
+     */
     Route::get('/volgroup', 'VolgroupController@GetGroup');
     Route::get('/volgroup/post/{id?}', 'VolgroupController@PostShow');
     Route::post('/volgroup/edit', 'VolgroupController@PostEdit');
     Route::post('/volgroup/post', 'VolgroupController@PostGroup');
+    Route::post('/volgroup/delete',['as' => 'deletegroup', 'uses' =>  'VolgroupController@PostDelete']);
 
+    /*
+     * Volunteer
+     */
+    Route::get('/volteer', 'VolunteerController@GetVolunteers');
+    Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
+    Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolgroupController@LockVolunteer']);
+});
+
+Route::get('/seedVolteer',function() {
+    $faker = Faker\Factory::create();
+//    echo Faker\Provider\;exit();
+
+    foreach(range(1, 10) as $index)
+    {
+        Hgy\Volunteer\Volunteer::create([
+            'volunteer_name'	=>	str_replace('.', '_', $faker->unique()->name),
+            'volunteer_mobile'	=>	Faker\Provider\PhoneNumber::phoneNumber(),
+            'volunteer_email'	=>	$faker->email,
+            'is_verify'         =>  0,
+            'volunteer_interest'=>  'soccer',
+            'org_id'            =>  1,
+            'groupd_id'         =>  2
+        ]);
+    }
 });
 
 //Route::get('/seedACL', function() {

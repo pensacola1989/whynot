@@ -6,7 +6,7 @@ class TestPresenter extends BasePresenter {
 
     public function __construct(Test $test)
     {
-        $this->wrappedObject = $test;
+        $this->resource = $test;
     }
 
 

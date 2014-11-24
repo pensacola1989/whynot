@@ -2,7 +2,7 @@
     width:auto;
 }
 .content-header.row{
-    margin-left: 0;
+    margin:0;
     height: 50px;
     line-height: 50px;
     width:80%;
@@ -19,4 +19,10 @@
 
 .table.table-hover thead {
     background-color: transparent;
+}
+.page-header{
+    margin:0;
+}
+.search-form input{
+    width:120px !important;
 }
