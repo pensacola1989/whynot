@@ -11,9 +11,10 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 class VolunteerPresenter extends BasePresenter {
 
     private $verifyMap = [
-        '<em style="color:#ddd;">未审核</em>',
+        '<em style="color:orange;">未审核</em>',
         '<em style="color:green">已审核</em>',
-        '<em style="color:#ddd;">正在审核</em>'
+        '<em style="color:#ddd;">正在审核</em>',
+        '<em style="color:#ddd;">已锁定</em>'
     ];
 
 

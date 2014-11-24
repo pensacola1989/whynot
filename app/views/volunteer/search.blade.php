@@ -66,8 +66,8 @@
       <td>{{ $v->volunteer_interest }}</td>
       <td>{{ $v->is_verify }}</td>
       <td>
-        <a href="＃" class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="锁定"></a>
-        <a href="#" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
+        <a href="javascript:void (null);" id="{{ $v->id }}" class="lock-vlt fa fa-lock" data-toggle="tooltip" data-placement="top" title="锁定"></a>
+        <a href="javascript:void (null);" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
       </td>
     </tr>
     @endforeach
@@ -87,6 +87,20 @@
 </div>
 @section('scripts')
 <script type="text/javascript">
-$('[data-toggle="tooltip"]').tooltip();
+function lockVtl() {
+    var id = parseInt($(this).attr('id'));
+    $.post('{{ route('lockvlt') }}', { id: id })
+    .success(function(data) {
+
+    })
+    .error(function(){
+        alert('操作失败');
+    });
+}
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('.lock-vlt').on('click',lockVtl);
+});
+
 </script>
 @stop

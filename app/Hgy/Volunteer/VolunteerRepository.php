@@ -28,4 +28,9 @@ class VolunteerRepository extends EntityRepository {
                         ->orderBy('created_at','desc')
                         ->paginate(self::NUMBER_PER_PAGE);
     }
+
+    public function updateVltStatus(User $bisUser,$id,$status)
+    {
+        $bisUser->volunteers()->where('id', '=', $id)->update(['is_verify'   =>  $status]);
+    }
 }

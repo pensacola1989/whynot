@@ -16,7 +16,7 @@ class VolunteerController extends BaseController {
     /**
      * lock status code
      */
-    const VLT_STATUS_LOCK = 4;
+    const VLT_STATUS_LOCK = 3;
     /**
      * verifying
      */
@@ -76,6 +76,11 @@ class VolunteerController extends BaseController {
 
     public function LockVolunteer()
     {
-        $vltid = Input::get('vltid');
+        $vltId = Input::get('id');
+        $currentUser = $this->getCurrentUser();
+        if(!$currentUser->volunteers()->where('id', '=', $vltId))
+            return ['errorCode'  =>  12, 'message'   =>  '更新失败'];
+        $this->volunteers->updateVltStatus($currentUser,$vltId,self::VLT_STATUS_LOCK);
+        return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }
 }
