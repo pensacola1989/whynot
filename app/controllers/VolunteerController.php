@@ -77,10 +77,27 @@ class VolunteerController extends BaseController {
     public function LockVolunteer()
     {
         $vltId = Input::get('id');
+        $islock = Input::get('type');
+
         $currentUser = $this->getCurrentUser();
         if(!$currentUser->volunteers()->where('id', '=', $vltId))
             return ['errorCode'  =>  12, 'message'   =>  '更新失败'];
-        $this->volunteers->updateVltStatus($currentUser,$vltId,self::VLT_STATUS_LOCK);
+        $this->volunteers->updateVltStatus($currentUser,$vltId,$islock ? self::VLT_STATUS_VRFD :self::VLT_STATUS_LOCK);
+        return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
+    }
+
+    public function BatchControl()
+    {
+        $bisUser = $this->getCurrentUser();
+        $type = Input::get('type');
+        $ids = json_decode(Input::get('ids'));
+        if($type == 'lock')
+            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_LOCK);
+        if($type == 'unlock')
+            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_VRFD);
+        if($type == 'changegroup'){
+            $this->volunteers->updateGroupWithIds($bisUser, $ids, Input::get('target'));
+        }
         return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }
 }

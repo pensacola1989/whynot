@@ -28,6 +28,7 @@
     <div class="form-group">
         <div class="input-group">
           <select class="form-control" name="groupd_id" id="groupd_id" placeholder="分组">
+            <option value="-1">不限</option>
             @if(count($groups))
             @foreach($groups as $g)
                 <option value="{{ $g->id }}">{{ $g->group_name }}</option>
@@ -41,10 +42,36 @@
   </button>
 </form>
 </div>
-<table class="table table-hover">
+<div class="container control-pannel" style="display: none;">
+    <label href="#" >
+        <i class="fa fa-mail-forward"></i>
+            转移至分组
+    </label>
+  <select class="form-control" name="targetgroup" id="targetgroup" style="display: inline-flex;width:120px;">
+    {{--<option value="-1">不限</option>--}}
+    @if(count($groups))
+    @foreach($groups as $g)
+        <option value="{{ $g->id }}">{{ $g->group_name }}</option>
+    @endforeach
+    @endif
+  </select>
+  <a href="#" class="btn btn-primary confirm-checked">
+    <i class="fa fa-check"></i>
+    &nbsp;&nbsp;确定
+  </a>
+    <a href="javascript:void(null);" class="btn btn-default batch-lock">
+        <i class="fa fa-lock"></i>
+        &nbsp;批量冻结
+    </a>
+</div>
+<table class="table-list table table-hover">
   <thead>
     <tr>
-      <th>＃</th>
+      <th>
+        <label>
+          <input type="checkbox" class="list-check" id="checkall">
+        </label>
+      </th>
       <th>姓名</th>
       <th>分组</th>
       <th>手机</th>
@@ -58,7 +85,11 @@
     @foreach($volunteers as $v)
 {{--    {{ dd($v->orgGroup);exit(); }}--}}
     <tr>
-      <td></td>
+      <td>
+          <label>
+            <input id="{{ $v->id }}" type="checkbox" class="list-check">
+          </label>
+      </td>
       <td>{{ $v->volunteer_name }}</td>
       <td>{{ $v->groupd_id }}</td>
       <td>{{ $v->volunteer_mobile }}</td>
@@ -66,7 +97,9 @@
       <td>{{ $v->volunteer_interest }}</td>
       <td>{{ $v->is_verify }}</td>
       <td>
-        <a href="javascript:void (null);" id="{{ $v->id }}" class="lock-vlt fa fa-lock" data-toggle="tooltip" data-placement="top" title="锁定"></a>
+        <a href="javascript:void (null);" id="{{ $v->id }}"
+            class="{{ !$v->isLock ? 'lock-vlt' : 'unlock-vlt'}} fa {{ !$v->isLock ? 'fa-lock' : 'fa-unlock' }}"
+            data-toggle="tooltip" data-placement="top" title="{{!$v->isLock ? '锁定' : '解锁'}}"></a>
         <a href="javascript:void (null);" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
       </td>
     </tr>
@@ -79,27 +112,81 @@
   {{ $volunteers ? $volunteers->appends($query)->links() : '' }}
 </nav>
 <div class="container" style="margin-top:0;margin-bottom: 20px;">
-<a href="{{ URL::action('VolgroupController@PostGroup') }}" class="btn btn-primary">
-    <i class="glyphicon glyphicon-plus"></i>
-    &nbsp;添加分组
-</a>
+{{--<a href="{{ URL::action('VolgroupController@PostGroup') }}" class="btn btn-primary">--}}
+    {{--<i class="glyphicon glyphicon-plus"></i>--}}
+    {{--&nbsp;添加分组--}}
+{{--</a>--}}
 </div>
 </div>
 @section('scripts')
 <script type="text/javascript">
-function lockVtl() {
-    var id = parseInt($(this).attr('id'));
-    $.post('{{ route('lockvlt') }}', { id: id })
-    .success(function(data) {
+function initBatch() {
+    var isAllcheck = false;
+    var selectedArr = [];
 
+    $('.list-check').on('click',function(e) {
+        var $checkbox = $('.table-list tr td:first-child .list-check')
+        if($(e.target).attr('id') == 'checkall') {
+            if(isAllcheck == false)  $checkbox.prop('checked',true);
+            else $checkbox.removeAttr('checked');
+            isAllcheck = !isAllcheck;
+        }
+        if($('.table-list tr td:first-child .list-check:checked').length)  $('.control-pannel').show();
+        else  $('.control-pannel').hide();
+    });
+}
+
+function confirmTocheck(e) {
+    var _type = e.data.type;
+    var _idArr = getSelectedData();
+    var _targetData = _type == 'changegroup' ?  $('#targetgroup').val() :'';
+
+
+    $.post('{{ route('batch') }}',{ type: _type, ids: JSON.stringify(_idArr), target: _targetData })
+    .success(function(data) {
+        if(data.errorCode == 0) {
+            alert(data.message);
+            history.go(0);
+        }
+    })
+    .error(function() {
+
+    });
+}
+
+function getSelectedData() {
+    var ret = [];
+    var checked = $('.table-list tr td:first-child .list-check:checked');
+    var i = 0;
+    if(!checked.length) {
+        alert('请选择');
+        return false;
+    }
+    for(; i < checked.length; i++) {
+        ret.push(parseInt($(checked[i]).attr('id')));
+    }
+    return ret;
+}
+function lockVtl(e) {
+    alert(e.data.lock);
+    var id = parseInt($(this).attr('id'));
+    $.post('{{ route('lockvlt') }}', { type: e.data.lock, id: id })
+    .success(function(data) {
+        if(data.errorCode == 0) {
+            history.go(0);
+        }
     })
     .error(function(){
         alert('操作失败');
     });
 }
 $(function() {
+    initBatch();
     $('[data-toggle="tooltip"]').tooltip();
-    $('.lock-vlt').on('click',lockVtl);
+    $('.lock-vlt').on('click', null, { lock: 0 }, lockVtl);
+    $('.unlock-vlt').on('click', null, { lock: 1 }, lockVtl);
+    $('.batch-lock').on('click',null,{type: 'lock'}, confirmTocheck);
+    $('.confirm-checked').on('click', null, {type: 'changegroup'}, confirmTocheck);
 });
 
 </script>

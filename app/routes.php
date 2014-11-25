@@ -61,6 +61,7 @@ Route::group(['before'  =>  'auth'], function () {
     Route::get('/volteer', 'VolunteerController@GetVolunteers');
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
+    Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
 });
 
 Route::get('/seedVolteer',function() {

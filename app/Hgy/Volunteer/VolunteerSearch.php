@@ -21,7 +21,7 @@ class VolunteerSearch {
         $query = $bisUser->volunteers();
         if(count($searchFieldArr)) {
             foreach ($searchFieldArr as $k => $v) {
-                if($v != '') {
+                if($v != '' && $v != '-1') {
                     $query = $query->where($k, '=', $v);
                 }
             }

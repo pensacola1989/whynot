@@ -47,4 +47,8 @@ class VolunteerPresenter extends BasePresenter {
         }])->get();
     }
 
+    public function isLock()
+    {
+        return $this->resource->is_verify == 3;
+    }
 }
