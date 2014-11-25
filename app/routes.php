@@ -59,6 +59,7 @@ Route::group(['before'  =>  'auth'], function () {
      * Volunteer
      */
     Route::get('/volteer', 'VolunteerController@GetVolunteers');
+    Route::get('/volteer/info' , 'VlrInfoController@VolunteerInfo');
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
     Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
@@ -126,5 +127,29 @@ Route::get('/validate',function() {
     $userinfo->u_cp_unit = '';
     if(!$userinfo->validate()) {
         return $userinfo->errors();
+    }
+});
+
+Route::get('seedVlrAttr', function() {
+    $faker = Faker\Factory::create();
+
+
+    foreach(range(1, 10) as $index)
+    {
+        Hgy\VltField\VltAttribute::create([
+            'attr_name'	=>	$faker->firstName,
+            'attr_field_name'	=>	$faker->word,
+            'attr_des'	=>	$faker->text(),
+            'attr_type' => $faker->numberBetween(0,10),
+            'attr_extra'    => '',
+            'attr_default_val'  =>  '',
+            'attr_remark'   =>  '',
+            'is_must'   =>  1,
+            'sort_number'   =>  0,
+            'vol_id'    =>  1,
+            'validate_rule' =>  '',
+            'is_active' =>  1,
+            'is_init'   =>  1
+        ]);
     }
 });

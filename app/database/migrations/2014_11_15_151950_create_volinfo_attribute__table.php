@@ -27,7 +27,7 @@ class CreateVolinfoAttributeTable extends Migration {
             $table->string('attr_remark'); // remark
             $table->string('is_must');
             $table->integer('sort_number');
-            $table->integer('vol_id'); // reference talbe 'volunteer_table'
+            $table->integer('vol_id'); // reference talbe 'users_table'
             $table->string('validate_rule');
             $table->tinyInteger('is_active'); // if not active,don't show
             $table->tinyInteger('is_init'); // if it is init,that can not be deleted

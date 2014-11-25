@@ -1,6 +1,7 @@
 <?php namespace Hgy\Account;
 
 use Hgy\Core\Entity;
+use Hgy\VltField\VltAttribute;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -54,6 +55,11 @@ class User extends Entity implements UserInterface, RemindableInterface {
     public function userinfos()
     {
         return $this->hasOne('Hgy\Account\UserInfo','uid');
+    }
+
+    public function VltAttributes()
+    {
+        return $this->hasMany(VltAttribute::class,'vol_id');
     }
 
     public function volunteers()
