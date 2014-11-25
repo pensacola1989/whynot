@@ -11,7 +11,7 @@ use Hgy\Account\User;
 
 class VolunteerRepository extends EntityRepository {
 
-    const NUMBER_PER_PAGE = 5;
+    const NUMBER_PER_PAGE = 8;
 
     public function __construct(Volunteer $model)
     {

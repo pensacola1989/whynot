@@ -4,7 +4,7 @@
     <h2>志愿者列表</h2>
 </div>
 <div class="container search-panel">
-<form method="post" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">
+<form method="GET" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">
   <div class="form-group">
     <div class="input-group">
       <input type="email" class="form-control" name="volunteer_email" id="volunteer_email" placeholder="email">
@@ -29,6 +29,7 @@
         <div class="input-group">
           <select class="form-control" name="groupd_id" id="groupd_id" placeholder="分组">
             @if(count($groups))
+              <option value="-1">不限</option>
             @foreach($groups as $g)
                 <option value="{{ $g->id }}">{{ $g->group_name }}</option>
             @endforeach

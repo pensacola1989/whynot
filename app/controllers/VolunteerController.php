@@ -12,7 +12,7 @@ class VolunteerController extends BaseController {
     /**
      * per page num
      */
-    const PER_PAGE_NUM = 10;
+    const PER_PAGE_NUM = 8;
     /**
      * lock status code
      */
@@ -71,6 +71,9 @@ class VolunteerController extends BaseController {
         $query = array_except($searchFieldArr,\Illuminate\Support\Facades\Paginator::getPageName());
         $repo = App::make('Hgy\Volunteer\VolunteerSearch');
         $volunteers = $repo->searchPaginated($currentUser,$query,self::PER_PAGE_NUM);
+        if($volunteers == null) {
+            $volunteers = $this->volunteers->getByBisUser($currentUser);
+        }
         $this->view('volunteer.search',['volunteers' => $volunteers, 'groups' => $groupOfUser, 'query' => $searchFieldArr]);
     }
 
