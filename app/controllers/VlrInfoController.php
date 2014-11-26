@@ -61,6 +61,15 @@ class VlrInfoController extends BaseController {
 //        $this->view('')
     }
 
+    public function postDelete()
+    {
+        $id = Input::get('id');
+        if($ret = $this->VltAttRepo->requireById($id)) {
+            $ret->delete();
+            return ['errorCode' =>  0, 'message'    =>  '删除成功'];
+        }
+    }
+
     public function editShow($id=null)
     {
         $fieldTypeMap = $this->fieldTypeMap;

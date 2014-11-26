@@ -70,6 +70,7 @@ Route::group(['before'  =>  'auth'], function () {
     Route::get('/vltinfo/addshow',  'VlrInfoController@addShow');
     Route::post('/vltinfo/edit/{id?}', 'VlrInfoController@postEdit');
     Route::get('/vltinfo/editshow/{id?}', 'VlrInfoController@editShow');
+    Route::post('/vltinfo/delete' ,['as' => 'deleteAttr', 'uses' => 'VlrInfoController@postDelete']);
 });
 
 Route::get('/seedVolteer',function() {
