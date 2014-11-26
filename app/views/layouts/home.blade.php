@@ -15,6 +15,7 @@
     {{ HTML::style('/styles/global.css') }}
     {{ HTML::style('/styles/register.css')  }}
     {{ HTML::style('/styles/tree.css') }}
+    @yield('styles')
 </head>
 <body>
 
@@ -98,7 +99,7 @@
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/volteer_s','志愿者查找') }}</li>
             <li class="child_item">{{ HTML::link('/volgroup','组别设置') }}</li>
-            <li class="child_item">{{ HTML::link('＃','信息设置') }}</li>
+            <li class="child_item">{{ HTML::link('/volteer/info','信息设置') }}</li>
           </ul>
         </li>
       </ul>

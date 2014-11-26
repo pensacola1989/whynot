@@ -104,9 +104,4 @@ class VolunteerController extends BaseController {
         return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }
 
-    public function VolunteerInfo()
-    {
-        $this->title = '志愿者信息收集';
-        $this->view('volunteer.info');
-    }
 }

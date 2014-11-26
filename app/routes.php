@@ -59,13 +59,14 @@ Route::group(['before'  =>  'auth'], function () {
      * Volunteer
      */
     Route::get('/volteer', 'VolunteerController@GetVolunteers');
-    Route::get('/volteer/info' , 'VlrInfoController@VolunteerInfo');
+    Route::get('/volteer/info' , 'VlrInfoController@index');
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
     Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
 });
 
 Route::get('/seedVolteer',function() {
+
     $faker = Faker\Factory::create();
 //    echo Faker\Provider\;exit();
 
@@ -131,6 +132,8 @@ Route::get('/validate',function() {
 });
 
 Route::get('seedVlrAttr', function() {
+    $fieldMap = ['datetime','text','enum','image'];
+
     $faker = Faker\Factory::create();
 
 
@@ -140,7 +143,7 @@ Route::get('seedVlrAttr', function() {
             'attr_name'	=>	$faker->firstName,
             'attr_field_name'	=>	$faker->word,
             'attr_des'	=>	$faker->text(),
-            'attr_type' => $faker->numberBetween(0,10),
+            'attr_type' => $fieldMap[$faker->numberBetween(0,3)],
             'attr_extra'    => '',
             'attr_default_val'  =>  '',
             'attr_remark'   =>  '',
