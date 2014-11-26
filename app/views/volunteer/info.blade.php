@@ -16,7 +16,7 @@
     </h2>
 </div>
 <div class="container hgy-form-control">
-<a href="javascript:void (null);" class="btn btn-primary">
+<a href="{{ action('VlrInfoController@editShow') }}" class="btn btn-primary">
     <i class="fa fa-plus"></i>
     &nbsp;&nbsp;添加
 </a>
@@ -61,7 +61,7 @@
                     &nbsp;&nbsp;
                     删除
                  </a>
-                 <a href="javascript:void (null);" class="edit-link">
+                 <a href="{{ action('VlrInfoController@editShow',['id'=>$a->id]) }}" class="edit-link">
                      <i class="fa fa-pencil"></i>
                      &nbsp;&nbsp;
                      编辑

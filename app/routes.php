@@ -59,10 +59,17 @@ Route::group(['before'  =>  'auth'], function () {
      * Volunteer
      */
     Route::get('/volteer', 'VolunteerController@GetVolunteers');
-    Route::get('/volteer/info' , 'VlrInfoController@index');
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
     Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
+
+    /*
+     * Volunteer Info
+     */
+    Route::get('/volteer/info' , 'VlrInfoController@index');
+    Route::get('/vltinfo/addshow',  'VlrInfoController@addShow');
+    Route::post('/vltinfo/add', 'VlrInfoController@add');
+    Route::get('/vltinfo/editshow/{id?}', 'VlrInfoController@editShow');
 });
 
 Route::get('/seedVolteer',function() {

@@ -35,10 +35,28 @@ class VlrInfoController extends BaseController {
     }
 
     /**
-     * http get
+     * http post
      */
-    public function EditInfo($id=null)
+    public function add()
     {
 
+    }
+    /**
+     * http get
+     */
+    public function addShow()
+    {
+//        $this->view('')
+    }
+
+    public function editShow($id=null)
+    {
+        $fieldTypeMap = $this->fieldTypeMap;
+        $viewType = $id == null ? 'add' : 'edit';
+        $data = null;
+        if($id != null) {
+            $data = $this->VltAttRepo->requireById($id);
+        }
+        $this->view('volunteer.infoEdit',compact('data','viewType','fieldTypeMap'));
     }
 }
