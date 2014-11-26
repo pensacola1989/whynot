@@ -37,9 +37,21 @@ class VlrInfoController extends BaseController {
     /**
      * http post
      */
-    public function add()
+    public function postEdit($id=null)
     {
-
+        $newModel = $this->VltAttRepo->getNew(Input::all());
+        if(!$newModel->validate())
+            return $this->redirectBack(['errors'    =>  $newModel->errors()]);
+        if($id == null) {
+            $this->getCurrentUser()->VltAttributes()->save($newModel);
+            return $this->redirectAction('VlrInfoController@index');
+        }
+        $this->VltAttRepo->UpdateAttributeInfoById($id,Input::all());
+//        $oldModel = $this->VltAttRepo->requireById($id);
+//        $oldModel->update(Input::all());
+//        $this->getCurrentUser()->VltAttributes()->where('id', '=', $id)->first()->update(Input::all());
+//        $this->VltAttRepo->UpdateAttributeInfo($this->getCurrentUser(),$newModel);
+        return $this->redirectAction('VlrInfoController@index');
     }
     /**
      * http get

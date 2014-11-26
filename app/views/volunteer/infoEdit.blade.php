@@ -4,8 +4,15 @@
         <small></small>
     </h2>
 </div>
-{{ Form::open(array('action'    =>  array('UserController@register'),'method'  =>  'post','class'=>'container form-horizontal','role'=>'form')) }}
-        <input type="hidden" name="step" value="2"/>
+@if($viewType == 'add')
+{{ Form::open(array('action'    =>  array('VlrInfoController@postEdit'),'method'  =>  'post','class'=>'container form-horizontal','role'=>'form')) }}
+@else
+{{ Form::open(array('action'    =>  array('VlrInfoController@postEdit',$data->id),'method'  =>  'post','class'=>'container form-horizontal','role'=>'form')) }}
+@endif
+        <input type="hidden" name="is_init" value="0"/>
+        <input type="hidden" name="validate_rule" value="0"/>
+        <input type="hidden" name="sort_number" value="0"/>
+        <input type="hidden" name="attr_remark" value="0"/>
         <div class="form-group">
             {{ Form::label('attr_name','字段名：',array('class'    =>  'col-sm-2 control-label'))  }}
           <div class="col-sm-10">
@@ -71,7 +78,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-success">
             <i class="hgy-icon fa fa-check"></i>  保存  </button>
-            <p style="color:red;"></p>
+             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
         </div>
 {{ Form::close() }}

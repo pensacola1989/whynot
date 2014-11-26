@@ -7,6 +7,7 @@
  */
 use Hgy\Core\EntityRepository;
 use Hgy\Account\User;
+use Hgy\Volunteer\Volunteer;
 
 class VltAttributeRepository extends EntityRepository {
 
@@ -20,4 +21,9 @@ class VltAttributeRepository extends EntityRepository {
         return $user->VltAttributes;
     }
 
+    public function UpdateAttributeInfoById($id,$inputArray)
+    {
+        $oldModel = $this->requireById($id);
+        return $oldModel->update($inputArray);
+    }
 }
