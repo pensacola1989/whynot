@@ -23,8 +23,9 @@
 	 <div class="navbar navbar-fixed-top mynav" role="navigation">
       <div class="pull-left">
         <div class="navbar-header">
-          <img id="logo" src="/images/logotop.png">
-          <a class="myhover navbar-brand" href="#">哈公益</a>
+          <a class="myhover navbar-brand" href="#">
+            <img id="logo" src="{{ URL::asset('images/home/hagongyi-3.png') }}">
+          </a>
           @if(Auth::check())
           <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="glyphicon glyphicon-align-justify"></a>
           @endif

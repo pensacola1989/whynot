@@ -104,4 +104,14 @@ class VolunteerController extends BaseController {
         return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }
 
+    public function GetVltDetails($vlrId)
+    {
+        $this->title = '查看志愿者详情';
+//        $attributes = $this->volunteers->getAttributeFieldNames($this->getCurrentUser());
+        $attributes = $this->getCurrentUser()->VltAttributes;
+        $values = $this->volunteers->getVltDetailById($this->getCurrentUser(),$vlrId);
+        $values = (array)json_decode($values->value);
+//        dd($values);exit();
+        $this->view('volunteer.detail',compact('values','attributes'));
+    }
 }
