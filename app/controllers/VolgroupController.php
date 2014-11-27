@@ -61,4 +61,15 @@ class VolgroupController extends BaseController {
         if($ret)
             return $this->redirectAction('VolgroupController@GetGroup');
     }
+
+    public function PostDelete()
+    {
+        $id = Input::get('id');
+        $user = $this->getCurrentUser();
+        if($group = $user->volunteerGroup()->where('id', '=', $id)) {
+            $group->delete();
+            return ['errorCode' => 0, 'message' => '删除成功'];
+        }
+        return ['errorCode' => 11, 'message' => '删除失败'];
+    }
 }

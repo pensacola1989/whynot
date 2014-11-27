@@ -6,112 +6,41 @@
  * Time: 8:59 PM
  */
 
-use Hgy\Account\User;
-use Hgy\Account\UserRepository;
-use Hgy\Account\UserInfoRepository;
+use Hgy\Activity\Activity;
+use Hgy\Activity\ActivityPresenter;
+use Hgy\Activity\ActivityRepository;
 
 class ActivityController extends BaseController {
 
     protected $layout = 'layouts.home';
 
-    /**
-     * hold user
-     * @var userRepo
-     */
-    private $userRepo;
-
-    /**
-     * hold userInfo
-     * @var userInfo
-     */
-    private $userInfo;
-
-    public function __construct(UserRepository $repo,UserInfoRepository $userinfo)
+    public function getHome()
     {
-        $this->userRepo = $repo;
-        $this->userInfo = $userinfo;
-    }
-    /*
-     * Org user's dashboard
-     */
-    public function index()
-    {
-        $this->title = '欢迎来到哈公益';
-        $this->view('user.index');
+        $this->title = '活动情况';
+        $this->view('activity.activityHome');
     }
 
-    /**
-     * Org user's register page
-     * @param null $uid
-     * @param null $step
-     */
-    public function register($step=null,$uid=null)
+    public function getManage()
     {
-        if(Auth::check()) return $this->redirectAction('UserController@index');
-        $step = !empty($step) ? $step : 1;
-        if($step == 1) {
-            $this->title = '组织用户注册';
-            $this->view('user.register',['step' => $step]);
-        } elseif($step == 2 && $uid != null) {
-            try {
-                $this->userRepo->requireById($uid);
-            } catch(Exception $e) {
-                return $this->redirectAction('UserController@register');
-            }
-            $this->title = '组织用户注册';
-            $this->view('user.register',['step' => $step,'uid' => $uid]);
-        } elseif($step == 3 && $uid != null) {
-            $isVerify = $this->_isUserVery($uid);
-            $this->view('user.register',['step' => $step, 'is_verify' => $isVerify]);
-        }
-        else {
-            $this->view('user.register',['step' => 1]);
-        }
-
+        $this->title = '活动管理';
+        $this->view('activity.activityManage');
     }
 
-    /**
-     *
-     * add a user
-     * @param null $uid
-     * @throws \Hgy\Core\Exceptions\EntityNotFoundException
-     * @return void
-     */
-    public function add($step=null,$uid=null)
+    public function getPublic()
     {
-        $step = Input::get('step');
-        $step = !empty($step) ? $step : 1;
-        if($step == 1) {
-            $input = Input::except('step');
-            $newUser = $this->userRepo->storeData($input);
-            if($newUser)
-                return $this->redirectAction('UserController@register',['step'=>2,'uid'=>$newUser->id]);
-            else
-                return $this->redirectBack(['errors'=>$this->userRepo->getError()]);
-        }
-        if($step == 2) {
-            if($uid == null)
-                return $this->redirectAction('UserController@login');
-            if($user = $this->userRepo->requireById($uid)) {
-                $userinfo = $this->userInfo->getNew(Input::except('step'));
-                if(!$userinfo->validate())
-                    return $this->redirectBack(['errors'=>$userinfo->errors()]);
-                $user->userinfos()->save($userinfo);
-                return $this->redirectAction('UserController@register',['step'=>3,'uid'=>$user->id]);
-            }
-        }
-
+        $this->title = '活动发布';
+        $this->view('activity.activityPublic');
     }
 
-    public function logout()
+    public function getSummary()
     {
-        Auth::logout();
-        return $this->redirectAction('UserController@login');
+        $this->title = '活动总结';
+        $this->view('activity.activitySummary');
     }
 
-    private function _isUserVery($uid)
-    {
-        $user = $this->userRepo->requireById($uid);
-        return boolval($user->is_verify );
+    public function homeSearch(){
+        $currentUser = $this->getCurrentUser();
+        $groupOfUser = $currentUser->volunteerGroup;
+
     }
 }

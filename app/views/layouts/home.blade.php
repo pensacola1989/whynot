@@ -10,6 +10,7 @@
     <![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     {{ HTML::style('/styles/global.css') }}
     {{ HTML::style('/styles/register.css')  }}
@@ -95,11 +96,20 @@
         </li>
         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('＃','志愿者查找') }}</li>
+            <li class="child_item">{{ HTML::link('/volteer_s','志愿者查找') }}</li>
             <li class="child_item">{{ HTML::link('/volgroup','组别设置') }}</li>
             <li class="child_item">{{ HTML::link('＃','信息设置') }}</li>
           </ul>
         </li>
+        <li class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
+          <ul class="tree_child">
+            <li class="child_item">{{ HTML::link('/activity/home','活动情况') }}</li>
+            <li class="child_item">{{ HTML::link('/activity/public','活动发布') }}</li>
+            <li class="child_item">{{ HTML::link('/activity/manage','活动管理') }}</li>
+            <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
+          </ul>
+        </li>
+
       </ul>
     </div>
     @endif
@@ -116,5 +126,6 @@
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
+@yield('scripts')
 </body>
 </html>

@@ -11,12 +11,19 @@ use Hgy\Core\Entity;
 
 class Volunteer extends Entity implements PresenterInterface {
 
+    protected $table = 'volunteer';
+
+    protected $guarded = [];
 
     public function VoluteerGroup()
     {
-        return $this->belongsTo('VolunteerGroup','groupd_id');
+        return $this->belongsTo('Hgy\Volunteer\VolunteerGroup','groupd_id');
     }
 
+    public function belongUser()
+    {
+        return $this->belongsTo('Hgy\Account\User','org_id');
+    }
 
     /**
      * Get the presenter class.
@@ -25,6 +32,6 @@ class Volunteer extends Entity implements PresenterInterface {
      */
     public function getPresenter()
     {
-        // TODO: Implement getPresenter() method.
+        return VolunteerPresenter::class;
     }
 }

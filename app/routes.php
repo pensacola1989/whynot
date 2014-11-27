@@ -29,7 +29,7 @@ Route::group(['before' => 'guest'], function () {
 });
 
 Route::group(['before'  =>  'auth'], function () {
-    /**
+    /*
      * Accounts
      */
 
@@ -38,19 +38,55 @@ Route::group(['before'  =>  'auth'], function () {
     // dashboard
     Route::get('/user/index', 'UserController@index');
 
-    /**
+    /*
      * Activity
      */
+    Route::get('/activity/home','ActivityController@getHome');
+    Route::get('/activity/manage','ActivityController@getManage');
+    Route::get('/activity/public','ActivityController@getPublic');
+    Route::get('/activity/summary','ActivityController@getSummary');
+
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
     Route::get('/activity/update', 'ActivityController@edit');
     Route::post('/activity/add', 'ActivityController@add');
+    Route::post('/activity/homeSearch', 'ActivityController@homeSearch');
 
+    /*
+     * VolunteerGroup
+     */
     Route::get('/volgroup', 'VolgroupController@GetGroup');
     Route::get('/volgroup/post/{id?}', 'VolgroupController@PostShow');
     Route::post('/volgroup/edit', 'VolgroupController@PostEdit');
     Route::post('/volgroup/post', 'VolgroupController@PostGroup');
+    Route::post('/volgroup/delete',['as' => 'deletegroup', 'uses' =>  'VolgroupController@PostDelete']);
 
+    /*
+     * Volunteer
+     */
+    Route::get('/volteer', 'VolunteerController@GetVolunteers');
+    Route::get('/volteer/info' , 'VlrInfoController@VolunteerInfo');
+    Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
+    Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
+    Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
+});
+
+Route::get('/seedVolteer',function() {
+    $faker = Faker\Factory::create();
+//    echo Faker\Provider\;exit();
+
+    foreach(range(1, 10) as $index)
+    {
+        Hgy\Volunteer\Volunteer::create([
+            'volunteer_name'	=>	str_replace('.', '_', $faker->unique()->name),
+            'volunteer_mobile'	=>	Faker\Provider\PhoneNumber::phoneNumber(),
+            'volunteer_email'	=>	$faker->email,
+            'is_verify'         =>  0,
+            'volunteer_interest'=>  'soccer',
+            'org_id'            =>  1,
+            'groupd_id'         =>  2
+        ]);
+    }
 });
 
 //Route::get('/seedACL', function() {
@@ -97,5 +133,29 @@ Route::get('/validate',function() {
     $userinfo->u_cp_unit = '';
     if(!$userinfo->validate()) {
         return $userinfo->errors();
+    }
+});
+
+Route::get('seedVlrAttr', function() {
+    $faker = Faker\Factory::create();
+
+
+    foreach(range(1, 10) as $index)
+    {
+        Hgy\VltField\VltAttribute::create([
+            'attr_name'	=>	$faker->firstName,
+            'attr_field_name'	=>	$faker->word,
+            'attr_des'	=>	$faker->text(),
+            'attr_type' => $faker->numberBetween(0,10),
+            'attr_extra'    => '',
+            'attr_default_val'  =>  '',
+            'attr_remark'   =>  '',
+            'is_must'   =>  1,
+            'sort_number'   =>  0,
+            'vol_id'    =>  1,
+            'validate_rule' =>  '',
+            'is_active' =>  1,
+            'is_init'   =>  1
+        ]);
     }
 });
