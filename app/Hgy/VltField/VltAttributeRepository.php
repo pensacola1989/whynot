@@ -35,16 +35,10 @@ class VltAttributeRepository extends EntityRepository {
 
     public function updateSortByIdSorts(User $user,$arr)
     {
-//        $res = $this->requireById(14);
-        $res = VltAttribute::find(14);
-
-        $res->sort_number = 3;
-        $res->save();
-//        foreach($arr as $a) {
-//            $res = $this->requireById($a->id);
-//            $res->sort_number = intval($a->sort_number);
-//            $res->save();
-////            var_dump(DB::getQueryLog());
-//        }
+        foreach($arr as $a) {
+            $res = $this->requireById($a->id);
+            $res->sort_number = $a->sort_number;
+            $res->save();
+        }
     }
 }
