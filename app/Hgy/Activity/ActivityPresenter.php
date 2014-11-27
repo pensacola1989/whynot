@@ -1,4 +1,4 @@
-<?php
+<?php namespace Hgy\Activity;
 /**
  * Created by PhpStorm.
  * User: danielwu

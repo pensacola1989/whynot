@@ -41,10 +41,16 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Activity
      */
+    Route::get('/activity/home','ActivityController@getHome');
+    Route::get('/activity/manage','ActivityController@getManage');
+    Route::get('/activity/public','ActivityController@getPublic');
+    Route::get('/activity/summary','ActivityController@getSummary');
+
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
     Route::get('/activity/update', 'ActivityController@edit');
     Route::post('/activity/add', 'ActivityController@add');
+    Route::post('/activity/homeSearch', 'ActivityController@homeSearch');
 
     /*
      * VolunteerGroup

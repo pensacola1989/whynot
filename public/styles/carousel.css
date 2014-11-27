@@ -1,0 +1,362 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-bottom: 40px;
+  color: #5a5a5a;
+  text-align: center;
+}
+.container {
+  width: 100%;
+
+}
+.navbar{
+  border: 0;
+    min-height: 70px!important;
+}
+.navbar-inverse{
+  background-color: #fff;
+}
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+/*.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+}*/
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  height: 500px;
+  /*margin-bottom: 60px;*/
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 500px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-2 {
+  width: 50%;
+  /*margin-bottom: 20px;*/
+  padding: 0 20px;
+  text-align: center;
+  /*border: 1px solid #333;*/
+}
+.marketing .col-lg-3{
+  width: 33.33%;
+  /*margin-bottom: 20px;*/
+  /*padding: 0 50px;*/
+  text-align: center;
+}
+
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+/*.marketing{
+  padding: 0 50px;
+}*/
+.thumbnail{
+  margin-top: 40px;
+  background-color: #FCFCFC;
+}
+.col-container{
+  margin: 0 100px;
+}
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.fr{
+    float: right;
+}
+.fl{
+    float: left;
+}
+.header-title>img{
+    float: left;
+    height: 70px;
+    margin-left: 10%;
+}
+.header-title>span{
+    margin-top: 50px;
+    margin-left: 10px;
+}
+.nav-footer{
+    margin-right: 120px;
+    min-height:70px;
+}
+.navbar-nav{
+    min-height: 70px;
+}
+.navbar-nav>li{
+    margin: 0 30px;
+    min-height: 70px;
+    line-height: 70px;
+}
+.navbar-nav>li>a{
+    min-height: 70px;
+    line-height: 40px;
+    font-size: 20px;
+    color:#333;
+}
+.col-md-5{
+    width:50%;
+}
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Navbar positioning foo */
+/*  .navbar-wrapper {
+    margin-top: 20px;
+  }*/
+
+  .row{
+    /*height: 300px;*/
+  }
+  .thumbnail{
+    height: 300px;
+    margin-bottom: 40px;
+  }
+
+  .navbar-wrapper .container {
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .row-bg3{
+      height: 300px;
+  }
+    .col-md-5>img{
+        height:80px;
+        margin-right: 60px;
+        margin-top: 60px;
+    }
+    .col-md-5>ul{
+        position: absolute;
+        top: 200px;
+        left: 200px;
+    }
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .row{
+    /*height: 350px;*/
+  }
+  .thumbnail{
+    height: 350px;
+    margin-bottom: 50px;
+  }
+    .row-bg3{
+        height: 350px;
+    }
+    .col-md-5>img{
+        height:100px;
+        margin-right: 80px;
+        margin-top: 80px;
+    }
+    .col-md-5>ul{
+        position: absolute;
+        top: 200px;
+        left: 200px;
+    }
+}
+@media (min-width: 1200px) {
+  .row{
+    /*height: 400px;*/
+  }
+  .thumbnail{
+    height: 400px;
+    margin-bottom: 60px;
+  }
+  .col-lg-3>.thumbnail{
+    height: 300px;
+    /*margin-bottom: 150px;*/
+  }
+    .row-bg3{
+        height: 400px;
+    }
+    .col-md-5>img{
+        height:180px;
+        margin-right: 180px;
+        margin-top: 60px;
+    }
+    .col-md-5>ul{
+        position: absolute;
+        top: 150px;
+        left: 200px;
+    }
+    .col-md-5>ul>h1{
+        font-family:"楷体";
+        font-weight: 900;
+        font-size: 90px;
+    }
+    .col-md-7{
+        margin-top: 60px;
+        margin-right: 130px;
+    }
+}
+
+/*=======================lewis=======================*/
+.row-bg1{
+  background-color: #F5F5F5;
+}
+.row-bg2{
+  background-color: #E7E9F0;
+}
+.row-bg3{
+  background-color: #B1E4D0;
+}
+.col-lg-3 > div{
+  border: none;
+  background-color:#E7E9F0; 
+}
+.thumbnail>img{
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+.thumbnail>span{
+  padding: 5px 20px;
+  font-size: 20px;
+  border-radius: 18px;
+  border: 1px solid #333;
+  font-weight: bold;
+}
+.thumbnail>ul>li{
+  list-style: none;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 6px 0;
+}
+.thumbnail>ul>li+li{
+  border-top: dashed 1px #333;
+}
+.thumbnail>ul{
+  padding: 0;
+  margin: 0 160px;
+  margin-top: 20px;
+}
+.col-lg-3>.thumbnail>img{
+  margin-top: 0;
+}
+.col-lg-3>.thumbnail{
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+.col-lg-3>.thumbnail>ul>li{
+  text-align: left;
+  list-style: none;
+  border:none;
+  font-weight: bold;
+}
+.users-nav{
+  margin-bottom: 20px;
+}
+.col-lg-3>.thumbnail>ul{
+  margin:0 0 0 20%;
+}
+.col-md-7{
+  width: 470px;
+}
+.tab-pane ,.tab-pane > .tab-pane{
+    height:230px!important;
+    background-color: #ffffff!important;
+}
+.form-horizontal{
+    padding-top: 40px;
+}
+footer>div>ul{
+    padding: 0;
+}
+footer>div>ul>li{
+    float: left;
+    margin: 10px 0;
+}
+footer>div>ul>li>img{
+    margin: 0 10px;
+}
+footer>div>ul>li+li{
+    border-left: solid 1px #BDBDBD;
+}
+footer>div>ul>li>img{
+    width: 150px;
+}
+footer>.content{
+    width: 1030px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.carousel-indicators li{
+    width: 18px;
+    height: 18px;
+    margin: 0 10px;
+}
+.carousel-indicators .active{
+    width: 18px;
+    height: 18px;
+    margin: 0 10px;
+}

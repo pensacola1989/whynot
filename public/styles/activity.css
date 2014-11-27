@@ -1,0 +1,42 @@
+.container{
+    width:auto;
+}
+.content-header.row{
+    margin:0;
+    height: 50px;
+    line-height: 50px;
+    width:80%;
+    color:#f4a62a;
+}
+.header-item{
+    border-bottom: 1px solid #eee;
+    height:100%;
+}
+.header-item.title{
+    border-bottom: 1px solid #f4a62a;
+    color:#f4a62a;
+}
+
+.table.table-hover thead {
+    background-color: transparent;
+}
+.page-header{
+    margin:0;
+}
+.activity-form>.form-group>.input-group{
+    display: flex;
+    width: 60%;
+    margin: 10px 0;
+    /*height: 54px;*/
+    line-height: 34px;
+}
+.activity-form>.form-group>.input-group>label{
+    width: 100px!important;
+    text-align: left;
+}
+.hidden{
+    display: none;
+}
+.info-list>.list-group-item{
+    display: inline-flex!important;
+}
