@@ -78,4 +78,9 @@ App::down(function()
 |
 */
 
+//Event::listen('illuminate.query', function($sql)
+//{
+//    echo $sql;
+//});
+
 require app_path().'/filters.php';

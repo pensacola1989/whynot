@@ -71,6 +71,7 @@ Route::group(['before'  =>  'auth'], function () {
     Route::post('/vltinfo/edit/{id?}', 'VlrInfoController@postEdit');
     Route::get('/vltinfo/editshow/{id?}', 'VlrInfoController@editShow');
     Route::post('/vltinfo/delete' ,['as' => 'deleteAttr', 'uses' => 'VlrInfoController@postDelete']);
+    Route::post('/vltinfo/sort', ['as' => 'savesort', 'uses' => 'VlrInfoController@postUpdateSort']);
 });
 
 Route::get('/seedVolteer',function() {

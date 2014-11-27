@@ -29,7 +29,7 @@ class VlrInfoController extends BaseController {
     public function index()
     {
         $this->title = '志愿者信息收集';
-        $attrs = $this->VltAttRepo->getAttributeInfoByOrg($this->getCurrentUser());
+        $attrs = $this->VltAttRepo->getAttributeInfoByOrgAndOrder($this->getCurrentUser());
         $fieldTypeMap = $this->fieldTypeMap;
         $this->view('volunteer.info', compact('attrs','fieldTypeMap'));
     }
@@ -79,5 +79,16 @@ class VlrInfoController extends BaseController {
             $data = $this->VltAttRepo->requireById($id);
         }
         $this->view('volunteer.infoEdit',compact('data','viewType','fieldTypeMap'));
+    }
+
+    public function postUpdateSort()
+    {
+        // error 102 => 缺少参数
+        $sortIdArr = Input::get('idSorts');
+        if($sortIdArr == null)
+            return ['errorCode' => 102, 'message' => '缺少参数'];
+        $sortIdArr = json_decode($sortIdArr);
+        $this->VltAttRepo->updateSortByIdSorts($this->getCurrentUser(),$sortIdArr);
+        return ['errorCode' => 0, 'message' => '更新排序成功'];
     }
 }

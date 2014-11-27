@@ -50,13 +50,12 @@
 <ul class="list-group" id="sortable">
   @if(count($attrs))
   @foreach($attrs as $a)
-      <li class="list-group-item sorted-item" sort-num="{{ $a->sort_number }}">
+      <li class="list-group-item sorted-item" sort-num="{{ $a->sort_number }}" id="{{ $a->id }}">
           <div class="drg-handler col-xs-2 col-md-1">
               ::::
           </div>
           <div class="row">
             <div class="col-xs-6 col-md-2">
-                <label class="info-label">字段名:</label>
                 <label>{{ $a->attr_name }}</label>
                 {{--<input type="text" name="field-name" class="field-input" value="{{ $a->attr_name }}"/>--}}
             </div>
@@ -70,12 +69,12 @@
                 {{--</select>--}}
             </div>
             <div class="col-xs-6 col-md-2">
-                <label for="">{{ $a->is_must ? '是' : '否' }}</label>
+                <label for="">{{ $a->is_must == 1 ? '是' : '否' }}</label>
                 {{--<input type="checkbox" name="is_must" class="is-must" {{ $a->is_must ? 'checked' :'' }}/>--}}
                 {{--是否必填--}}
             </div>
             <div class="col-xs-6 col-md-2">
-                <label for="">{{ $a->is_active ? '是' : '否' }}</label>
+                <label for="">{{ $a->is_active == 1 ? '是' : '否' }}</label>
                 {{--<input type="checkbox" name="is_show" class="is-show" {{ $a->is_active ? 'checked' : '' }}/>--}}
                 {{--是否显示--}}
             </div>
@@ -113,6 +112,31 @@ function resort(event,ui) {
     }
     $('.save-sort').show();
 }
+
+function savesort() {
+    var _this = this;
+    $(_this).attr('disabled',true);
+    var _items = $('.sorted-item'),
+        _len = _items.length,
+        _i = 0,
+        _ret = [];
+
+    for(; _i < _len; _i++) {
+        var _id = parseInt($(_items[_i]).prop('id'));
+        var _sort_number = parseInt($(_items[_i]).attr('sort-num'));
+        _ret.push({ id: _id, sort_number: _sort_number });
+    }
+
+    if(_ret.length) {
+        $.post('{{ route('savesort') }}',{ idSorts: JSON.stringify(_ret) })
+        .success(function (data) {
+            console.log(data);
+        })
+        .done(function() {
+            $(_this).removeAttr('disabled');
+        });
+    }
+}
 $(function() {
     $('#sortable').sortable();
     $('#sortable').on('sortstart',function(e,ui){
@@ -130,6 +154,7 @@ $(function() {
             }
         });
     });
+    $('.save-sort').on('click',savesort);
 })
 </script>
 @endsection
