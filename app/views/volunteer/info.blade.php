@@ -130,7 +130,10 @@ function savesort() {
     if(_ret.length) {
         $.post('{{ route('savesort') }}',{ idSorts: JSON.stringify(_ret) })
         .success(function (data) {
-            console.log(data);
+            if(data.errorCode == 0) {
+                alert(data.message);
+                history.go(0);
+            }
         })
         .done(function() {
             $(_this).removeAttr('disabled');
