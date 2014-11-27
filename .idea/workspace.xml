@@ -2,35 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e6c4ca7-0e03-4a2e-adc8-72ab6704b4b8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/database/migrations/2014_11_24_090929_add_basedata_to_volunteer_table.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/VlrInfoController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Hgy/VltField/VltAttribute.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Hgy/VltField/VltAttributePresenter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Hgy/VltField/VltAttributeValue.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/VolunteerController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Hgy/Volunteer/VolunteerSearch.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/volunteer/index.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/volunteer/info.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/volunteer/search.blade.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
       <change type="MOVED" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/database/migrations/2014_11_15_151950_create_volinfo_attribute__table.php" afterPath="$PROJECT_DIR$/app/database/migrations/2014_11_15_151950_create_volinfo_attribute__table.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Activity/Activity.php" afterPath="$PROJECT_DIR$/app/Hgy/Activity/Activity.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ActivityController.php" afterPath="$PROJECT_DIR$/app/controllers/ActivityController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Activity/ActivityPresenter.php" afterPath="$PROJECT_DIR$/app/Hgy/Activity/ActivityPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Activity/ActivityRepository.php" afterPath="$PROJECT_DIR$/app/Hgy/Activity/ActivityRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Test/TestPresenter.php" afterPath="$PROJECT_DIR$/app/Hgy/Test/TestPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/database/seeds/TestsTableSeeder.php" afterPath="$PROJECT_DIR$/app/database/seeds/TestsTableSeeder.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Account/User.php" afterPath="$PROJECT_DIR$/app/Hgy/Account/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/VolgroupController.php" afterPath="$PROJECT_DIR$/app/controllers/VolgroupController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Volunteer/Volunteer.php" afterPath="$PROJECT_DIR$/app/Hgy/Volunteer/Volunteer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Volunteer/VolunteerPresenter.php" afterPath="$PROJECT_DIR$/app/Hgy/Volunteer/VolunteerPresenter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Hgy/Volunteer/VolunteerRepository.php" afterPath="$PROJECT_DIR$/app/Hgy/Volunteer/VolunteerRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/styles/global.css" afterPath="$PROJECT_DIR$/public/styles/global.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/home.blade.php" afterPath="$PROJECT_DIR$/app/views/layouts/home.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/group/list.blade.php" afterPath="$PROJECT_DIR$/app/views/group/list.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.php" afterPath="$PROJECT_DIR$/app/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/styles/vol.css" afterPath="$PROJECT_DIR$/public/styles/vol.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hagongyi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,10 +31,11 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13111888" vertical-offset="420" max-vertical-offset="2505">
-              <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.18356644" vertical-offset="705" max-vertical-offset="2685">
+              <caret line="54" column="6" selection-start-line="54" selection-start-column="6" selection-end-line="54" selection-end-column="6" />
               <folding>
                 <element signature="e#7#392#0#PHP" expanded="true" />
+                <marker date="1417081151000" expanded="true" signature="3313:3587" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -83,8 +57,8 @@
       <file leaf-file-name="home.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/home.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-48.916668" vertical-offset="746" max-vertical-offset="2055">
-              <caret line="128" column="17" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
+            <state vertical-scroll-proportion="-48.916668" vertical-offset="761" max-vertical-offset="2070">
+              <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -93,8 +67,8 @@
       <file leaf-file-name="VolunteerController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/VolunteerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2083333" vertical-offset="1183" max-vertical-offset="1755">
-              <caret line="84" column="47" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
+            <state vertical-scroll-proportion="-3.2083333" vertical-offset="1108" max-vertical-offset="1680">
+              <caret line="79" column="35" selection-start-line="79" selection-start-column="35" selection-end-line="79" selection-end-column="35" />
               <folding>
                 <element signature="e#6#91#0#PHP" expanded="true" />
               </folding>
@@ -219,10 +193,10 @@
         <option value="$PROJECT_DIR$/app/Hgy/Activity/ActivityPresenter.php" />
         <option value="$PROJECT_DIR$/app/Hgy/Activity/ActivityRepository.php" />
         <option value="$PROJECT_DIR$/app/controllers/ActivityController.php" />
-        <option value="$PROJECT_DIR$/app/routes.php" />
         <option value="$PROJECT_DIR$/app/views/activity/activityHome.blade.php" />
         <option value="$PROJECT_DIR$/app/views/activity/activityPublic.blade.php" />
         <option value="$PROJECT_DIR$/public/styles/activity.css" />
+        <option value="$PROJECT_DIR$/app/routes.php" />
       </list>
     </option>
   </component>
@@ -935,8 +909,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/VolunteerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2083333" vertical-offset="1183" max-vertical-offset="1755">
-          <caret line="84" column="47" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
+        <state vertical-scroll-proportion="-3.2083333" vertical-offset="1108" max-vertical-offset="1680">
+          <caret line="79" column="35" selection-start-line="79" selection-start-column="35" selection-end-line="79" selection-end-column="35" />
           <folding>
             <element signature="e#6#91#0#PHP" expanded="true" />
           </folding>
@@ -957,8 +931,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-48.916668" vertical-offset="746" max-vertical-offset="2055">
-          <caret line="128" column="17" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
+        <state vertical-scroll-proportion="-48.916668" vertical-offset="761" max-vertical-offset="2070">
+          <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -984,10 +958,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13111888" vertical-offset="420" max-vertical-offset="2505">
-          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.18356644" vertical-offset="705" max-vertical-offset="2685">
+          <caret line="54" column="6" selection-start-line="54" selection-start-column="6" selection-end-line="54" selection-end-column="6" />
           <folding>
             <element signature="e#7#392#0#PHP" expanded="true" />
+            <marker date="1417081151000" expanded="true" signature="3313:3587" placeholder="..." />
           </folding>
         </state>
       </provider>
