@@ -68,7 +68,7 @@ Route::group(['before'  =>  'auth'], function () {
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);
     Route::post('/volteer/batch', ['as' => 'batch', 'uses' => 'VolunteerController@BatchControl']);
-
+    Route::get('/volteer/detail/{vlrId}', ['as' => 'vltdtl', 'uses' => 'VolunteerController@GetVltDetails']);
     /*
      * Volunteer Info
      */
@@ -96,6 +96,14 @@ Route::get('/seedVolteer',function() {
             'org_id'            =>  1,
             'groupd_id'         =>  2
         ]);
+    }
+});
+
+
+Route::get('/testacl', function() {
+    $currentUserRole = Auth::user()->roles;
+    foreach($currentUserRole as $role) {
+        echo $role->perms;
     }
 });
 
@@ -137,7 +145,23 @@ Route::get('/seedVolteer',function() {
 //    // return $u->hasRole('Owner') . '----' . $u->hasRole('Admin');
 //});
 
+Route::get('/seedVlrDetail', function() {
+    $faker = Faker\Factory::create();
 
+    foreach(range(1, 11) as $index) {
+        $value = new stdClass();
+        $value->name = 'www';
+        $value->age = $faker->numberBetween(18,30);
+        $value->location = $faker->address;
+
+        Hgy\VltField\VltAttributeValue::create([
+            'vol_id'    =>  $index,
+            'value'     =>  json_encode($value)
+        ]);
+        unset($value);
+    }
+
+});
 Route::get('/validate',function() {
     $userinfo = new Hgy\Account\UserInfo();
     $userinfo->u_cp_unit = '';

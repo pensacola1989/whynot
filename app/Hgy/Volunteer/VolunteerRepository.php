@@ -8,6 +8,7 @@
 
 use Hgy\Core\EntityRepository;
 use Hgy\Account\User;
+use Illuminate\Support\Facades\DB;
 
 class VolunteerRepository extends EntityRepository {
 
@@ -42,5 +43,15 @@ class VolunteerRepository extends EntityRepository {
     public function updateGroupWithIds (User $bisUser, $ids, $targetGroup)
     {
         $bisUser->Volunteers()->whereIn('id',$ids)->update(['groupd_id' => $targetGroup]);
+    }
+
+    public function getAttributeFieldNames(User $orgUser)
+    {
+        return $orgUser->VltAttributes->lists('attr_field_name');
+    }
+
+    public function getVltDetailById(User $bisUser,$id)
+    {
+        return $bisUser->volunteers()->where('id', '=', $id)->first()->VolunteerAttrValues;
     }
 }

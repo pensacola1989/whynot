@@ -28,12 +28,15 @@
 <div class="container">
 <form action="">
 <div class="row">
-             <div class="col-xs-2 col-md-1">
-                  拖拽区
-              </div>
-            <div class="col-xs-6 col-md-2">
+           <div class="col-xs-2 col-md-1">
+               拖拽区
+           </div>
+            <div class="col-xs-6 col-md-1">
                 <label class="info-label">字段名:</label>
             </div>
+           <div class="col-xs-2 col-md-2">
+                存储标识
+           </div>
             <div class="col-xs-6 col-md-2">
                 <label for="">字段类型</label>
             </div>
@@ -55,28 +58,20 @@
               ::::
           </div>
           <div class="row">
-            <div class="col-xs-6 col-md-2">
+            <div class="col-xs-6 col-md-1">
                 <label>{{ $a->attr_name }}</label>
-                {{--<input type="text" name="field-name" class="field-input" value="{{ $a->attr_name }}"/>--}}
+            </div>
+            <div class="col-xs-6 col-md-2">
+                <label>{{ $a->attr_field_name }}</label>
             </div>
             <div class="col-xs-6 col-md-2">
                 <label for="">{{ $a->attr_type }}</label>
-                {{--<select name="field-select" id="field-select">--}}
-                    {{--@foreach($fieldTypeMap as $k => $v)--}}
-                    {{--<option {{ $a->attr_type == $k ? 'selected' : '' }} value="{{ $k }}">{{ $v }}</option>--}}
-                    {{--@endforeach--}}
-                    {{--<option value="0">文本类型</option>--}}
-                {{--</select>--}}
             </div>
             <div class="col-xs-6 col-md-2">
                 <label for="">{{ $a->is_must == 1 ? '是' : '否' }}</label>
-                {{--<input type="checkbox" name="is_must" class="is-must" {{ $a->is_must ? 'checked' :'' }}/>--}}
-                {{--是否必填--}}
             </div>
             <div class="col-xs-6 col-md-2">
                 <label for="">{{ $a->is_active == 1 ? '是' : '否' }}</label>
-                {{--<input type="checkbox" name="is_show" class="is-show" {{ $a->is_active ? 'checked' : '' }}/>--}}
-                {{--是否显示--}}
             </div>
             <div class="drg-handler col-xs-2 col-md-1">
                  <a href="javascript:void (null);" class="delete-link" id="{{ $a->id }}">

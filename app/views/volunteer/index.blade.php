@@ -67,7 +67,7 @@
       <td>{{ $v->is_verify }}</td>
       <td>
         <a href="＃" class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="锁定"></a>
-        <a href="#" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
+        <a href="{{ route('vltdtl',['vlrid' => $v->id]) }}" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看详情"></a>
       </td>
     </tr>
     @endforeach

@@ -100,7 +100,7 @@
         <a href="javascript:void (null);" id="{{ $v->id }}"
             class="{{ !$v->isLock ? 'lock-vlt' : 'unlock-vlt'}} fa {{ !$v->isLock ? 'fa-lock' : 'fa-unlock' }}"
             data-toggle="tooltip" data-placement="top" title="{{!$v->isLock ? '锁定' : '解锁'}}"></a>
-        <a href="javascript:void (null);" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
+        <a href="{{ route('vltdtl',['vlrid' => $v->id]) }}" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
       </td>
     </tr>
     @endforeach

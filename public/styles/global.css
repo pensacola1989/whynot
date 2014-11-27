@@ -9,7 +9,7 @@ body{background-color: #FFF;}
     background-color:#34495e;
     /*	box-shadow:0 1px 3px rgba(0, 0, 0, 0.2)*/
 }
-.mynav a{color:#f4a62a}
+.mynav a{color:#f4a62a;padding:0;}
 .mynav>li>a:hover{color:#000000;}
 .mynav a:hover{color:#f4a62a;}
 .navbar-header a:hover{color:#f4a62a;}

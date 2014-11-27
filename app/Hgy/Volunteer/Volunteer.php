@@ -8,6 +8,7 @@
 
 use McCool\LaravelAutoPresenter\PresenterInterface;
 use Hgy\Core\Entity;
+use Hgy\VltField\VltAttributeValue;
 
 class Volunteer extends Entity implements PresenterInterface {
 
@@ -18,6 +19,11 @@ class Volunteer extends Entity implements PresenterInterface {
     public function VoluteerGroup()
     {
         return $this->belongsTo('Hgy\Volunteer\VolunteerGroup','groupd_id');
+    }
+
+    public function VolunteerAttrValues()
+    {
+        return $this->hasOne(VltAttributeValue::class,'vol_id');
     }
 
     public function belongUser()

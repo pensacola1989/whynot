@@ -14,7 +14,8 @@ class VlrInfoController extends BaseController {
         'text'      =>  '文本类型',
         'enum'      =>  '枚举类型',
         'email'     =>  'email类型',
-        'textera'   =>  '多文字'
+        'textarea'   =>  '多文字',
+        'image'     =>  '图片'
     ];
 
     protected $layout = 'layouts.home';

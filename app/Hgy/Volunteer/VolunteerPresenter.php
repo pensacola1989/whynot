@@ -43,8 +43,8 @@ class VolunteerPresenter extends BasePresenter {
     {
         $user = $this->resource->belongUser;
         return $user->with(['volunteerGroup' => function($query) {
-            $query->select('group_name');
-        }])->get();
+                    $query->select('group_name');
+                }])->get();
     }
 
     public function isLock()
