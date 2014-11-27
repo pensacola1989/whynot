@@ -99,6 +99,14 @@ Route::get('/seedVolteer',function() {
     }
 });
 
+
+Route::get('/testacl', function() {
+    $currentUserRole = Auth::user()->roles;
+    foreach($currentUserRole as $role) {
+        echo $role->perms;
+    }
+});
+
 //Route::get('/seedACL', function() {
 //
 ////    add role

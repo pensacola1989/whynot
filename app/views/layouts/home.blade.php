@@ -49,8 +49,16 @@
         </div><!--/.nav-collapse -->
         @if(Auth::check())
         <ul class="nav navbar-nav navbar-right" style="float:right;">
+            @if(Auth::user()->can('manage_platform')))
               <li>
-                <a href="{{ url('user/logout') }}" class="dropdown-toggle" >
+                <a href="#" class="" data-toggle="tooltip" data-placement="top" title="用户系统管理">
+                  <i class="fa fa-user" style="margin-right:5px;"></i>
+                  &nbsp;平台用户管理
+                </a>
+              </li>
+              @endif
+              <li>
+                <a href="{{ url('user/logout') }}" class="" >
                   <span class="glyphicon glyphicon-off" style="margin-right:5px;color:#ea6153;"></span>
                 </a>                
               </li>
@@ -128,6 +136,11 @@
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
+<script type="text/javascript">
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 @yield('scripts')
 </body>
 </html>
