@@ -13,6 +13,12 @@ class VltAttribute extends Entity implements PresenterInterface {
     protected $table = 'volinfo_attribute';
 
     protected $guarded = [];
+
+    public static $rules = [
+        'attr_name'				=> 'required|between:0,16',
+        'attr_field_name'       => 'required|alpha_num',
+        'attr_des'              => 'required|alpha_num|between:4,120'
+    ];
     /**
      * Get the presenter class.
      *

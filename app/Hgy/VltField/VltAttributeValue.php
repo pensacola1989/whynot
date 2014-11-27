@@ -12,4 +12,5 @@ class VltAttributeValue extends Entity {
     protected $table = 'volinfo_value';
 
     protected $guarded = [];
+
 }
