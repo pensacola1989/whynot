@@ -12,7 +12,7 @@
       <input type="text" class="form-control" name="activity" id="activity" placeholder="活动">
     </div>
     <div class="input-group">
-        <label>活动图标</label>
+      <label>活动图标</label>
       <img src="{{URL::asset('/images/home/logo-max.png')}}" height="60px">
     </div>
     <div class="input-group">
@@ -39,8 +39,25 @@
         <div class="list-group-item">
             <label>活动地点</label>
             <input type="text" class="form-control" name="activity" id="activity" placeholder="活动地点">
+              <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
         </div>
-
+        <div class="list-group-item">
+            <label>手机</label>
+            <input type="text" class="form-control" name="activity" id="activity" placeholder="手机">
+            <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
+        </div>
+        <div class="list-group-item">
+            <label>邮箱</label>
+            <input type="text" class="form-control" name="activity" id="activity" placeholder="邮箱">
+            <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
+        </div>
+        <a class="btn btn-primary" id="add_info" href="#" role="button">添加</a>
     </div>
     <a class="btn btn-primary public_next" href="#" role="button">下一步</a>
 </div>

@@ -37,6 +37,10 @@
 .hidden{
     display: none;
 }
-.info-list>.list-group-item{
-    display: inline-flex!important;
+.public-info>.info-list>.list-group-item{
+    display: flex;
+    border: 0px;
+}
+.public-info>.info-list{
+    margin-bottom: 50px;
 }
