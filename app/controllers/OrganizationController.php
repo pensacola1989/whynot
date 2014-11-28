@@ -2,16 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: danielwu
- * Date: 11/17/14
- * Time: 8:59 PM
+ * Date: 11/28/14
+ * Time: 11:40 PM
  */
 
 use Hgy\Account\User;
 use Hgy\Account\UserRepository;
 use Hgy\Account\UserInfoRepository;
 
-class UserController extends BaseController {
-
+class OrganizationController extends BaseController {
     protected $layout = 'layouts.home';
 
     /**
@@ -113,4 +112,4 @@ class UserController extends BaseController {
         $user = $this->userRepo->requireById($uid);
         return boolval($user->is_verify );
     }
-}
+} 

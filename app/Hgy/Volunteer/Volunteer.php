@@ -6,6 +6,7 @@
  * Time: 3:03 PM
  */
 
+use Hgy\Account\User;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 use Hgy\Core\Entity;
 use Hgy\VltField\VltAttributeValue;
@@ -24,6 +25,13 @@ class Volunteer extends Entity implements PresenterInterface {
     public function VolunteerAttrValues()
     {
         return $this->hasOne(VltAttributeValue::class,'vol_id');
+    }
+
+    // User表
+    public function Organizations()
+    {
+        return $this->belongsToMany(User::class,'user_volunteer','vol_id','org_id')
+                    ->withPivot(['group_id']);
     }
 
     public function belongUser()

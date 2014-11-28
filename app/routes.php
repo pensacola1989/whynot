@@ -26,6 +26,9 @@ Route::group(['before' => 'guest'], function () {
     Route::get('/user/login','AuthController@getLogin');
     Route::get('/user/register/{step?}/{uid?}', 'UserController@register');
     Route::post('/user/register/{step?}/{uid?}', 'UserController@add');
+
+    Route::get('/org/register/{step?}/{uid?}', 'OrganizationController@register');
+    Route::post('/org/register/{step?}/{uid?}', 'OrganizationController@add');
 });
 
 Route::group(['before'  =>  'auth'], function () {
@@ -91,7 +94,7 @@ Route::get('/seedVolteer',function() {
 
     foreach(range(1, 10) as $index)
     {
-        Hgy\Volunteer\Volunteer::create([
+        $ret = Hgy\Volunteer\Volunteer::create([
             'volunteer_name'	=>	str_replace('.', '_', $faker->unique()->name),
             'volunteer_mobile'	=>	Faker\Provider\PhoneNumber::phoneNumber(),
             'volunteer_email'	=>	$faker->email,
@@ -100,6 +103,7 @@ Route::get('/seedVolteer',function() {
             'org_id'            =>  1,
             'groupd_id'         =>  2
         ]);
+        \Hgy\Account\User::find(1)->CVolunteers()->attach($ret->id,['group_id' =>  0]);
     }
 });
 
@@ -110,7 +114,30 @@ Route::get('/testacl', function() {
         echo $role->perms;
     }
 });
-
+Route::get('testpivot', function() {
+    return \Hgy\Volunteer\Volunteer::find(15)->Organizations;
+    $user = \Hgy\Volunteer\Volunteer::find(15)
+                ->Organizations()
+                ->where('org_id', Auth::user()->id)
+                ->first();
+    return $user->CVolunteers->pivot->group_id;
+//    $ret = \Hgy\Account\User::find(1)->CVolunteers;
+//    foreach($ret as $r) {
+//        return $r->pivot->group_id;
+//    }
+//    return \Hgy\Account\User::find(1)->CVolunteers;
+});
+Route::get('/testuser', function() {
+//    foreach(range(1,4) as $index) {
+//        \Hgy\Account\User::find(1)->CVolunteers()->updateExistingPivot($index,['group_id'   =>  3]);
+//    }
+//    \Hgy\Account\User::find(1)->CVolunteers()->attachNew(['group_id' =>  6],[1,2,3,4]);
+//    return 'done';
+//    return \Hgy\Account\User::find(1)->CVolunteers()->updateExistingPivot([1,2,3],['group_id' =>  3]);
+//    return \Hgy\Account\User::find(1)->CVolunteers()->whereIn('vol_id',[1,2,3])->get();
+//    return \Hgy\Volunteer\::find()
+//    return \Hgy\Account\User::find(1)->CVolunteers;
+});
 //Route::get('/seedACL', function() {
 //
 ////    add role
