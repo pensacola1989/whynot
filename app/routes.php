@@ -30,6 +30,10 @@ Route::group(['before' => 'guest'], function () {
 
 Route::group(['before'  =>  'auth'], function () {
     /*
+     * Platform
+     */
+    Route::get('/platform/manager/user','PlatformController@UserManage');
+    /*
      * Accounts
      */
 
