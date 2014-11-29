@@ -53,7 +53,8 @@ Route::group(['before'  =>  'auth'], function () {
     Route::get('/activity/publish/{step?}/{uid?}', 'ActivityController@publish');
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
 
-    Route::get('/activity/summary','ActivityController@summary');
+//    Route::get('/activity/summary','ActivityController@summary');
+    Route::get('/activity/summary','AtSummaryController@index');
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
     Route::get('/activity/update', 'ActivityController@edit');
@@ -224,6 +225,29 @@ Route::get('seedVlrAttr', function() {
             'validate_rule' =>  '',
             'is_active' =>  1,
             'is_init'   =>  1
+        ]);
+    }
+});
+
+Route::get('seedAt', function() {
+    $faker = Faker\Factory::create();
+
+    foreach(range(1,10) as $index) {
+        Hgy\Activity\Activities::create([
+            'bizid'    =>  1,
+            'content'   =>  '欢迎参加活动' . $index,
+            'channels'  =>  '1,2',
+            'can_edit'  =>  0,
+            'end_time'  =>  '2014-12-01 02:31:16',
+            'is_verify' =>  0,
+            'attend_num'    =>  10,
+            'approve_num'   =>  5,
+            'request_num'   =>  20,
+            'cover'     =>  2,
+            'finish_tip'    =>  '请准时参加',
+            'title'     =>  '活动'.$index,
+            'area'      =>  '上海',
+            'start_time'    =>  time()
         ]);
     }
 });

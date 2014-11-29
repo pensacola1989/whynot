@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
 use Hgy\Org\Organization;
 use Hgy\VltField\VltAttribute;
@@ -54,7 +55,10 @@ class User extends Entity implements UserInterface, RemindableInterface {
         $this->remember_token = $value;
     }
 
-
+    public function Activities()
+    {
+        return $this->hasMany(Activities::class,'bizid');
+    }
 
     public function userinfos()
     {

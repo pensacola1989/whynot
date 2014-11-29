@@ -7,10 +7,21 @@
  */
 
 use Hgy\Core\Entity;
-class Activities extends Entity {
+use McCool\LaravelAutoPresenter\PresenterInterface;
+
+class Activities extends Entity implements PresenterInterface {
     protected $table = 'activities';
 
     protected $guarded = array('_token');
 
 
+    /**
+     * Get the presenter class.
+     *
+     * @return string The class path to the presenter.
+     */
+    public function getPresenter()
+    {
+        return ActivityPresenter::class;
+    }
 }

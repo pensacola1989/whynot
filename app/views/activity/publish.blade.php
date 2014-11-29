@@ -185,17 +185,17 @@ function add(){
 
 function attribute(name,type,istrue){
     $("#form_after_attr").after(
-        '<div class="form-group”>'+
-        '<label for="attr_name" class="col-sm-2 control-label"></label>'+
-        '<div class="col-sm-10">'+
-        '<input class="form-control" id="attr_name" placeholder="姓名" name="attr_name" type="text" value="">'+
-        '</div>'+
-        '<div class="attr_move">'+
-        '<input checked="checked" name="name" type="checkbox" value="value">'+
-        '<label>必填</label>'+
-        '<button type="button" class="btn btn-default glyphicon glyphicon-arrow-up" data-toggle="tooltip" data-placement="right" title="" data-original-title="上移"></button>'+
-        '<button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="right" title="" data-original-title="下移"></button>'+
-        '</div>'+
+        '<div class="form-group">'+
+        '   <label for="attr_name" class="col-sm-2 control-label"></label>'+
+        '   <div class="col-sm-10">'+
+        '       <input class="form-control" id="attr_name" placeholder="姓名" name="attr_name" type="text" value="">'+
+        '   </div>'+
+        '   <div class="attr_move">'+
+        '       <input checked="checked" name="name" type="checkbox" value="value">'+
+        '       <label>必填</label>'+
+        '       <button type="button" class="btn btn-default glyphicon glyphicon-arrow-up" data-toggle="tooltip" data-placement="right" title="" data-original-title="上移"></button>'+
+        '       <button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="right" title="" data-original-title="下移"></button>'+
+        '   </div>'+
         '</div>'
      );
 }
