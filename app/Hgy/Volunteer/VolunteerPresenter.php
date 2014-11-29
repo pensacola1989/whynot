@@ -37,7 +37,7 @@ class VolunteerPresenter extends BasePresenter {
                                 ->where('org_id', '=', Auth::user()->id)
                                 ->first();
         if($user->pivot->group_id == 0) return self::UN_GROUP_NAME;
-        
+
         return $user->volunteerGroup()
                     ->where('id', '=', $user->pivot->group_id)
                     ->pluck('group_name');
