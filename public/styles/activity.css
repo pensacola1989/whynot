@@ -27,7 +27,6 @@
     display: flex;
     width: 60%;
     margin: 10px 0;
-    /*height: 54px;*/
     line-height: 34px;
 }
 .activity-form>.form-group>.input-group>label{
@@ -37,6 +36,18 @@
 .hidden{
     display: none;
 }
-.info-list>.list-group-item{
-    display: inline-flex!important;
+.public-info>.info-list>.list-group-item{
+    display: flex;
+    border: 0px;
 }
+.public-info>.info-list{
+    margin-bottom: 50px;
+}
+/*自定义信息*/
+.col-sm-10{
+    width: auto;
+}
+.attr_move>button{
+    top:-1px
+}
+

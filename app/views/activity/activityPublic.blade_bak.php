@@ -12,14 +12,14 @@
       <input type="text" class="form-control" name="activity" id="activity" placeholder="活动">
     </div>
     <div class="input-group">
-        <label>活动图标</label>
+      <label>活动图标</label>
       <img src="{{URL::asset('/images/home/logo-max.png')}}" height="60px">
     </div>
     <div class="input-group">
       <label>活动时间</label>
-      <input type="text" class="form-control" name="activity" id="activity" placeholder="开始时间" style="width:200px;margin-left:-15px">
+      <input type="text" value="2014-11-28 21:05" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
       &nbsp;至&nbsp;
-      <input type="text" class="form-control" name="activity" id="activity" placeholder="结束时间" style="width:200px">
+      <input type="text" value="2014-11-28 21:05" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
     </div>
     <div class="input-group">
         <label>活动地点</label>
@@ -39,8 +39,25 @@
         <div class="list-group-item">
             <label>活动地点</label>
             <input type="text" class="form-control" name="activity" id="activity" placeholder="活动地点">
+              <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
         </div>
-
+        <div class="list-group-item">
+            <label>手机</label>
+            <input type="text" class="form-control" name="activity" id="activity" placeholder="手机">
+            <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
+        </div>
+        <div class="list-group-item">
+            <label>邮箱</label>
+            <input type="text" class="form-control" name="activity" id="activity" placeholder="邮箱">
+            <input type="checkbox">必填
+              <a class="btn btn-primary" href="#" role="button">上移</a>
+              <a class="btn btn-primary" href="#" role="button">下移</a>
+        </div>
+        <a class="btn btn-primary" id="add_info" href="#" role="button">添加</a>
     </div>
     <a class="btn btn-primary public_next" href="#" role="button">下一步</a>
 </div>
@@ -53,6 +70,7 @@
 </div>
 
 @section('scripts')
+{{ HTML::script('/scripts/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 <script type="text/javascript">
 function nextPage() {
     $('.public_next').bind("click",function(){
@@ -71,6 +89,9 @@ function initPublic(){
 }
 $(function() {
     initPublic();
+    $('.datetimepicker').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii'
+    });
 });
 
 </script>

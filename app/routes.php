@@ -18,9 +18,7 @@ Route::get('/', function()
 Route::get('/test','HomeController@getShow');
 Route::get('/page', 'HomeController@getPage');
 
-
 Route::post('/user/login', 'AuthController@login');
-
 
 Route::group(['before' => 'guest'], function () {
     Route::get('/user/login','AuthController@getLogin');
@@ -48,11 +46,14 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Activity
      */
-    Route::get('/activity/home','ActivityController@getHome');
-    Route::get('/activity/manage','ActivityController@getManage');
-    Route::get('/activity/public','ActivityController@getPublic');
-    Route::get('/activity/summary','ActivityController@getSummary');
+    Route::get('/activity/index','ActivityController@index');
+    Route::get('/activity/manage','ActivityController@manage');
+//  public
+//    Route::get('/activity/release','ActivityController@release');
+    Route::get('/activity/publish/{step?}/{uid?}', 'ActivityController@publish');
+    Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
 
+    Route::get('/activity/summary','ActivityController@summary');
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
     Route::get('/activity/update', 'ActivityController@edit');

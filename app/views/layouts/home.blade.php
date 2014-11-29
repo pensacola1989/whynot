@@ -113,8 +113,8 @@
         </li>
         <li class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('/activity/home','活动情况') }}</li>
-            <li class="child_item">{{ HTML::link('/activity/public','活动发布') }}</li>
+            <li class="child_item">{{ HTML::link('/activity/index','活动情况') }}</li>
+            <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
             <li class="child_item">{{ HTML::link('/activity/manage','活动管理') }}</li>
             <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
           </ul>
