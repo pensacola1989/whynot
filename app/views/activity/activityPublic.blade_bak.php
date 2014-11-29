@@ -17,9 +17,9 @@
     </div>
     <div class="input-group">
       <label>活动时间</label>
-      <input type="text" class="form-control" name="activity" id="activity" placeholder="开始时间" style="width:200px;margin-left:-15px">
+      <input type="text" value="2014-11-28 21:05" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
       &nbsp;至&nbsp;
-      <input type="text" class="form-control" name="activity" id="activity" placeholder="结束时间" style="width:200px">
+      <input type="text" value="2014-11-28 21:05" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
     </div>
     <div class="input-group">
         <label>活动地点</label>
@@ -70,6 +70,7 @@
 </div>
 
 @section('scripts')
+{{ HTML::script('/scripts/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 <script type="text/javascript">
 function nextPage() {
     $('.public_next').bind("click",function(){
@@ -88,6 +89,9 @@ function initPublic(){
 }
 $(function() {
     initPublic();
+    $('.datetimepicker').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii'
+    });
 });
 
 </script>

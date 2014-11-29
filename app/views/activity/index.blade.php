@@ -2,14 +2,14 @@
 <div class="container">
 <div class="page-header">
     <h2>活动情况</h2>
-    <a class="btn btn-primary btn-lg" href="/index.php/activity/public" role="button">发布活动</a>
+    <a class="btn btn-primary" href="/index.php/activity/publish" role="button">发布活动</a>
 </div>
 <div class="container search-panel">
 <form method="GET" action="" class="form-inline search-form" role="form">
   <span>快速查询</span>
   <div class="form-group">
     <div class="input-group">
-      <input type="text" class="form-control" name="activity" id="activity" placeholder="活动">
+      <input type="email" class="form-control" name="activity" id="activity" placeholder="活动">
     </div>
   </div>
 
