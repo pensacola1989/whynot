@@ -25,9 +25,11 @@ class VolunteerRepository extends EntityRepository {
      */
     public function getByBisUser(User $bisUser)
     {
-        return $bisUser->volunteers()
-//                        ->orderBy('created_at','desc')
+        return $bisUser->CVolunteers()
                         ->paginate(self::NUMBER_PER_PAGE);
+//        return $bisUser->volunteers()
+//                        ->orderBy('created_at','desc')
+//                        ->paginate(self::NUMBER_PER_PAGE);
     }
 
     public function updateVltStatus(User $bisUser,$id,$status)
@@ -43,6 +45,13 @@ class VolunteerRepository extends EntityRepository {
     public function updateGroupWithIds (User $bisUser, $ids, $targetGroup)
     {
         $bisUser->Volunteers()->whereIn('id',$ids)->update(['groupd_id' => $targetGroup]);
+    }
+
+    public function updateGroup(User $bisUser, $ids, $targetGroup)
+    {
+        foreach($ids as $id) {
+            $bisUser->CVolunteers()->updateExistingPivot($id,['group_id'   =>  $targetGroup]);
+        }
     }
 
     public function getAttributeFieldNames(User $orgUser)

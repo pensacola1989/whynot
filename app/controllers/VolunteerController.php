@@ -99,7 +99,7 @@ class VolunteerController extends BaseController {
         if($type == 'unlock')
             $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_VRFD);
         if($type == 'changegroup'){
-            $this->volunteers->updateGroupWithIds($bisUser, $ids, Input::get('target'));
+            $this->volunteers->updateGroup($bisUser, $ids, Input::get('target'));
         }
         return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }

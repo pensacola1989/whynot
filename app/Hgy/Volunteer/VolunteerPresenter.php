@@ -10,6 +10,8 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 
 class VolunteerPresenter extends BasePresenter {
 
+    const UN_GROUP_NAME = '未分组';
+
     private $verifyMap = [
         '<em style="color:orange;">未审核</em>',
         '<em style="color:green">已审核</em>',
@@ -31,12 +33,28 @@ class VolunteerPresenter extends BasePresenter {
 
     public function groupd_id()
     {
-        $repo = App::make('Hgy\Account\UserRepository');
-        $user = $repo->requireById(Auth::user()->id);
-        $ret = $user->volunteerGroup()
-                    ->where('id', '=', $this->resource->groupd_id)
+        $user = $this->resource->Organizations()
+                                ->where('org_id', '=', Auth::user()->id)
+                                ->first();
+        if($user->pivot->group_id == 0) return self::UN_GROUP_NAME;
+
+        return $user->volunteerGroup()
+                    ->where('id', '=', $user->pivot->group_id)
                     ->pluck('group_name');
-        return $ret;
+
+//        $groupId = $this->resource
+//                    ->Organizations
+//                    ->pivot
+//                    ->group_id;
+//
+//        return $user->CVolunteers->pivot->group_id;
+//        $repo = App::make('Hgy\Account\UserRepository');
+//        $user = $repo->requireById(Auth::user()->id);
+
+//        $ret = $user->volunteerGroup()
+//                    ->where('id', '=', $this->resource->groupd_id)
+//                    ->pluck('group_name');
+//        return $ret;
     }
 
     public function orgGroup()
