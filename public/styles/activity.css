@@ -50,4 +50,7 @@
 .attr_move>button{
     top:-1px
 }
+.bs-example-modal-lg{
+    width: 50%;
+}
 
