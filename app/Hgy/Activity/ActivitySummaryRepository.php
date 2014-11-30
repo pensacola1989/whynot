@@ -10,7 +10,7 @@ use Hgy\Core\EntityRepository;
 
 class ActivitySummaryRepository extends EntityRepository {
 
-    public function __construct (Activity_complete $model)
+    public function __construct (ActivityComplete $model)
     {
         $this->model = $model;
     }

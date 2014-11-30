@@ -2,7 +2,6 @@
 
 use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
-use Hgy\Org\Organization;
 use Hgy\VltField\VltAttribute;
 use Hgy\Volunteer\Volunteer;
 use Illuminate\Auth\UserTrait;

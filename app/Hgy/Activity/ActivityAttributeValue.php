@@ -1,15 +1,19 @@
 <?php namespace Hgy\Activity;
+use Hgy\Core\Entity;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 
 /**
  * Created by PhpStorm.
  * User: danielwu
- * Date: 11/16/14
- * Time: 3:01 PM
+ * Date: 12/1/14
+ * Time: 1:44 AM
  */
-class Activity_complete extends Entity implements PresenterInterface{
-    protected $table = 'activity_complete';
 
+class ActivityAttributeValue extends Entity implements PresenterInterface {
+
+    protected $table = 'activity_attrvalue';
+
+    protected $guarded = [];
     /**
      * Get the presenter class.
      *

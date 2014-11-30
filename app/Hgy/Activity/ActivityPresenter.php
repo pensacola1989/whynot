@@ -28,8 +28,9 @@ class ActivityPresenter extends BasePresenter {
     public function controlPannel()
     {
         return $this->resource->status == 0
-                ? '<a href="javascript:void (null);" id="' . $this->resource->id . '" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看"></a>'
-                : '<a href="javascript:void (null);" id="3" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="总结"></a>';
+                ? '<a href="' . action("AtSummaryController@editSummary", ['activityId'=>$this->resource->id]) . '" id="' . $this->resource->id . '" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="总结"></a>'
+                : '<a href="javascript:void (null);" id="' . $this->resource->id . '" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看评价"></a>';
+
     }
 
     public function status()
@@ -47,6 +48,11 @@ class ActivityPresenter extends BasePresenter {
         }
 
         return $this->statusMap[$ret];
+    }
+
+    public function start_time()
+    {
+        return date('Y-m-d h:i',$this->resource->start_time);
     }
 
     public function planDuration()

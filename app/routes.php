@@ -54,6 +54,9 @@ Route::group(['before'  =>  'auth'], function () {
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
 
 //    Route::get('/activity/summary','ActivityController@summary');
+    Route::get('/summary/reply/{activityId}', 'AtSummaryController@Reply');
+    Route::get('/summary/editsummary/{activityId}', 'AtSummaryController@editSummary');
+    Route::post('/summary/postEditSummary/{activityId?}', 'AtSummaryController@postEditSummary');
     Route::get('/activity/summary','AtSummaryController@index');
     Route::get('/activity/show/{userid}', 'ActivityController@index');
     Route::get('/activity/new', 'ActivityController@new');
@@ -109,6 +112,18 @@ Route::get('/seedVolteer',function() {
     }
 });
 
+Route::get('/seedatval', function() {
+
+    $faker = Faker\Factory::create();
+
+    foreach(range(1,23) as $index) {
+        Hgy\Activity\ActivityAttributeValue::create([
+            'uid'   =>  $index,
+            'activity_id'   =>  1,
+            'value'     =>  '[ name:"sdf"]'
+        ]);
+    }
+});
 
 Route::get('/testacl', function() {
     $currentUserRole = Auth::user()->roles;
