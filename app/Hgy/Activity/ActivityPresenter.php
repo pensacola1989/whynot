@@ -12,8 +12,9 @@ class ActivityPresenter extends BasePresenter {
 
     private $statusMap = [
         '<label class="label label-default">未开始</label>',
-        '<label class="label label-success">正在进行</label>',
-        '<label class="label label-warning">已结束</label>'
+        '<label class="label label-warning">正在进行</label>',
+        '<label class="label label-success">已结束,未完成</label>',
+        '<label class="label label-success">已完成</label>'
     ];
 
     public function __construct(Activities $activities)
@@ -21,9 +22,31 @@ class ActivityPresenter extends BasePresenter {
         $this->resource = $activities;
     }
 
+    /**
+     * 视图上操作按钮，根据条件生成
+     */
+    public function controlPannel()
+    {
+        return $this->resource->status == 0
+                ? '<a href="javascript:void (null);" id="' . $this->resource->id . '" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看"></a>'
+                : '<a href="javascript:void (null);" id="3" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="总结"></a>';
+    }
+
     public function status()
     {
-        return $this->statusMap[$this->resource->status];
+        $endTimestamp = intval(strtotime($this->resource->end_time));
+        if(time() < $this->resource->start_time)
+            $ret = 0;
+        elseif (time() < $endTimestamp && time() > $this->resource->start_time)
+            $ret = 1;
+        else
+            $ret = 2;
+        if($ret == 2 && $this->resource->status == 1) {
+            // 完成状态根据时间计算，字段的status存是否手动设置完成（因为完成需要填写相关的信息，才算完成)
+            $ret = 3;
+        }
+
+        return $this->statusMap[$ret];
     }
 
     public function planDuration()
@@ -33,10 +56,13 @@ class ActivityPresenter extends BasePresenter {
 
     private function countDuration($endTime,$startTime)
     {
-        $date = intval(($endTime - $startTime)/86400);
-        $hour = intval(($endTime - $startTime)%86400/3600);
-        $minute = intval(($endTime - $startTime)%86400/60);
-        $second = intval(($endTime - $startTime)%86400%60);
+        $date = floor(($endTime - $startTime) / 86400);
+        $hour = floor(($endTime - $startTime) % 86400 / 3600);
+//        $minute = floor(($endTime - $startTime) % 86400 / 60);
+        $minute = floor($hour % 60);
+        $second = floor(($endTime - $startTime) % 86400 % 60);
+
+//        echo $hour;exit();
 
         return $date . '天' . $hour . '时' . $minute . '分';
     }

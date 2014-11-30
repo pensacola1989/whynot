@@ -14,6 +14,14 @@ class Activities extends Entity implements PresenterInterface {
 
     protected $guarded = array('_token');
 
+    /**
+     * @return bool 完成返回true
+     */
+    public function isFinished()
+    {
+        $endTimestamp = intval(strtotime(self::end_time));
+        return time() > $endTimestamp;
+    }
 
     /**
      * Get the presenter class.

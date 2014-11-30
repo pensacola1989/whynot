@@ -24,10 +24,9 @@
           <td>{{ $at->status }}</td>
           <td>{{ '<em style="color:#DDD;">' . $at->request_num.'</em>/'.'<em style="color:#2ECC71;">'.$at->approve_num . '</em>' }}</td>
           <td>{{ $at->created_at }}</td>
-          <td><em style="color:#ddd;">{{ $at->planDuration }}</em></td>
+          <td><em>{{ $at->planDuration }}</em></td>
           <td>
-            <a href="javascript:void (null);" id="3" class="unlock-vlt fa fa-unlock" data-toggle="tooltip" data-placement="top" title="" data-original-title="解锁"></a>
-            <a href="http://localhost:8080/volteer/detail/3" id="3" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看"></a>
+            {{ $at->controlPannel }}
           </td>
     </tr>
   @endforeach
