@@ -50,7 +50,7 @@ class AtSummaryController extends BaseController {
             return $this->redirectBack(['errors'    =>  $newInstance->errors()]);
         $ret = $this->activityRep->insertOrUpdateSummaryDetail($this->getCurrentUser(),$activityId, $newInstance);
         if($ret)
-            return $this->redirectBack();
+            return $this->redirectAction('AtSummaryController@Reply',['activityId'  =>  $activityId]);
     }
 
     /**

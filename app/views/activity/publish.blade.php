@@ -253,7 +253,6 @@ function formToJsonObj(form){
 function attribute(name,title,type,istrue){
     $("#form_after_attr").after(
         '<div class="form-group">'+
-<<<<<<< HEAD
         '<label for="attr_name" class="col-sm-2 control-label">'+title+'</label>'+
         '<div class="col-sm-10">'+
         '<input class="form-control form_attr" id="attr_name" placeholder="'+title+'" type="text" attr_name="'+name+'" attr_title="'+title+'" attr_type="'+type+'" is_must="'+istrue+'">'+
@@ -264,18 +263,6 @@ function attribute(name,title,type,istrue){
         '<button type="button" class="btn btn-default glyphicon glyphicon-arrow-up" data-toggle="tooltip" data-placement="right" title="上移"></button>&nbsp;'+
         '<button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="right" title="下移"></button>'+
         '</div>'+
-=======
-        '   <label for="attr_name" class="col-sm-2 control-label"></label>'+
-        '   <div class="col-sm-10">'+
-        '       <input class="form-control" id="attr_name" placeholder="姓名" name="attr_name" type="text" value="">'+
-        '   </div>'+
-        '   <div class="attr_move">'+
-        '       <input checked="checked" name="name" type="checkbox" value="value">'+
-        '       <label>必填</label>'+
-        '       <button type="button" class="btn btn-default glyphicon glyphicon-arrow-up" data-toggle="tooltip" data-placement="right" title="" data-original-title="上移"></button>'+
-        '       <button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="right" title="" data-original-title="下移"></button>'+
-        '   </div>'+
->>>>>>> ff6e79f5266e76b3c147726e18e705cb366a71d6
         '</div>'
      );
 }
