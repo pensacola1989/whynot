@@ -7,6 +7,8 @@
  */
 
 use Hgy\Account\User;
+use Hgy\Activity\Activities;
+use Hgy\Activity\ActivityAttributeValue;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 use Hgy\Core\Entity;
 use Hgy\VltField\VltAttributeValue;
@@ -25,6 +27,16 @@ class Volunteer extends Entity implements PresenterInterface {
     public function VolunteerAttrValues()
     {
         return $this->hasOne(VltAttributeValue::class,'vol_id');
+    }
+
+    /**
+     * 指向activity_value表
+     * 多对多
+     */
+    public function ActivityAttendInfo()
+    {
+        return $this->belongsToMany(Activities::class,'activity_attrvalue','uid','activity_id')
+                    ->withPivot('[value]');
     }
 
     // User表
