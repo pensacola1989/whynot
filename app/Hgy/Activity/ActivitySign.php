@@ -5,6 +5,8 @@
  * Date: 11/16/14
  * Time: 3:01 PM
  */
-class Activity_register extends Entity {
-    protected $table = 'activity_register';
+use Hgy\Core\Entity;
+
+class ActivitySign extends Entity {
+    protected $table = 'activity_sign';
 }

@@ -8,16 +8,19 @@
 
 use Hgy\Activity\ActivityPresenter;
 use Hgy\Activity\ActivityRepository;
+use Hgy\Activity\ActivityAttributeRepository;
 
 class ActivityController extends BaseController {
 
     protected $layout = 'layouts.home';
 
     private $activityRepo;
-    private $activityInfo;
-    public function __construct(ActivityRepository $repo)
+    private $attributeRepo;
+
+    public function __construct(ActivityRepository $repo,ActivityAttributeRepository $attrRepo)
     {
         $this->activityRepo = $repo;
+        $this->attributeRepo = $attrRepo;
     }
 
     public function index()
@@ -70,9 +73,11 @@ class ActivityController extends BaseController {
             $this->view('Activity.publish',['step' => $step,'uid' => $uid]);
         } elseif($step == 3 && $uid != null) {
 //            $isVerify = $this->_isUserVery($uid);
+            $this->title = '发布渠道选择';
             $this->view('Activity.publish',['step' => $step]);
         }
         else {
+            $this->title = '基本信息';
             $this->view('Activity.publish',['step' => 1]);
         }
 
@@ -83,19 +88,38 @@ class ActivityController extends BaseController {
      */
     public function add($step=null,$uid=null)
     {
-        $step = Input::get('step');
-        $step = !empty($step) ? $step : 1;
-        if($step == 1) {
-            $input = Input::except('step');
-            $newActivity = $this->activityRepo->storeData($input);
-            if($newActivity)
-                return $this->redirectAction('ActivityController@publish',['step'=>2,'uid'=>$newActivity->id]);
-            else
-                return $this->redirectBack(['errors'=>$this->activityRepo->getError()]);
+        if (Request::ajax()) {
+            $attrArray = Input::get('attrJson');
+            try {
+                foreach ($attrArray as $value) {
+                    $value['activit_id'] = $uid;
+                    $newAttr = $this->attributeRepo->storeData($value);
+                }
+            }catch(Exception $e){
+                return $e;
+            }
+
+        }else{
+            if (Input::hasFile('imgFile'))
+            {
+                $file = Input::file('imgFile');
+            }
+            $step = Input::get('step');
+            $step = !empty($step) ? $step : 1;
+            if ($step == 1) {
+                $input = Input::except('step');
+                $newActivity = $this->activityRepo->storeData($input);
+                if ($newActivity) {
+                    return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
+                }else {
+                    return $this->redirectBack(['errors' => $this->activityRepo->getError()]);
+                }
+            }
         }
         if($step == 2) {
-            if($uid == null)
-                return $this->redirectAction('ActivityController@publish');
+
+//            if($uid == null)
+//                return $this->redirectAction('ActivityController@publish');
 //            if($user = $this->userRepo->requireById($uid)) {
 //                $userinfo = $this->userInfo->getNew(Input::except('step'));
 //                if(!$userinfo->validate())

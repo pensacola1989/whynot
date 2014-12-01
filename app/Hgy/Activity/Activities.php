@@ -12,5 +12,12 @@ class Activities extends Entity {
 
     protected $guarded = array('_token');
 
-
+    public static $rules = array(
+        'title'	=> 'required',
+        'cover_id' => 'required',
+        'start_time' => 'required',
+        'end_time' => 'required',
+        'area' => 'required',
+        'content' => 'required'
+    );
 }
