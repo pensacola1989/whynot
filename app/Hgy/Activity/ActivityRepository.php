@@ -82,8 +82,19 @@ class ActivityRepository extends EntityRepository
         return $activity->Attendees()->updateExistingPivot($attendeeId,$info);
     }
 
-    public function getSummaryReply(User $user, $activityId)
+    public function summaryReply(User $user, $activityId, $attendeeId, $info)
     {
+        $activity = $this->_getActivity($user,$activityId);
+        return $this->_updateAttendeeInfo($activity, $attendeeId, $info);
+    }
 
+    private function _getActivity(User $user, $activityId)
+    {
+        return $user->Activities()->where('id', '=', $activityId)->first();
+    }
+
+    private function _updateAttendeeInfo(Activities $activity, $attendeeId, $info)
+    {
+        return $activity->Attendees()->updateExistingPivot($attendeeId, $info);
     }
 }

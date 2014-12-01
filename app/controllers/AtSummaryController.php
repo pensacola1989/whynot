@@ -81,8 +81,13 @@ class AtSummaryController extends BaseController {
         return ['errorCode' =>  102,    'message'   =>  '操作失败'];
     }
 
-    public function atReplyToVol()
+    public function atReplyToVol($activityId)
     {
-        
+        $volId = Input::get('volId');
+        $data = Input::except('volId');
+
+        if($this->activityRep->summaryReply($this->getCurrentUser(),$activityId,$volId, $data))
+            return ['errorCode' =>  0, 'message'    =>  '操作成功'];
+        return ['errorCode' =>  102,    'message'   =>  '操作失败'];
     }
 }

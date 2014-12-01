@@ -72,7 +72,7 @@
                 </a>
             </td>
             <td>
-                <a data-vol_reply="{{ $attendee->pivot->vol_reply }}"
+                <a id="{{ $attendee->id }}" data-vol_reply="{{ $attendee->pivot->vol_reply }}"
                     data-at_reply="{{ $attendee->pivot->at_reply }}"
                     class="check-reply" href="javascript:void(null);" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
                     <i class="fa fa-eye"></i>
@@ -145,7 +145,7 @@
           <div class="row reply-box">
               <div class="col-sm-3">回复内容：</div>
               <div class="col-sm-6">
-                <textarea name="at-reply" id="" cols="30" rows="5"></textarea>
+                <textarea name="at-reply" id="reply-content" cols="30" rows="5"></textarea>
               </div>
           </div>
           <p class="bg-danger" id="modal-error" style="display: none;"></p>
@@ -162,10 +162,13 @@
 </div>
 @section('scripts')
 <script type="text/javascript">
-
+var CURRENT_REPLY_ID = -1;
 $(function() {
     $('[data-toggle="tooltip"]').tooltip();
     $('.check-reply').on('click',function() {
+        CURRENT_REPLY_ID = parseInt($(this).attr('id'));
+
+        $('#replyModal').find('#reply-btn').attr('vol_id',$(this).attr('id'));
         var vol_reply = $(this).data('vol_reply');
         var at_reply = $(this).data('at_reply');
         if(vol_reply != '') {
@@ -186,6 +189,41 @@ $(function() {
 
 
         $('#replyModal').modal();
+    });
+    $('#reply-btn').on('click', function() {
+//        $('#reply-content').val('');
+        $(this).attr('disabled');
+        $('#modal-error').hide();
+        var _id = parseInt($(this).attr('vol_id'));
+        var _value = $('#reply-content').val();
+        var _error = '';
+        var _isError = false;
+
+        if(_value == '') {
+            _isError = true;
+            _error = '请输入回复内容';
+        }
+        if(_isError) {
+            $('#modal-error').html(_error).show();
+            return false;
+        }
+
+        $.post('{{ route('replytovol', $activityId) }}', { volId: _id , at_reply: _value })
+        .success(function(data) {
+            if(!data.errorCode) {
+                $('#replyModal').modal('hide');
+                $('.check-reply').find('#' + CURRENT_REPLY_ID).data('at_reply',_value);
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        })
+        .error(function() {
+
+        })
+        .done(function() {
+            $('#reply-btn').removeAttr('disabled');
+        })
     });
     $('#submit-btn').on('click', function() {
         var _id = parseInt($(this).attr('id'));
