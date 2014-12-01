@@ -18,6 +18,11 @@ class ActivityRepository extends EntityRepository
         $this->model = $model;
     }
 
+    /**
+     * store data
+     * @param $data
+     * @return mixed
+     */
     public function storeData($data)
     {
         $activity = $this->getNew($data);
@@ -69,5 +74,16 @@ class ActivityRepository extends EntityRepository
     {
         $activity = $user->Activities()->where('id', '=', $activityId)->first();
         return $activity->Attendees;
+    }
+
+    public function updateAttendeeInfo(User $user,$activityId,$attendeeId,$info)
+    {
+        $activity = $user->Activities()->where('id', '=', $activityId)->first();
+        return $activity->Attendees()->updateExistingPivot($attendeeId,$info);
+    }
+
+    public function getSummaryReply(User $user, $activityId)
+    {
+
     }
 }

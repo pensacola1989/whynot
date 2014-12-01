@@ -36,7 +36,7 @@ class Volunteer extends Entity implements PresenterInterface {
     public function ActivityAttendInfo()
     {
         return $this->belongsToMany(Activities::class,'activity_attrvalue','uid','activity_id')
-                    ->withPivot('[value]');
+                    ->withPivot(['value','vol_duration', 'vol_reply', 'at_reply']);
     }
 
     // User表

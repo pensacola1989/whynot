@@ -61,6 +61,28 @@ class AtSummaryController extends BaseController {
     {
         $this->title = '志愿者评价';
         $attendWithPivot = $this->activityRep->getAttendeeInfo($this->getCurrentUser(),$activityId);
-        $this->view('activity.activity_reply',compact('attendWithPivot'));
+        $this->view('activity.activity_reply',compact('attendWithPivot','activityId'));
+    }
+
+    /**
+     * Http Post
+     * @param $activityId
+     * @param $volId
+     * @return array
+     */
+    public function postEditVolDuration($activityId)
+    {
+        $volId = Input::get('volId');
+
+        $data = Input::except('volId');
+        if($this->activityRep->updateAttendeeInfo($this->getCurrentUser(),$activityId,$volId,$data)) {
+            return ['errorCode' =>  0,  'message'   =>  '更新成功'];
+        }
+        return ['errorCode' =>  102,    'message'   =>  '操作失败'];
+    }
+
+    public function atReplyToVol()
+    {
+        
     }
 }

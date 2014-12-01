@@ -1,6 +1,43 @@
 @section('styles')
 <style type="text/css">
 /*.modify-time.hide {display: none;}*/
+.comment-content {
+    position: relative;
+    color: #FFF;
+    padding: 5px;
+    border-radius: 5px;
+    margin:5px;
+}
+.vol-row .comment-content {
+    background-color: #2980B9;
+}
+.at-row .comment-content {
+    background-color: #DDD;
+    color:#333;
+}
+.arrow.arrow-left {
+    position: absolute;
+    display: block;
+    height: 0;
+    left: -10px;
+    top: 5px;
+    width: 0;
+    /* border-color: #000; */
+    border:5px solid transparent;
+    border-right: 5px solid #2980B9;
+}
+
+.arrow.arrow-right {
+    position: absolute;
+    display: block;
+    height: 0;
+    left: -10px;
+    top: 5px;
+    width: 0;
+    /* border-color: #000; */
+    border:5px solid transparent;
+    border-right: 5px solid #ddd;
+}
 </style>
 @endsection
 <div class="page-header">
@@ -16,7 +53,7 @@
             <th>电话</th>
             <th>邮箱</th>
             <th>活动时间</th>
-            <th>参与评价</th>
+            <th>参与者评价</th>
         </tr>
         </thead>
         <tbody>
@@ -27,14 +64,21 @@
             <td>{{ $attendee->volunteer_mobile }}</td>
             <td>{{ $attendee->volunteer_email }}</td>
             <td>
-                <span>{{ 10 }}</span>
+                <span>{{ $attendee->pivot->vol_duration ? $attendee->pivot->vol_duration : 10}}</span>
                 &nbsp;&nbsp;
-                <a class="modify-time" id="{{ $attendee->id }}" href="javascript:void(null)">
+                <a class="modify-time" id="{{ $attendee->id }}" href="javascript:void(null)"
+                    data-toggle="tooltip" data-placement="top" title="" data-original-title="修改">
                     <i class="fa fa-pencil"></i>
-                    修改
                 </a>
             </td>
-            <td></td>
+            <td>
+                <a data-vol_reply="{{ $attendee->pivot->vol_reply }}"
+                    data-at_reply="{{ $attendee->pivot->at_reply }}"
+                    class="check-reply" href="javascript:void(null);" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
+                    <i class="fa fa-eye"></i>
+                </a>
+
+            </td>
         </tr>
         @endforeach
         @endif
@@ -71,14 +115,80 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+            <i class="fa fa-pencil"></i>
+            &nbsp;
+            志愿者评价
+        </h4>
+      </div>
+      <div class="modal-body">
+          <div class="row vol-row">
+            <div class="col-sm-3">志愿者：</div>
+            <div class="col-sm-6 comment-content">
+                活动办的不错
+                <span class="arrow arrow-left"></span>
+            </div>
+          </div>
+          <div class="row at-row">
+              <div class="col-sm-3">活动方：</div>
+              <div class="col-sm-6 comment-content">
+                谢谢鼓励
+                <span class="arrow arrow-right"></span>
+              </div>
+          </div>
+          <div class="row reply-box">
+              <div class="col-sm-3">回复内容：</div>
+              <div class="col-sm-6">
+                <textarea name="at-reply" id="" cols="30" rows="5"></textarea>
+              </div>
+          </div>
+          <p class="bg-danger" id="modal-error" style="display: none;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+        <button type="button" id="reply-btn" class="btn btn-success" data-id="">
+            <i class="fa fa-check"></i>
+            回复
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 @section('scripts')
 <script type="text/javascript">
-function showModifyDailog() {
 
-}
 $(function() {
-    $('#submit-btn').on('click', function() {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('.check-reply').on('click',function() {
+        var vol_reply = $(this).data('vol_reply');
+        var at_reply = $(this).data('at_reply');
+        if(vol_reply != '') {
+            $('.vol-row').find('.comment-content').html(vol_reply);
+        }
 
+        if(at_reply != '')  {
+            $('.at-row').show();
+            $('.at-row').find('.comment-content').html(at_reply);
+            $('.reply-box').hide();
+            $('#reply-btn').hide();
+        }
+        else {
+            $('.at-row').hide()
+            $('.reply-box').show();
+            $('#reply-btn').show();
+        }
+
+
+        $('#replyModal').modal();
+    });
+    $('#submit-btn').on('click', function() {
+        var _id = parseInt($(this).attr('id'));
         var _error = '';
         var _isError = false;
         var _value = $('#time-value').val();
@@ -96,6 +206,18 @@ $(function() {
             return false;
         }
         // make ajax call
+        $.post('{{ route('updateduration', $activityId) }}', { volId: _id , vol_duration: _value})
+        .success(function(data) {
+            if(!data.errorCode) {
+                $('#myModal').modal('hide');
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        })
+        .error(function() {
+
+        });
     });
     $('table tbody>tr').hover(function() {
 //        $(this).find('a.modify-time').toggleClass('hide');
