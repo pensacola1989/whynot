@@ -19,13 +19,23 @@ class Activities extends Entity implements PresenterInterface {
 
     public static $rules = array(
         'title'	=> 'required',
-        'cover_id' => 'required',
+        'cover' => 'required',
         'start_time' => 'required',
         'end_time' => 'required',
         'area' => 'required',
         'content' => 'required'
     );
 
+    public function ActivitySigns()
+    {
+        return $this->belongsToMany(Volunteer::class, 'activity_sign', 'sign_activity_id',  'sign_vlt_id')
+                    ->withPivot(['sign_des']);
+    }
+
+    /**
+     * 活动完成
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function ActivityComplete()
     {
         return $this->hasOne(ActivityComplete::class,'cpl_activity_id');

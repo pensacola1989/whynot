@@ -34,6 +34,7 @@ class ActivityRepository extends EntityRepository
         }
     }
 
+
     public function getError()
     {
         return $this->errorMessage;
@@ -73,7 +74,7 @@ class ActivityRepository extends EntityRepository
     public function getAttendeeInfo(User $user,$activityId)
     {
         $activity = $user->Activities()->where('id', '=', $activityId)->first();
-        return $activity->Attendees;
+        return $activity->Attendees()->paginate(self::AT_PER_PAGE_NUM);
     }
 
     public function updateAttendeeInfo(User $user,$activityId,$attendeeId,$info)

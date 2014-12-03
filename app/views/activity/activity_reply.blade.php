@@ -84,6 +84,10 @@
         @endif
         </tbody>
     </table>
+    <nav class="pager-container">
+
+      {{ $attendWithPivot->links() }}
+    </nav>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -162,11 +166,11 @@
 </div>
 @section('scripts')
 <script type="text/javascript">
-var CURRENT_REPLY_ID = -1;
+var $current;
 $(function() {
     $('[data-toggle="tooltip"]').tooltip();
     $('.check-reply').on('click',function() {
-        CURRENT_REPLY_ID = parseInt($(this).attr('id'));
+        $current = $(this);
 
         $('#replyModal').find('#reply-btn').attr('vol_id',$(this).attr('id'));
         var vol_reply = $(this).data('vol_reply');
@@ -212,7 +216,7 @@ $(function() {
         .success(function(data) {
             if(!data.errorCode) {
                 $('#replyModal').modal('hide');
-                $('.check-reply').find('#' + CURRENT_REPLY_ID).data('at_reply',_value);
+                $current.data('at_reply',_value);
                 alert(data.message);
             } else {
                 alert(data.message);

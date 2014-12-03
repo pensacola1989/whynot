@@ -17,11 +17,11 @@
         </div>
       </div>
       <div class="form-group">
-
+        <input type="hidden" name="cover" value="2"/>
         {{ Form::label('img_upload','活动图标',array('class' => 'col-sm-2 control-label'))  }}
         <div class="col-sm-10" id="uploadImg" style="height: 50px;width: 100px"></div>
         <div class="col-sm-10">
-            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}
+{{--            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}--}}
         </div>
       </div>
         <div class="form-group">
