@@ -35,6 +35,11 @@ class ActivityRepository extends EntityRepository
     }
 
 
+    public function getActivities(User $user)
+    {
+        return $user->Activities()->paginate(self::AT_PER_PAGE_NUM);
+    }
+
     public function getError()
     {
         return $this->errorMessage;
@@ -98,4 +103,25 @@ class ActivityRepository extends EntityRepository
     {
         return $activity->Attendees()->updateExistingPivot($attendeeId, $info);
     }
+
+    public function ApproveWithIds(User $user, $activityId, $vltIds)
+    {
+        $this->_updateApproveStatusWithBatch($user, $activityId, $vltIds, 1);
+    }
+
+    public function RejectWithIds(User $user, $activityId, $vltIds)
+    {
+        $this->_updateApproveStatusWithBatch($user, $activityId, $vltIds, 0);
+    }
+
+    private function _updateApproveStatusWithBatch(User $user, $activityId, $vltIds, $type)
+    {
+        foreach ($vltIds as $id) {
+            $user->Activities()
+                ->find($activityId)
+                ->Attendees()
+                ->updateExistingPivot($id, ['is_verify' => intval($type)]);
+        }
+    }
+
 }

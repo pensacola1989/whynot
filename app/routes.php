@@ -42,7 +42,11 @@ Route::group(['before'  =>  'auth'], function () {
 
     // dashboard
     Route::get('/user/index', 'UserController@index');
-
+    /**
+     * Activity Register
+     */
+    Route::get('/activityreg/{activityId}', 'AtRegisterController@index');
+    Route::post('/activityreg/{actvityId}', ['as' => 'approve', 'uses' => 'AtRegisterController@approveVlt']);
     /*
      * Activity
      */

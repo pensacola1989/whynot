@@ -32,7 +32,8 @@ class ActivityController extends BaseController {
     public function manage()
     {
         $this->title = '活动管理';
-        $this->view('activity.manage');
+        $activities = $this->activityRepo->getActivities($this->getCurrentUser());
+        $this->view('activity.manage', compact('activities'));
     }
 
 //    public function publish()

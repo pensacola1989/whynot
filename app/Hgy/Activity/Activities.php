@@ -47,7 +47,7 @@ class Activities extends Entity implements PresenterInterface {
     public function Attendees()
     {
         return $this->belongsToMany(Volunteer::class,'activity_attrvalue','activity_id','uid')
-                    ->withPivot(['value', 'vol_duration', 'vol_reply', 'at_reply']);
+                    ->withPivot(['is_verify', 'value', 'vol_duration', 'vol_reply', 'at_reply']);
     }
     /**
      * @return bool 完成返回true
