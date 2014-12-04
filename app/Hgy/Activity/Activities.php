@@ -49,6 +49,14 @@ class Activities extends Entity implements PresenterInterface {
         return $this->belongsToMany(Volunteer::class,'activity_attrvalue','activity_id','uid')
                     ->withPivot(['is_verify', 'value', 'vol_duration', 'vol_reply', 'at_reply']);
     }
+
+    /**
+     * 指向activity_attribute
+     */
+    public function Attributes()
+    {
+        return $this->hasMany(ActivityAttribute::class, 'activit_id');
+    }
     /**
      * @return bool 完成返回true
      */

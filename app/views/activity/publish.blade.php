@@ -19,6 +19,14 @@
       <div class="form-group">
         <input type="hidden" name="cover" value="2"/>
         {{ Form::label('img_upload','活动图标',array('class' => 'col-sm-2 control-label'))  }}
+        <input type="hidden" name="finish_tip" value="default_tips"/>
+        <input type="hidden" name="channels" value="1,2"/>
+        <input type="hidden" name="can_edit" value="0"/>
+        <input type="hidden" name="is_verify" value="0"/>
+        <input type="hidden" name="attend_num" value="0"/>
+        <input type="hidden" name="approve_num" value="0"/>
+        <input type="hidden" name="request_num" value="0"/>
+        <input type="hidden" name="status" value="0"/>
         <div class="col-sm-10" id="uploadImg" style="height: 50px;width: 100px"></div>
         <div class="col-sm-10">
 {{--            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}--}}
@@ -200,17 +208,14 @@ function add(){
 }
 
 function formSend(){
+    var uid = {{ $uid }};
     $("#formSend").bind('click',function(){
         var obj = formToJsonObj(".form_attr");
-        var jsonArr = '{"attrJson":'+JSON.stringify(obj)+'}';
-//        var _data = eval(jsonArr);
-
+        var jsonArr = { attrJson: JSON.stringify(obj), activityId: uid };
         $.ajax({
-                 type: "Post",
-                 contentType: "application/json",
+                 type: "POST",
                  url: window.location.href,
                  data: jsonArr,
-                 dataType: 'json',
                  success: function (result) {
                      alert("success");
                  }
@@ -240,10 +245,11 @@ function formToJsonObj(form){
     var obj=[];
     $.each(attrArray,function(i,val){
         var o = {
-            "attr_name":$(val).attr("attr_name"),
-            "attr_title":$(val).attr("attr_title"),
+            "attr_name":$(val).attr("attr_title"),
+            "attr_field_name":$(val).attr("attr_name"),
             "attr_type":$(val).attr("attr_type"),
-            "is_must":$(val).attr("is_must")
+            "is_must":$(val).attr("is_must") == 'checked' ? 1 : 0,
+            'attr_des': '默认描述'
         }
         obj.push(o);
     });

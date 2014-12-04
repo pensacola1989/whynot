@@ -94,6 +94,14 @@ class ActivityRepository extends EntityRepository
         return $this->_updateAttendeeInfo($activity, $attendeeId, $info);
     }
 
+    public function saveNewActivity(User $user, $inputs)
+    {
+        $obj = $this->getNew($inputs);
+        $ret = $user->Activities()->save($obj);
+        if(!$ret) $this->errorMessage = $obj->errors();
+        else return $obj;
+    }
+
     private function _getActivity(User $user, $activityId)
     {
         return $user->Activities()->where('id', '=', $activityId)->first();

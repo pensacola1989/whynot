@@ -90,15 +90,12 @@ class ActivityController extends BaseController {
     public function add($step=null,$uid=null)
     {
         if (Request::ajax()) {
-            $attrArray = Input::get('attrJson');
-            try {
-                foreach ($attrArray as $value) {
-                    $value['activit_id'] = $uid;
-                    $newAttr = $this->attributeRepo->storeData($value);
-                }
-            }catch(Exception $e){
-                return $e;
+            $jsonStr = Input::get('attrJson');
+            $activityId = Input::get('activityId');
+            if($obj = json_decode($jsonStr, true)) {
+                $this->attributeRepo->saveAttributes($activityId, $obj);
             }
+
 
         }else{
             if (Input::hasFile('imgFile'))
@@ -109,7 +106,7 @@ class ActivityController extends BaseController {
             $step = !empty($step) ? $step : 1;
             if ($step == 1) {
                 $input = Input::except('step');
-                $newActivity = $this->activityRepo->storeData($input);
+                $newActivity = $this->activityRepo->saveNewActivity($this->getCurrentUser(), $input);
                 if ($newActivity) {
                     return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
                 }else {

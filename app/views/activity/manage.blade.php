@@ -24,7 +24,7 @@
             <td>{{ $at->area }}</td>
             <td>{{ $at->status }}</td>
             <td>
-                <a class="modify-time" id="" href="javascript:void(null)"
+                <a class="modify-time" id="" href="{{ route('approve',$at->id )}}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
                     <i class="fa fa-eye"></i>
                 </a>

@@ -11,11 +11,11 @@ class ActivityAttribute extends Entity {
 
     protected $guarded = array('_token');
 
-    public static $rules = array(
-        'attr_name'	=> 'required|',
-        'attr_type' => 'required',
-        'attr_title' => 'required',
-        'is_must' => 'required'
-    );
+//    public static $rules = array(
+//        'attr_name'	=> 'required|',
+//        'attr_type' => 'required',
+//        'attr_title' => 'required',
+//        'is_must' => 'required'
+//    );
 
 }
