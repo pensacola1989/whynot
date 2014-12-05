@@ -8,14 +8,18 @@
 
 use Hgy\Account\User;
 use Hgy\Core\EntityRepository;
+use Auth;
 
 class ActivityRepository extends EntityRepository
 {
     const AT_PER_PAGE_NUM = 7;
 
+    private $currentUser;
+
     public function __construct(Activities $model)
     {
         $this->model = $model;
+        $this->currentUser = Auth::user();
     }
 
     /**
@@ -122,6 +126,11 @@ class ActivityRepository extends EntityRepository
         $this->_updateApproveStatusWithBatch($user, $activityId, $vltIds, 0);
     }
 
+    public function updateActivityStatus($activityId, $statusCode)
+    {
+        return $this->currentUser->Activities()->find($activityId)->update(['status' =>  $statusCode]);
+    }
+
     private function _updateApproveStatusWithBatch(User $user, $activityId, $vltIds, $type)
     {
         foreach ($vltIds as $id) {
@@ -131,5 +140,6 @@ class ActivityRepository extends EntityRepository
                 ->updateExistingPivot($id, ['is_verify' => intval($type)]);
         }
     }
+
 
 }

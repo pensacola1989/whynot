@@ -59,6 +59,7 @@ Route::group(['before'  =>  'auth'], function () {
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
 
 //    Route::get('/activity/summary','ActivityController@summary');
+    Route::post('/summary/complete/{activityId}', ['as' =>  'postcomplete', 'uses'  =>  'AtSummaryController@postComplete']);
     Route::post('/summary/replytovol/{activityId}',['as'    =>  'replytovol', 'uses'   => 'AtSummaryController@atReplyToVol']);
     Route::post('/summary/editduration/{activityId}', ['as'  =>  'updateduration', 'uses'    =>  'AtSummaryController@postEditVolDuration']);
     Route::get('/summary/reply/{activityId}', 'AtSummaryController@Reply');

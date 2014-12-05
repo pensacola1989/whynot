@@ -5,6 +5,7 @@
  * Date: 11/16/14
  * Time: 11:08 PM
  */
+use Hgy\Account\User;
 
 class AuthController extends BaseController {
 
@@ -22,10 +23,13 @@ class AuthController extends BaseController {
             'email'  => Input::get('email'),
             'password'  => Input::get('password')
         );
-
-        if(Auth::attempt($userCredential)) {
+        if(Auth::validate($userCredential)) {
+            Auth::login(User::find(1));
             return $this->redirectIntended('user/index');
         }
+//        if(Auth::attempt($userCredential)) {
+//            return $this->redirectIntended('user/index');
+//        }
         else {
             return 'failed';
         }

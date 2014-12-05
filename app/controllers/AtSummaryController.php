@@ -9,6 +9,8 @@ use Hgy\Activity\ActivityRepository;
 
 class AtSummaryController extends BaseController {
 
+    const AT_STATUS_COMPLETE = 1;
+
     private $activityRep;
 
     protected $layout = 'layouts.home';
@@ -32,6 +34,7 @@ class AtSummaryController extends BaseController {
     {
         $this->title = '总结子页面';
         $currentActivity = $this->activityRep->requireById($activityId);
+//        dd($currentActivity->start_time);exit();
         $atComplete = $this->activityRep->getSummaryDetail($this->getCurrentUser(),$activityId);
         if(empty($atComplete)) $atComplete = $this->activityRep->getNew([]);
         $this->view('activity.summary_edit',compact('atComplete','activityId','currentActivity'));
@@ -67,7 +70,6 @@ class AtSummaryController extends BaseController {
     /**
      * Http Post
      * @param $activityId
-     * @param $volId
      * @return array
      */
     public function postEditVolDuration($activityId)
@@ -88,6 +90,13 @@ class AtSummaryController extends BaseController {
 
         if($this->activityRep->summaryReply($this->getCurrentUser(),$activityId,$volId, $data))
             return ['errorCode' =>  0, 'message'    =>  '操作成功'];
+        return ['errorCode' =>  102,    'message'   =>  '操作失败'];
+    }
+
+    public function postComplete($activityId)
+    {
+        $ret = $this->activityRep->updateActivityStatus($activityId, self::AT_STATUS_COMPLETE);
+        if($ret) return ['errorCode'    =>  0, 'message'    =>  '操作成功'];
         return ['errorCode' =>  102,    'message'   =>  '操作失败'];
     }
 }

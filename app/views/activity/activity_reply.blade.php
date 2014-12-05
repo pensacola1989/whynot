@@ -38,6 +38,11 @@
     border:5px solid transparent;
     border-right: 5px solid #ddd;
 }
+.bottom-btn-container {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
 </style>
 @endsection
 <div class="page-header">
@@ -46,6 +51,13 @@
     </h2>
 </div>
 <div class="container">
+    <div class="container bottom-btn-container">
+        <a href="javascript:void(null);" class="btn btn-success" id="confirm-to-finish">
+            <i class="fa fa-check"></i>
+            &nbsp;
+            设置完成
+        </a>
+    </div>
     <table class="table-list table table-hover">
         <thead>
         <tr>
@@ -88,6 +100,7 @@
 
       {{ $attendWithPivot->links() }}
     </nav>
+
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -167,7 +180,18 @@
 @section('scripts')
 <script type="text/javascript">
 var $current;
+
 $(function() {
+    $('#confirm-to-finish').on('click', function() {
+        bootbox.confirm('确定设置活动为完成状态?', function(ret) {
+            if(!ret) return false;
+            $.post('{{ route('postcomplete', $activityId) }}', {})
+             .success(function(data) {
+                if(data) bootbox.alert(data.message);
+             })
+             .error()
+        });
+    });
     $('[data-toggle="tooltip"]').tooltip();
     $('.check-reply').on('click',function() {
         $current = $(this);

@@ -115,4 +115,12 @@ class User extends Entity implements UserInterface, RemindableInterface {
                 ->orWhere('orgName','=',$orgName);
         })->first();
     }
+
+    /**
+     * 管理员
+     */
+    public function Admins()
+    {
+        return $this->belongsToMany(UserBase::class, 'admin_user', 'org_id', 'user_id');
+    }
 }

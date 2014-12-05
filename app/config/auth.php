@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'model' => 'Hgy\Account\User',
+	'model' => 'Hgy\Account\UserBase',
 
 	/*
 	|--------------------------------------------------------------------------

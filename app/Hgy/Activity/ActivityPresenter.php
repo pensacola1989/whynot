@@ -50,9 +50,30 @@ class ActivityPresenter extends BasePresenter {
         return $this->statusMap[$ret];
     }
 
+    public function isEdit()
+    {
+        $endTimestamp = intval(strtotime($this->resource->end_time));
+        if(time() < $this->resource->start_time)
+            $ret = 0;
+        elseif (time() < $endTimestamp && time() > $this->resource->start_time)
+            $ret = 1;
+        else
+            $ret = 2;
+        if($ret == 2 && $this->resource->status == 1) {
+            // 完成状态根据时间计算，字段的status存是否手动设置完成（因为完成需要填写相关的信息，才算完成)
+            $ret = 3;
+        }
+        return $ret >= 2;
+    }
+
     public function start_time()
     {
-        return date('Y-m-d h:i',$this->resource->start_time);
+        $target = is_numeric($this->resource->start_time)
+                    ? $this->resource->start_time
+                    : strtotime($this->resource->start_time);
+
+//        return date('Y-m-d h:i',$this->resource->start_time);
+        return date('Y-m-d h:i',$target);
     }
 
     public function planDuration()

@@ -26,7 +26,9 @@
           <td>{{ $at->created_at }}</td>
           <td><em>{{ $at->planDuration }}</em></td>
           <td>
+          @if($at->isEdit)
             {{ $at->controlPannel }}
+          @endif
           </td>
     </tr>
   @endforeach
