@@ -63,7 +63,7 @@ class ActivityController extends BaseController {
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $this->title = '基本信息';
-            $this->view('Activity.publish',['step' => $step]);
+            $this->view('Activity.publish',['step' => $step, 'uid'  =>  $uid]);
         } elseif($step == 2 && $uid != null) {
 //            try {
 //                $this->userRepo->requireById($uid);
