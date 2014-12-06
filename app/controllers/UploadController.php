@@ -95,6 +95,7 @@ class UploadController extends BaseController {
             // Strip the temp .part suffix off
             rename("{$filePath}.part", $filePath);
         }
+        App::make('Hgy\Image\ImageRepository')->addImage($fileName);
         return url($uploadUrl . '/' .$fileName);
     }
 }

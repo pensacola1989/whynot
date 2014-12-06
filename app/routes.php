@@ -274,3 +274,10 @@ Route::get('seedAt', function() {
         ]);
     }
 });
+
+Route::get('testimg', function() {
+
+//    $imgRepo = new \Hgy\Image\ImageRepository(new \Hgy\Image\Image());
+    $imgRepo = App::make('Hgy\Image\ImageRepository');
+    $imgRepo->addImage('fuck');
+});
