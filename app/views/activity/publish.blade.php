@@ -208,7 +208,7 @@ function add(){
 }
 
 function formSend(){
-    var uid = {{ $uid }};
+    var uid = {{ $uid ? $uid : 0 }};
     $("#formSend").bind('click',function(){
         var obj = formToJsonObj(".form_attr");
         var jsonArr = { attrJson: JSON.stringify(obj), activityId: uid };

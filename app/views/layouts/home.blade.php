@@ -135,6 +135,7 @@
 {{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
 {{ HTML::script('scripts/bootbox.min.js') }}
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
+{{ HTML::script('scripts/plupload.js')}}
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
 <script type="text/javascript">
