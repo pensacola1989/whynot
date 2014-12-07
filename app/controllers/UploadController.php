@@ -20,13 +20,15 @@ class UploadController extends BaseController {
 
         // Create target dir
         if (!file_exists($targetDir)) {
-            @mkdir($targetDir);
+            if(@mkdir($targetDir,0777,true)){
+                echo "目录创建成功";
+            }
+                echo "目录创建失败";
         }
-
 
         // Get a file name
         if (isset($_REQUEST["name"])) {
-            $fileName = $_REQUEST["name"];
+            $fileName = time() . '_' . $_REQUEST["name"];
         } elseif (!empty($_FILES)) {
             $fileName = $_FILES["chunkfile"]["name"];
 
@@ -95,7 +97,8 @@ class UploadController extends BaseController {
             // Strip the temp .part suffix off
             rename("{$filePath}.part", $filePath);
         }
-        App::make('Hgy\Image\ImageRepository')->addImage($fileName);
-        return url($uploadUrl . '/' .$fileName);
+        $ret = App::make('Hgy\Image\ImageRepository')->addImage($fileName);
+        return ['url'=>url('..'.$uploadUrl . '/' .$fileName),'id'=>$ret->id];
+//        return url($uploadUrl . '/' .$fileName);
     }
 }

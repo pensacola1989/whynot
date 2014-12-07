@@ -17,7 +17,20 @@ class ImageRepository extends EntityRepository {
     }
     public function addImage($filename)
     {
-        $imgObj = $this->getNew(['filename' =>  $filename]);
-        return $this->save($imgObj);
+        $imgObj = $this->storeData(['filename' =>  $filename]);
+//        return $this->save($imgObj);
+        return $imgObj;
+    }
+
+    public function storeData($data)
+    {
+        $user = $this->getNew($data);
+        $ret = $this->save($user);
+        if(!$ret)  {
+            $this->errorMessage = $user->errors();
+        } else {
+//            $this->_setDefaultRole($user);
+            return $user;
+        }
     }
 }

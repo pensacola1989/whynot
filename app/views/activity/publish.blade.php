@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="form-group">
-        <input type="hidden" name="cover" value="2"/>
+        <input type="hidden" name="cover" id="cover_id" value="2"/>
         {{ Form::label('img_upload','活动图标',array('class' => 'col-sm-2 control-label'))  }}
         <input type="hidden" name="finish_tip" value="default_tips"/>
         <input type="hidden" name="channels" value="1,2"/>
@@ -27,9 +27,10 @@
         <input type="hidden" name="approve_num" value="0"/>
         <input type="hidden" name="request_num" value="0"/>
         <input type="hidden" name="status" value="0"/>
-        <div class="col-sm-10" id="uploadImg" style="height: 50px;width: 100px"></div>
+        <img class="col-sm-10" id="uploadImg" style="height: 50px;">
         <div class="col-sm-10">
 {{--            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}--}}
+            <botton type="botton" id="btnImg" class="btn btn-info">上传</botton>
         </div>
       </div>
         <div class="form-group">
@@ -92,7 +93,7 @@
                     <button type="button" class="btn btn-default glyphicon glyphicon-arrow-down" data-toggle="tooltip" data-placement="right" title="下移"></button>
                   </div>
                 </div>
-                <div class="form-group" id="form_after_attr">
+                <div class="form-group">
                     {{ Form::label('u_email','邮箱',array('class'    =>  'col-sm-2 control-label'))  }}
                   <div class="col-sm-10">
                     {{ Form::text('u_email','',array('class'=>'form-control form_attr',"id"=>"u_email", "placeholder"=>"邮箱",'attr_name'=>'attr_email','attr_title'=>'邮箱','attr_type'=>'email','is_must'=>'checked')) }}
@@ -105,7 +106,7 @@
                   </div>
                 </div>
 
-            <div class="form-group">
+            <div class="form-group" id="form_after_attr">
                 <label class="col-sm-2 control-label"></label>
                  <div class="col-sm-10">
                      <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal" >
@@ -257,7 +258,7 @@ function formToJsonObj(form){
 }
 
 function attribute(name,title,type,istrue){
-    $("#form_after_attr").after(
+    $("#form_after_attr").before(
         '<div class="form-group">'+
         '<label for="attr_name" class="col-sm-2 control-label">'+title+'</label>'+
         '<div class="col-sm-10">'+
@@ -271,32 +272,79 @@ function attribute(name,title,type,istrue){
         '</div>'+
         '</div>'
      );
+     $('[data-toggle="tooltip"]').tooltip();
+     attrMove();
 }
-function uploadImg(){
-    $('#img_upload').uploadify({
-        	'auto'     : true,//关闭自动上传
-        	'removeTimeout' : 1,//文件队列上传完成1秒后删除
-            'swf'      : '{{URL::asset('/scripts/uploadify/uploadify.swf')}}',
-            'uploader' : window.location.href,
-            'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
-    		'buttonText' : '选择图片',//设置按钮文本
-            'multi'    : true, //允许同时上传多张图片
-//            'uploadLimit' : 1,//一次最多只允许上传10张图片
-            'fileTypeDesc' : 'Image Files',//只允许上传图像
-            'fileTypeExts' : '*.gif; *.jpg; *.png',//限制允许上传的图片后缀
-            'fileSizeLimit' : '20000KB',//限制上传的图片不得超过200KB
-            'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
-    			   alert(data);
-            },
-            'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
 
-            }
-        });
+function attrMove(){
+     $(".glyphicon-arrow-up").off('click').on('click',function(){
+        var attrPrev = $(this).parent().parent().prev().clone();
+        $(this).parent().parent().prev().remove();
+        var p = $(this).parent().parent();
+        attrPrev.insertAfter(p);
+        attrMove();
+     });
+     $(".glyphicon-arrow-down").off('click').on('click',function(){
+
+     });
+
 }
+
+//==================upload img=====================
+function uploadImg(){
+    var _uploader = new plupload.Uploader({
+				            runtimes: 'html5,html4,flash',
+				            browse_button: 'btnImg',
+				            max_file_size: '2000mb',
+				            chunk_size: '512kb',
+				            multi_selection: false,
+				            // resize: { width: 125, height: 85, quality: 90 },
+				            flash_swf_url: 'plupload.flash.swf',
+				            filters: [{
+				                extensions: 'jpg,png,gif'
+				            }]
+				        });
+
+//						_uploader.bind('UploadProgress',function (up,files) {
+//							$('#' + btnId).siblings('.percent').html(files.percent + '%');
+//				        });
+
+				        _uploader.bind('BeforeUpload',function (up,files) {
+				        	up.settings.file_data_name = 'chunkfile';
+				        	up.settings.url = "{{action('UploadController@uploadFile')}}";
+				        });
+
+				        _uploader.bind('FileUploaded',function (up,file,info) {
+				            var obj = $.parseJSON(info.response);
+				            uploadEnd(obj.url,obj.id);
+				        	//$('#' + btnId).siblings('img').attr('src',info.response);
+
+				        });
+
+				        _uploader.bind('UploadComplete',function (up,file) {
+				        });
+
+						_uploader.bind('init',function () {
+				        	console.log('init');
+				        });
+
+
+				        _uploader.init();
+
+				        _uploader.bind('FilesAdded',function (up,files) {
+				        	up.start();
+				        });
+	}
+	function uploadEnd(url,id){
+	    $('#cover_id').val(id);
+	    $('#uploadImg').attr('src',url);
+	}
+//==================upload img=====================
 
 $(function() {
     add();
     formSend();
+    attrMove();
     $('.datetimepicker').datetimepicker({
             format: 'yyyy-mm-dd hh:ii'
     });
