@@ -315,8 +315,12 @@ function uploadImg(){
 				        });
 
 				        _uploader.bind('FileUploaded',function (up,file,info) {
-				            var obj = $.parseJSON(info.response);
-				            uploadEnd(obj.url,obj.id);
+				            if(info){
+				                var obj = $.parseJSON(info.response);
+				                uploadEnd(obj.url,obj.id);
+				            }else{
+				                alert("上传失败！");
+				            }
 				        	//$('#' + btnId).siblings('img').attr('src',info.response);
 
 				        });
