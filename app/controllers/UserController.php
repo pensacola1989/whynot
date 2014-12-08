@@ -20,16 +20,20 @@ class UserController extends BaseController {
      */
     private $userRepo;
 
+    private $userBase;
     /**
      * hold userInfo
      * @var userInfo
      */
     private $userInfo;
 
-    public function __construct(UserRepository $repo,UserInfoRepository $userinfo)
+    public function __construct(UserRepository $repo,
+                                UserInfoRepository $userinfo,
+                                \Hgy\Account\UserBaseRepository $userBaseRepository)
     {
         $this->userRepo = $repo;
         $this->userInfo = $userinfo;
+        $this->userBase = $userBaseRepository;
     }
     /*
      * Org user's dashboard
@@ -53,11 +57,11 @@ class UserController extends BaseController {
             $this->title = '组织用户注册';
             $this->view('user.register',['step' => $step]);
         } elseif($step == 2 && $uid != null) {
-            try {
-                $this->userRepo->requireById($uid);
-            } catch(Exception $e) {
-                return $this->redirectAction('UserController@register');
-            }
+//            try {
+//                $this->userRepo->requireById($uid);
+//            } catch(Exception $e) {
+//                return $this->redirectAction('UserController@register');
+//            }
             $this->title = '组织用户注册';
             $this->view('user.register',['step' => $step,'uid' => $uid]);
         } elseif($step == 3 && $uid != null) {
@@ -83,21 +87,32 @@ class UserController extends BaseController {
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $input = Input::except('step');
-            $newUser = $this->userRepo->storeData($input);
+//            $newUser = $this->userRepo->storeData($input);
+            $newUser = $this->userBase->storeData($input);
             if($newUser)
-                return $this->redirectAction('UserController@register',['step'=>2,'uid'=>$newUser->id]);
+                return $this->redirectAction('UserController@register',['step' =>2,'uid' => $newUser->id]);
             else
-                return $this->redirectBack(['errors'=>$this->userRepo->getError()]);
+                return $this->redirectBack(['errors'=>$this->userBase->getError()]);
         }
-        if($step == 2) {
+        if($step == 2) { // 这里的uid指的是UserBase的id
             if($uid == null)
                 return $this->redirectAction('UserController@login');
-            if($user = $this->userRepo->requireById($uid)) {
+            if($user = $this->userBase->getById($uid)) {
                 $userinfo = $this->userInfo->getNew(Input::except('step'));
                 if(!$userinfo->validate())
                     return $this->redirectBack(['errors'=>$userinfo->errors()]);
-                $user->userinfos()->save($userinfo);
-                return $this->redirectAction('UserController@register',['step'=>3,'uid'=>$user->id]);
+                $tempOrgData = [
+                    'password'  =>  'xxx090',
+                    'password_confirmation' =>  'xxx090',
+                    'orgName'   =>  'templateOrgName',
+                    'email'     =>  'temp@gmail.com',
+                    'is_verify' =>  0
+                ];
+                $ret = $this->userRepo->storeData($tempOrgData);
+                $org = $this->userRepo->requireById($ret->id);
+                $org->userinfos()->save($userinfo);
+                $user->Orgs()->attach($ret->id);
+                return $this->redirectAction('UserController@register',['step'=>3,'uid'=>$ret->id]);
             }
         }
     }

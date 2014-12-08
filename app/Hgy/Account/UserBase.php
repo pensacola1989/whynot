@@ -50,4 +50,29 @@ class UserBase extends Entity implements UserInterface, RemindableInterface {
     {
         return $this->belongsToMany(User::class, 'admin_user', 'user_id', 'org_id');
     }
+
+    public function beforeSave()
+    {
+        // if there's a new password, hash it
+        if($this->isDirty('password')) {
+            $this->password = \Hash::make($this->password);
+        }
+
+        if($this->_isUserExist($this->email,$this->username)) {
+            $this->errors()->add('account_error','该用户已经被注册');
+            return false;
+        }
+        return true;
+        //or don't return nothing, since only a boolean false will halt the operation
+    }
+
+
+    private function _isUserExist($email,$userName)
+    {
+        return self::Where(function($query) use ($email,$userName)
+        {
+            $query->where('email','=',$email)
+                ->orWhere('username','=',$userName);
+        })->first();
+    }
 }

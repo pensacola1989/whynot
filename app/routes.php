@@ -10,7 +10,16 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+/*
+|--------------------------------------------------------------------------
+| 平台方
+|--------------------------------------------------------------------------
+| 平台方路由
+|
+*/
 
+Route::get('/pfmanager/activity', 'PlatformController@activitymanager');
+//---------------------------------------------------------------------------
 Route::get('/', function()
 {
     return View::make('home');

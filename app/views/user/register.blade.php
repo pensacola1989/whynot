@@ -14,12 +14,18 @@
         {{ Form::text('email','',array('class'=>'form-control',"id"=>"inputEmail", "placeholder"=>"Email")) }}
         </div>
       </div>
+      {{--<div class="form-group">--}}
+        {{--{{ Form::label('orgName','机构名：',array('class'    =>  'col-sm-2 control-label'))  }}--}}
+        {{--<div class="col-sm-10">--}}
+         {{--{{ Form::text('orgName','',array('class'=>'form-control',"id"=>"inputUserName", "placeholder"=>"机构名：")) }}--}}
+        {{--</div>--}}
+      {{--</div>--}}
       <div class="form-group">
-        {{ Form::label('orgName','机构名：',array('class'    =>  'col-sm-2 control-label'))  }}
-        <div class="col-sm-10">
-         {{ Form::text('orgName','',array('class'=>'form-control',"id"=>"inputUserName", "placeholder"=>"机构名：")) }}
+          {{ Form::label('username','用户名：',array('class'    =>  'col-sm-2 control-label'))  }}
+          <div class="col-sm-10">
+           {{ Form::text('username','',array('class'=>'form-control',"id"=>"inputUserName", "placeholder"=>"用户名 ：")) }}
+          </div>
         </div>
-      </div>
       <div class="form-group">
         {{ Form::label('password','密码：',array('class'    =>  'col-sm-2 control-label'))  }}
           <div class="col-sm-10">

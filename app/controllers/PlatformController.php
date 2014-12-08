@@ -9,6 +9,8 @@ use Hgy\Account\UserRepository;
 
 class PlatformController extends BaseController {
 
+    protected $layout = 'layouts.home';
+
     private $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -22,5 +24,11 @@ class PlatformController extends BaseController {
     public function GetOrgUsers()
     {
 
+    }
+
+    public function activitymanager()
+    {
+        $this->title = '管理组织活动';
+        $this->view('platform.mgr_activity');
     }
 }
