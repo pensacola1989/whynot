@@ -23,13 +23,13 @@ class AuthController extends BaseController {
             'email'  => Input::get('email'),
             'password'  => Input::get('password')
         );
-        if(Auth::validate($userCredential)) {
-            Auth::login(User::find(1));
-            return $this->redirectIntended('user/index');
-        }
-//        if(Auth::attempt($userCredential)) {
+//        if($ret = Auth::validate($userCredential)) {
+//            Auth::login(User::find(1));
 //            return $this->redirectIntended('user/index');
 //        }
+        if(Auth::attempt($userCredential)) {
+            return $this->redirectIntended('user/index');
+        }
         else {
             return 'failed';
         }

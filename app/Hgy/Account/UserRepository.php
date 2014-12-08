@@ -44,6 +44,4 @@ class UserRepository extends EntityRepository {
         $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
          $user->attachRole($role);
      }
-
-
 }
