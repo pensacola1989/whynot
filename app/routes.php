@@ -66,6 +66,7 @@ Route::group(['before'  =>  'auth'], function () {
 //    Route::get('/activity/release','ActivityController@release');
     Route::get('/activity/publish/{step?}/{uid?}', 'ActivityController@publish');
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
+    Route::any('/upload/images','UploadController@uploadFile');
 
 //    Route::get('/activity/summary','ActivityController@summary');
     Route::post('/summary/complete/{activityId}', ['as' =>  'postcomplete', 'uses'  =>  'AtSummaryController@postComplete']);
