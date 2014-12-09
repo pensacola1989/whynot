@@ -1,7 +1,6 @@
 *{outline: none;}
 body,h1,h4{font-family: 'Helvetica','STHeiti';}
 body{background-color: #FFF;}
-
 .navbar .navbar-header :hover,.navbar-nav a:hover{
      color: #ddd !important;
 }
@@ -258,7 +257,7 @@ footer {border-top: 1px solid #CACACA;width: 70%;margin: auto;margin-top: 100px;
 }
 
 .table.table-hover thead{
-    background-color: #EEE;
+    background-color: #FFF;
 }
 
 .grid-btn{cursor: pointer;color:#555;}

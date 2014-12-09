@@ -23,22 +23,27 @@ class UserInfo extends Entity implements PresenterInterface{
      * @return string The class path to the presenter.
      */
 
-//    public static $rules = array(
-//        'u_cp_unit'             => 'required|between:5,50',
-//        'u_pw_industry'         => 'required|between:5,50',
-//        'u_province'            => 'required|between:5,50',
-//        'u_address'             => 'required|between:5,150',
-//        'u_postcode'            => 'numeric',
-//        'u_teamsize'            => 'numeric',
-//        'u_target_area'         => 'required|between:1,50',
-//        'u_target_people'       => 'required|between:2,50',
-//        'u_username'            => 'required|between:5,50',
-//        'u_mobile'              => 'required|between:11,15',
-//        'u_other_contact'       => 'required|between:5,50'
-//    );
+    public static $rules = array(
+        'u_cp_unit'             => 'required|between:1,50',
+        'u_pw_industry'         => 'required|between:1,50',
+        'u_province'            => 'required|between:1,50',
+        'u_address'             => 'required|between:1,150',
+        'u_postcode'            => 'numeric',
+        'u_teamsize'            => 'numeric',
+        'u_target_area'         => 'required|between:1,50',
+        'u_target_people'       => 'required|between:2,50',
+        'u_username'            => 'required|between:2,50',
+        'u_mobile'              => 'required|between:11,15',
+        'u_other_contact'       => 'required|between:1,50'
+    );
+
+    public static $customMessages = [
+        'required'  =>  '请填写所有字段',
+        'numeric'   =>  '请填写数字类型'
+    ];
 
     public function getPresenter()
     {
-        // TODO: Implement getPresenter() method.
+        return UserInfoPresenter::class;
     }
 }

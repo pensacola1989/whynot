@@ -104,6 +104,12 @@
             <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
           </ul>
         </li>
+         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
+          <ul class="tree_child">
+            <li class="child_item">{{ HTML::link('/pfmanager/activity','活动审核') }}</li>
+            <li class="child_item">{{ HTML::link('/pfmanager/org','组织审核') }}</li>
+          </ul>
+        </li>
         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/volteer_s','志愿者查找') }}</li>

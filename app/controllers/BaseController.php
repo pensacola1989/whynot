@@ -56,6 +56,10 @@ class BaseController extends Controller
         return Redirect::to($default);
     }
 
+    /**
+     * @return mixed 这里的User实际是组织表，为了减少修改，保留User作为名字，
+     * 组织信息通过Auth::user查到。。所有信息都与组织信息关联
+     */
     public function getCurrentUser()
     {
         $user = Auth::user();

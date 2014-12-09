@@ -36,13 +36,13 @@ class User extends Entity implements UserInterface, RemindableInterface {
      */
     public $autoPurgeRedundantAttributes = true;
 
-    public static $rules = array(
-        'orgName'				=> 'required|between:4,16',
-        'email'                 => 'required|email',
-        'password'              => 'required|alpha_num|between:4,12|confirmed',
-        'password_confirmation' => 'required|alpha_num|between:4,12'
-
-    );
+//    public static $rules = array(
+//        'orgName'				=> 'required|between:4,16',
+//        'email'                 => 'required|email',
+//        'password'              => 'required|alpha_num|between:4,12|confirmed',
+//        'password_confirmation' => 'required|alpha_num|between:4,12'
+//
+//    );
 
     public function getRememberToken()
     {
@@ -91,30 +91,30 @@ class User extends Entity implements UserInterface, RemindableInterface {
         return 'remember_token';
     }
 
-    public function beforeSave()
-    {
-        // if there's a new password, hash it
-        if($this->isDirty('password')) {
-            $this->password = \Hash::make($this->password);
-        }
-
-        if($this->_isUserExist($this->email,$this->orgName)) {
-            $this->errors()->add('account_error','该用户已经被注册');
-            return false;
-        }
-        return true;
-        //or don't return nothing, since only a boolean false will halt the operation
-    }
-
-
-    private function _isUserExist($email,$orgName)
-    {
-        return self::Where(function($query) use ($email,$orgName)
-        {
-            $query->where('email','=',$email)
-                ->orWhere('orgName','=',$orgName);
-        })->first();
-    }
+//    public function beforeSave()
+//    {
+//        // if there's a new password, hash it
+//        if($this->isDirty('password')) {
+//            $this->password = \Hash::make($this->password);
+//        }
+//
+//        if($this->_isUserExist($this->email,$this->orgName)) {
+//            $this->errors()->add('account_error','该用户已经被注册');
+//            return false;
+//        }
+//        return true;
+//        //or don't return nothing, since only a boolean false will halt the operation
+//    }
+//
+//
+//    private function _isUserExist($email,$orgName)
+//    {
+//        return self::Where(function($query) use ($email,$orgName)
+//        {
+//            $query->where('email','=',$email)
+//                ->orWhere('orgName','=',$orgName);
+//        })->first();
+//    }
 
     /**
      * 管理员

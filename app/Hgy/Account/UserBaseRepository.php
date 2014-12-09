@@ -34,6 +34,8 @@ class UserBaseRepository extends EntityRepository {
         return $this->errorMessage;
     }
 
+
+
     public function saveUserInfo($uid)
     {
 

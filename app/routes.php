@@ -18,7 +18,15 @@
 |
 */
 
-Route::get('/pfmanager/activity', 'PlatformController@activitymanager');
+Route::get('/test2', function() {
+    header("Content-type: application/json; charset=utf-8");
+    dd(Hgy\Account\User::with(['Admins', 'userinfos'])->where('is_verify', '=', 1)->get());
+//    $ret = App::make('Hgy\PlatForm\PlatformRepository')->getAllOrgsPaginate();
+//    return $ret->first()->Admins->first()->Volunteer->volunteer_name;
+//    return Hgy\Account\User::paginate(10);
+});
+
+
 //---------------------------------------------------------------------------
 Route::get('/', function()
 {
@@ -43,6 +51,8 @@ Route::group(['before'  =>  'auth'], function () {
      * Platform
      */
     Route::get('/platform/manager/user','PlatformController@UserManage');
+    Route::get('/pfmanager/activity', 'PlatformController@activitymanager');
+    Route::get('/pfmanager/org/{isVerify?}', 'PlatformController@orgmanager');
     /*
      * Accounts
      */

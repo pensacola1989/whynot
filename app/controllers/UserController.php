@@ -57,6 +57,11 @@ class UserController extends BaseController {
             $this->title = '组织用户注册';
             $this->view('user.register',['step' => $step]);
         } elseif($step == 2 && $uid != null) {
+            $userBase = $this->userBase->requireById($uid);
+            if(!$userBase)
+                return $this->redirectAction('UserController@register');
+            if($userBase->Orgs()->first())
+                return $this->redirectAction('UserController@register',['step'=>3, 'uid'=>$uid]);
 //            try {
 //                $this->userRepo->requireById($uid);
 //            } catch(Exception $e) {
@@ -87,7 +92,6 @@ class UserController extends BaseController {
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $input = Input::except('step');
-//            $newUser = $this->userRepo->storeData($input);
             $newUser = $this->userBase->storeData($input);
             if($newUser)
                 return $this->redirectAction('UserController@register',['step' =>2,'uid' => $newUser->id]);
@@ -102,17 +106,13 @@ class UserController extends BaseController {
                 if(!$userinfo->validate())
                     return $this->redirectBack(['errors'=>$userinfo->errors()]);
                 $tempOrgData = [
-                    'password'  =>  'xxx090',
-                    'password_confirmation' =>  'xxx090',
-                    'orgName'   =>  'templateOrgName',
-                    'email'     =>  'temp@gmail.com',
                     'is_verify' =>  0
                 ];
                 $ret = $this->userRepo->storeData($tempOrgData);
                 $org = $this->userRepo->requireById($ret->id);
                 $org->userinfos()->save($userinfo);
                 $user->Orgs()->attach($ret->id);
-                return $this->redirectAction('UserController@register',['step'=>3,'uid'=>$ret->id]);
+                return $this->redirectAction('UserController@register',['step'=>3,'uid'=>$uid]);
             }
         }
     }
@@ -125,7 +125,6 @@ class UserController extends BaseController {
 
     private function _isUserVery($uid)
     {
-        $user = $this->userRepo->requireById($uid);
-        return boolval($user->is_verify );
+        return boolval($this->userBase->requireById($uid)->Orgs()->first()->is_verify);
     }
 }

@@ -1,6 +1,7 @@
 <?php namespace Hgy\Account;
 
 use Hgy\Core\Entity;
+use Hgy\Volunteer\Volunteer;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -49,6 +50,14 @@ class UserBase extends Entity implements UserInterface, RemindableInterface {
     public function Orgs()
     {
         return $this->belongsToMany(User::class, 'admin_user', 'user_id', 'org_id');
+    }
+
+    /**
+     * 普通用户，有一个userBase，就会产生一个Volunteer
+     */
+    public function Volunteer()
+    {
+        return $this->hasOne(Volunteer::class, 'u_base_id');
     }
 
     public function beforeSave()
