@@ -51,8 +51,12 @@ Route::group(['before'  =>  'auth'], function () {
      * Platform
      */
     Route::get('/platform/manager/user','PlatformController@UserManage');
-    Route::get('/pfmanager/activity', 'PlatformController@activitymanager');
+//    Route::get('/pfmanager/activity', 'PlatformController@activitymanager');
     Route::get('/pfmanager/org/{isVerify?}', 'PlatformController@orgmanager');
+    Route::get('/pfmanager/activity/{isVerify?}', 'PlatformController@activityManager');
+
+    Route::post('/pfmanager/org', ['as' =>  'verifyorg', 'uses' =>  'PlatformController@verifyOrg']);
+    Route::post('/pfmanager/at', ['as' =>  'verifyat', 'uses' =>  'PlatformController@verifyAt']);
     /*
      * Accounts
      */

@@ -4,7 +4,9 @@ use Hgy\Account\UserBase;
 use Hgy\Activity\Activities;
 use Hgy\Core\EntityRepository;
 use Hgy\Account\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Paginator;
+use LaravelBook\Ardent\Ardent;
 
 /**
  * Created by PhpStorm.
@@ -17,11 +19,19 @@ class PlatformRepository extends EntityRepository {
 
     const PER_PAGE_NUM = 5;
 
-    public function __construct(User $model)
+    private $activities;
+
+    public function __construct(User $model, Activities $activities)
     {
         $this->model = $model;
+        $this->activities = $activities;
     }
 
+    /**
+     * 获取分业的所有公益组织信息
+     * @param null $isVerify
+     * @return \Illuminate\Pagination\Paginator
+     */
     public function getAllOrgsPaginate($isVerify=null)
     {
         if($isVerify == null) {
@@ -30,10 +40,19 @@ class PlatformRepository extends EntityRepository {
         return User::with(['Admins', 'userinfos'])->where('is_verify', '=', $isVerify)->paginate(self::PER_PAGE_NUM);
     }
 
+    public function getAllActivitiesPaginate($isVerify=null)
+    {
+        if($isVerify == null) {
+            return Activities::paginate(self::PER_PAGE_NUM);
+        }
+        return Activities::where('is_verify', '=', $isVerify)->paginate(self::PER_PAGE_NUM);
+    }
+
     /**
      * 审核或者否决（禁用）
-     * @param $id
+     * @param $ids
      * @param $status
+     * @internal param $id
      * @return bool|int
      */
     public function updateOrgStatusBatch($ids, $status)
@@ -43,4 +62,37 @@ class PlatformRepository extends EntityRepository {
         }
     }
 
+    /**
+     * @param $ids
+     * @param $status
+     */
+    public function updateActivityStatusBatch($ids, $status)
+    {
+        $this->_updateObjectBatch($this->activities, $ids, $status);
+    }
+
+    private function _updateObjectBatch($obj, $ids, $arr)
+    {
+        if($obj instanceof Ardent) {
+            foreach($ids as $id) {
+                $obj->find($id)->update($arr);
+            }
+        }
+    }
+
+    /**
+     * 组织总数
+     */
+    public function getOrgCount()
+    {
+        return $this->model->count();
+    }
+
+    /**
+     * 审核总数
+     */
+    public function getVerifyOrgCount()
+    {
+        return $this->model->where('is_verify', '=', 1)->count();
+    }
 }

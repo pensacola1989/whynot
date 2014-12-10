@@ -89,7 +89,7 @@ function setCheckedState(ids, state) {
         $(_$checkedItems[_i])
             .parents('tr')
             .find('input[name=verify]')
-            .bootstrapSwitch('state', state,state);
+            .bootstrapSwitch('state', state,1);
     }
     $('.list-check:checked').eq(0).parents('tr').find('input[name=verify]')
 //    $('input[name="my-checkbox"]').bootstrapSwitch('state', true, true);

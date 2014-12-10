@@ -29,28 +29,43 @@ class PlatformController extends BaseController {
 
     }
 
-    public function activitymanager()
-    {
-        $this->title = '管理组织活动';
-        $this->view('platform.mgr_activity');
-    }
-
     public function orgmanager($isVerify=null)
     {
         $this->title = '组织管理';
+        $totalCount = $this->platFormRepsitory->getOrgCount();
         $Orgs = $this->platFormRepsitory->getAllOrgsPaginate($isVerify);
-        $this->view('platform.mgr_org',compact('Orgs', 'isVerify'));
+        $verifyCount = $this->platFormRepsitory->getVerifyOrgCount();
+        $this->view('platform.mgr_org',compact('Orgs', 'isVerify', 'totalCount', 'verifyCount'));
+    }
+
+    public function activityManager($isVerify=null)
+    {
+        $this->title = '管理组织活动';
+        $activityManager = $this->platFormRepsitory->getAllActivitiesPaginate($isVerify);
+        $this->view('platform.mgr_activity',compact('isVerify', 'activityManager'));
+    }
+
+    public function verifyAt()
+    {
+        $type = Input::get('type');
+        $ids = Input::get('ids');
+
+        if(!count($ids))
+            return ['errorCode' =>  102, 'message'  =>  '操作失败'];
+
+        $this->platFormRepsitory->updateActivityStatusBatch($ids, ['is_verify'  =>  intval($type)]);
+        return ['errorCode' =>  0,  'message'   =>  '操作成功'];
     }
 
     public function verifyOrg()
     {
+        $type = Input::get('type');
         $ids = Input::get('ids');
-        $this->platFormRepsitory->updateOrgStatusBatch($ids, 1);
-    }
 
-    public function notVerifyOrg()
-    {
-        $ids = Input::get('id');
-        $this->platFormRepsitory->updateOrgStatusBatch($ids, 0);
+        if(!count($ids))
+            return ['errorCode' =>  102, 'message'  =>  '操作失败'];
+
+        $this->platFormRepsitory->updateOrgStatusBatch($ids, intval($type));
+        return ['errorCode' =>  0,  'message'   =>  '操作成功'];
     }
 }

@@ -24,6 +24,9 @@ class AuthController extends BaseController {
             'password'  => Input::get('password')
         );
 //        if($ret = Auth::validate($userCredential)) {
+//            $user = \Hgy\Account\UserBase::where('email', '=', $userCredential['email'])
+//                ->first();
+//            dd($user->Orgs()->first()->is_verify);exit();
 //            Auth::login(User::find(1));
 //            return $this->redirectIntended('user/index');
 //        }
