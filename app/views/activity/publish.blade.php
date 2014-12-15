@@ -106,7 +106,7 @@
                   </div>
                 </div>
 
-            <div class="form-group" id="form_after_attr">
+            <div class="form-group not-move" id="form_after_attr">
                 <label class="col-sm-2 control-label"></label>
                  <div class="col-sm-10">
                      <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal" >
@@ -276,16 +276,26 @@ function attribute(name,title,type,istrue){
      attrMove();
 }
 
+function resort() {
+
+}
+
 function attrMove(){
      $(".glyphicon-arrow-up").off('click').on('click',function(){
         var attrPrev = $(this).parent().parent().prev().clone();
+        if(!attrPrev) return false;
         $(this).parent().parent().prev().remove();
         var p = $(this).parent().parent();
         attrPrev.insertAfter(p);
         attrMove();
      });
      $(".glyphicon-arrow-down").off('click').on('click',function(){
-
+        var attrPrev = $(this).parent().parent().next().clone();
+        if(!attrPrev || attrPrev.hasClass('not-move')) return false;
+        $(this).parent().parent().next().remove();
+        var p = $(this).parent().parent();
+        attrPrev.insertBefore(p);
+        attrMove();
      });
 
 }

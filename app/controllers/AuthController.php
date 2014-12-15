@@ -23,16 +23,21 @@ class AuthController extends BaseController {
             'email'  => Input::get('email'),
             'password'  => Input::get('password')
         );
-//        if($ret = Auth::validate($userCredential)) {
-//            $user = \Hgy\Account\UserBase::where('email', '=', $userCredential['email'])
-//                ->first();
-//            dd($user->Orgs()->first()->is_verify);exit();
-//            Auth::login(User::find(1));
+        if($ret = Auth::validate($userCredential)) {
+            $user = \Hgy\Account\UserBase::where('email', '=', $userCredential['email'])
+                ->first();
+            $isVerify = $user->Orgs()->first()->is_verify;
+            if($isVerify) {
+                Auth::login(User::find($user->id));
+                return $this->redirectIntended('user/index');
+            }
+            else {
+                return '<script type="text/javascript">alert("您未获得管理员权限");window.location.href=window.location.href;</script>';
+            }
+        }
+//        if(Auth::attempt($userCredential)) {
 //            return $this->redirectIntended('user/index');
 //        }
-        if(Auth::attempt($userCredential)) {
-            return $this->redirectIntended('user/index');
-        }
         else {
             return 'failed';
         }

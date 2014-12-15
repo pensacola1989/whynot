@@ -87,7 +87,7 @@ background-color: #FFF;
     <nav class="page-container">
     {{ $activityManager->links() }}
     </nav>
-    <div class="control-pannel" style="display: none;">
+    <div class="control-pannel" style="">
         <a href="javascript:void(null);" class="btn btn-success" id="approve-btn">
             <i class="fa fa-check"></i>
             &nbsp;
@@ -130,8 +130,8 @@ function initBatch() {
             else $checkbox.removeAttr('checked');
             isAllcheck = !isAllcheck;
         }
-        if($('.table-list tr td:first-child .list-check:checked').length)  $('.control-pannel').show();
-        else  $('.control-pannel').hide();
+//        if($('.table-list tr td:first-child .list-check:checked').length)  $('.control-pannel').show();
+//        else  $('.control-pannel').hide();
     });
 }
 

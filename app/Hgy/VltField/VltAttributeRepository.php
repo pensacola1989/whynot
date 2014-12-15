@@ -28,6 +28,7 @@ class VltAttributeRepository extends EntityRepository {
         return $oldModel->update($inputArray);
     }
 
+
     public function getAttributeInfoByOrgAndOrder(User $user)
     {
         return $user->VltAttributes()->orderBy('sort_number','asc')->get();

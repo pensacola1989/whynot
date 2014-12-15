@@ -49,6 +49,15 @@ class ActivityRepository extends EntityRepository
         return $this->errorMessage;
     }
 
+    public function getAttrByOrderNum($activityId)
+    {
+        return $this->model
+                    ->find($activityId)
+                    ->Attributes()
+                    ->orderBy('sort_number', 'asc')
+                    ->get();
+    }
+
     public function getSummaryPaginate(User $orgUser)
     {
         return $orgUser->Activities()

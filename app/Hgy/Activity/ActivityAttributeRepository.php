@@ -31,16 +31,41 @@ class ActivityAttributeRepository extends EntityRepository
         }
     }
 
+
+
+    public function UpdateAttributeInfoById($id, $inputArray)
+    {
+        $oldModel = $this->requireById($id);
+        return $oldModel->update($inputArray);
+    }
+
     public function saveAttributes($activityId, $attrObjs)
     {
-        foreach($attrObjs as $obj) {
-            $newObj = $this->getNew($obj);
-
             $this->currentUser
+                ->Orgs()
+                ->first()
                 ->Activities()
                 ->find($activityId)
                 ->Attributes()
-                ->save($newObj);
+                ->save($attrObjs);
+    }
+
+
+    private function _getActivitiesAttribute($activityId)
+    {
+        return $this->currentUser->Orgs()
+                                ->first()
+                                ->Activities()
+                                ->find($activityId)
+                                ->Attributes;
+    }
+
+    public function updateSortByIdSorts($arr)
+    {
+        foreach($arr as $a) {
+            $res = $this->requireById($a->id);
+            $res->sort_number = $a->sort_number;
+            $res->save();
         }
     }
 

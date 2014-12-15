@@ -65,6 +65,14 @@ Route::group(['before'  =>  'auth'], function () {
 
     // dashboard
     Route::get('/user/index', 'UserController@index');
+
+    /**
+     * Activity Attributes
+     */
+    Route::get('/activity/infoEdit/{id?}' ,'ActivityController@editAtInfo');
+    Route::post('/activity/postInfoEdit/{id?}', 'ActivityController@postEditInfo');
+    Route::post('/activity/postSort', ['as' =>  'sortAt', 'uses'    =>  'ActivityController@postUpdateSort']);
+    Route::post('/activity/postDelete', ['as'   =>  'deleteInfoAt', 'uses'  =>  'ActivityController@postDelete']);
     /**
      * Activity Register
      */
@@ -269,6 +277,30 @@ Route::get('seedVlrAttr', function() {
             'is_must'   =>  1,
             'sort_number'   =>  0,
             'vol_id'    =>  1,
+            'validate_rule' =>  '',
+            'is_active' =>  1,
+            'is_init'   =>  1
+        ]);
+    }
+});
+
+Route::get('seedAtAttr', function() {
+    $fieldMap = ['datetime','text','enum','image'];
+
+    $faker = Faker\Factory::create();
+
+    foreach(range(1,10) as $index) {
+        \Hgy\Activity\ActivityAttribute::create([
+            'attr_name'	=>	$faker->firstName,
+            'attr_field_name'	=>	$faker->word,
+            'attr_des'	=>	$faker->text(),
+            'attr_type' => $fieldMap[$faker->numberBetween(0,3)],
+            'attr_extra'    => '',
+            'attr_default_val'  =>  '',
+            'attr_remark'   =>  '',
+            'is_must'   =>  1,
+            'sort_number'   =>  0,
+            'activit_id'    =>  1,
             'validate_rule' =>  '',
             'is_active' =>  1,
             'is_init'   =>  1
