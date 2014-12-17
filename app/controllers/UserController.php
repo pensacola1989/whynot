@@ -9,6 +9,8 @@
 use Hgy\Account\User;
 use Hgy\Account\UserRepository;
 use Hgy\Account\UserInfoRepository;
+use Hgy\Activity\ActivityRepository;
+use Hgy\Account\UserBaseRepository;
 
 class UserController extends BaseController {
 
@@ -19,21 +21,29 @@ class UserController extends BaseController {
      * @var userRepo
      */
     private $userRepo;
-
+    /**
+     * 用户基础信息管理
+     * @var \Hgy\Account\UserBaseRepository
+     */
     private $userBase;
     /**
      * hold userInfo
      * @var userInfo
      */
     private $userInfo;
-
+    /**
+     * @var Activity管理
+     */
+    private $activityRepo;
     public function __construct(UserRepository $repo,
                                 UserInfoRepository $userinfo,
-                                \Hgy\Account\UserBaseRepository $userBaseRepository)
+                                UserBaseRepository $userBaseRepository,
+                                ActivityRepository $activityRepository)
     {
         $this->userRepo = $repo;
         $this->userInfo = $userinfo;
         $this->userBase = $userBaseRepository;
+        $this->activityRepo = $activityRepository;
     }
     /*
      * Org user's dashboard
@@ -41,7 +51,9 @@ class UserController extends BaseController {
     public function index()
     {
         $this->title = '欢迎来到哈公益';
-        $this->view('user.index');
+        $currentActivity = $this->activityRepo->getLastestActivity();
+        $needSummary = $this->activityRepo->getCompleteAndUnSummaryActivity();
+        $this->view('user.index',compact('currentActivity', 'needSummary'));
     }
 
     /**

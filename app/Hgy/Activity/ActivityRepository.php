@@ -13,6 +13,8 @@ use Auth;
 class ActivityRepository extends EntityRepository
 {
     const AT_PER_PAGE_NUM = 7;
+    const STATUS_VERIFIED = 2;
+    const AT_COMPLETE = 3;
 
     private $currentUser;
 
@@ -150,5 +152,34 @@ class ActivityRepository extends EntityRepository
         }
     }
 
+    public function publishAt($activityId)
+    {
+        return $this->model->find($activityId)
+                            ->update(['is_verify'  =>  2]);
+    }
 
+    /**
+     * @return mixed当前最新正在进行的活动
+     */
+    public function getLastestActivity()
+    {
+        return $this->currentUser->Orgs()
+                    ->first()
+                    ->Activities()
+                    ->where('is_verify', '=', self::STATUS_VERIFIED)
+                    ->where('start_time', '<', date('Y-m-d H:i:s',time()))
+                    ->where('end_time', '>', date('Y-m-d H:i:s',time()))
+                    ->firstOrFail();
+    }
+
+    public function getCompleteAndUnSummaryActivity()
+    {
+        return $this->currentUser->Orgs()
+                    ->first()
+                    ->Activities()
+                    ->where('is_verify', '=', self::STATUS_VERIFIED)
+                    ->where('end_time', '<', date('Y-m-d H:i:s',time()))
+                    ->where('status', '=', self::AT_COMPLETE)
+                    ->first();
+    }
 }

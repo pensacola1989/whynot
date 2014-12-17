@@ -24,11 +24,18 @@
             <td>{{ $at->area }}</td>
             <td>{{ $at->status }}</td>
             <td>
+            @if($at->is_verify == 1)
+                <a class="publish-btn" id="{{ $at->id }}" href="javascript:void(null);"
+                    data-toggle="tooltip" data-placement="top" title="" data-original-title="发布">
+                    <i class="fa fa-send"></i>
+                </a>
+            @elseif($at->is_verify >= 1 && $at->isBegin)
                 <a class="modify-time" id="" href="{{ route('approve',$at->id )}}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
                     <i class="fa fa-eye"></i>
                 </a>
             </td>
+            @endif
         </tr>
         @endforeach
         @endif
@@ -39,3 +46,24 @@
       {{ $activities->links() }}
     </nav>
 </div>
+
+@section('scripts')
+<script type="text/javascript">
+function publish($activityId) {
+    $.post('{{ route('atpub') }}', { activityId: $activityId })
+    .success(function(data) {
+        if(!data.errorCode) {
+            alert(data.message);
+            history.go(0);
+        }
+    })
+    .error();
+}
+$(function() {
+    $('.publish-btn').on('click', function() {
+        var _id = parseInt($(this).attr('id'));
+        publish(_id);
+    });
+});
+</script>
+@endsection

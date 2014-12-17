@@ -81,6 +81,7 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Activity
      */
+    Route::post('/atpublish', ['as'  =>  'atpub',    'uses'  =>  'ActivityController@publishActivity']);
     Route::get('/activitysign/index/{activityId}', 'AtSignController@index');
     Route::get('/activity/index','ActivityController@index');
     Route::get('/activity/manage','ActivityController@manage');

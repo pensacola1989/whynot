@@ -10,6 +10,9 @@ use McCool\LaravelAutoPresenter\BasePresenter;
 
 class ActivityPresenter extends BasePresenter {
 
+    /**
+     * 未审核，未发布，已发布未进行，正在进
+     */
     private $statusMap = [
         '<label class="label label-default">未开始</label>',
         '<label class="label label-warning">正在进行</label>',
@@ -35,6 +38,10 @@ class ActivityPresenter extends BasePresenter {
 
     public function status()
     {
+        if($this->is_verify == 0)
+            return '<label class="label label-default">等待审核</label>';
+        if($this->is_verify == 1)
+            return '<label class="label label-warning">未发布</label>';
         $endTimestamp = intval(strtotime($this->resource->end_time));
         if(time() < $this->resource->start_time)
             $ret = 0;
@@ -93,4 +100,21 @@ class ActivityPresenter extends BasePresenter {
 
         return $date . '天' . $hour . '时' . $minute . '分';
     }
+
+    /**
+     * 是否开始
+     */
+    public function isBegin()
+    {
+        return time() > intval($this->resource->start_time);
+    }
+
+    /**
+     * @return bool是否结束
+     */
+    public function isFinished()
+    {
+        return time() > intval(strtotime($this->resource->end_time));
+    }
+
 }

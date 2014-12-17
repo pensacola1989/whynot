@@ -434,3 +434,7 @@ label{
 select {
     border-radius: 0;
 }
+
+h3.hgy-header{
+    color:#34495E;
+}

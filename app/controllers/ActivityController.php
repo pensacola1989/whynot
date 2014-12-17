@@ -58,6 +58,13 @@ class ActivityController extends BaseController {
 
     }
 
+    public function publishActivity()
+    {
+        $activityId = Input::get('activityId');
+        if($this->activityRepo->publishAt($activityId))
+            return ['errorCode' =>  0,  'message'   =>  '操作成功'];
+    }
+
     public function editAtInfo($id=null)
     {
         $fieldTypeMap = $this->fieldTypeMap;
