@@ -44,20 +44,20 @@ h3,p{color:#34495E;}
     <h3>活动情况</h3>
     <p>
         <em>正在开展的活动：</em>
-        <b style="color:#2ECC71;">{{ $currentActivity->title }}</b>
+        <b style="color:#2ECC71;">{{ $currentActivity->title ? $currentActivity->title: '' }}</b>
     </p>
     <p>
         <em>报名数/审核数：</em>
-        <b style="color:#2ECC71;">{{ $currentActivity->request_num }}</b>
+        <b style="color:#2ECC71;">{{ $currentActivity->request_num ? $currentActivity->request_num : '' }}</b>
         /
         <b>{{ $currentActivity->approve_num }}</b>
     </p>
     <hr class="dot-line"/>
     <p>
         <em>需总结的活动：</em>
-        <b style="color:#2ECC71;">活动2</b>
-        <a role="button" href="javascript:void(null);" class="btn btn-default">
-            查看更多 »
+        <b style="color:#2ECC71;">{{ $needSummary->title ? $needSummary->title : '' }}</b>
+        <a role="button" href="{{ action('AtSummaryController@editSummary', $needSummary->id) }}" class="btn btn-default">
+            总结 »
         </a>
     </p>
     <p>
@@ -68,8 +68,18 @@ h3,p{color:#34495E;}
   <div class="col-lg-4">
     <i class="index-big-icon vlt fa fa-child"></i>
     <h3>志愿者情况</h3>
-    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+     <p>
+        <em>志愿者总数：</em>
+        <a href="{{ action('VolunteerController@GetVolSearch') }}">{{ $vltCount }}</a>
+    </p>
+    <p>
+        <em>志愿者分组：</em>
+        @if($orgGroups)
+        @foreach($orgGroups as $group)
+       <a href="{{ action('VolunteerController@checkByGroup', $group->id) }}">{{ $group->group_name }}</a>,
+        @endforeach
+        @endif
+    </p>
   </div><!-- /.col-lg-4 -->
   <div class="col-lg-4">
     <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">

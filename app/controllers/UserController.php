@@ -11,6 +11,8 @@ use Hgy\Account\UserRepository;
 use Hgy\Account\UserInfoRepository;
 use Hgy\Activity\ActivityRepository;
 use Hgy\Account\UserBaseRepository;
+use Hgy\Volunteer\VolunteerRepository;
+use Hgy\Volunteer\VolunteerGroupRepository;
 
 class UserController extends BaseController {
 
@@ -35,15 +37,27 @@ class UserController extends BaseController {
      * @var Activity管理
      */
     private $activityRepo;
+    /**
+     * @var 志愿者管理
+     */
+    private $vltRepo;
+    /**
+     * @var 志愿者组管理
+     */
+    private $vltGroupRepo;
     public function __construct(UserRepository $repo,
                                 UserInfoRepository $userinfo,
                                 UserBaseRepository $userBaseRepository,
-                                ActivityRepository $activityRepository)
+                                ActivityRepository $activityRepository,
+                                VolunteerRepository $volunteerRepository,
+                                VolunteerGroupRepository $groupRepository)
     {
         $this->userRepo = $repo;
         $this->userInfo = $userinfo;
         $this->userBase = $userBaseRepository;
         $this->activityRepo = $activityRepository;
+        $this->vltGroupRepo = $groupRepository;
+        $this->vltRepo = $volunteerRepository;
     }
     /*
      * Org user's dashboard
@@ -53,7 +67,9 @@ class UserController extends BaseController {
         $this->title = '欢迎来到哈公益';
         $currentActivity = $this->activityRepo->getLastestActivity();
         $needSummary = $this->activityRepo->getCompleteAndUnSummaryActivity();
-        $this->view('user.index',compact('currentActivity', 'needSummary'));
+        $vltCount = $this->vltRepo->getCurrentOrgVltCount();
+        $orgGroups = $this->vltGroupRepo->getCurrentOrgGroup();
+        $this->view('user.index',compact('currentActivity', 'needSummary', 'vltCount', 'orgGroups'));
     }
 
     /**

@@ -21,6 +21,6 @@ class VolunteerGroup extends Entity {
 
     public function Volunteers()
     {
-        return $this->hasMany('Volunteer','groupd_id');
+        return $this->hasMany(Volunteer::class,'groupd_id');
     }
 }

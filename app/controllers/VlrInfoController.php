@@ -27,6 +27,7 @@ class VlrInfoController extends BaseController {
         $this->VltAttRepo = $vltAttributeRepository;
     }
 
+
     public function index()
     {
         $this->title = '志愿者信息收集';

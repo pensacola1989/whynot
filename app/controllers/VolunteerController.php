@@ -114,4 +114,11 @@ class VolunteerController extends BaseController {
 //        dd($values);exit();
         $this->view('volunteer.detail',compact('values','attributes'));
     }
+
+    public function checkByGroup($group_id)
+    {
+        $group_users = $this->volunteers->getVltByGroupId($group_id);
+        $pagerData = $group_users->volunteers()->paginate(6);
+        $this->view('volunteer.group_user', compact('group_users', 'pagerData'));
+    }
 }

@@ -30,7 +30,7 @@ class ActivityPresenter extends BasePresenter {
      */
     public function controlPannel()
     {
-        return $this->resource->status == 0
+        return ($this->isFinished() && $this->resource->status != 3)
                 ? '<a href="' . action("AtSummaryController@editSummary", ['activityId'=>$this->resource->id]) . '" id="' . $this->resource->id . '" class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="总结"></a>'
                 : '<a href="javascript:void (null);" id="' . $this->resource->id . '" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="查看评价"></a>';
 
@@ -51,7 +51,7 @@ class ActivityPresenter extends BasePresenter {
             $ret = 2;
         if($ret == 2 && $this->resource->status == 1) {
             // 完成状态根据时间计算，字段的status存是否手动设置完成（因为完成需要填写相关的信息，才算完成)
-            $ret = 3;
+            $ret = 2;
         }
 
         return $this->statusMap[$ret];

@@ -48,6 +48,20 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('mobile-auth', function()
+{
+    if (Auth::guest())
+    {
+        if (Request::ajax())
+        {
+            return Response::make('Unauthorized', 401);
+        }
+        else
+        {
+            return Redirect::guest('/user/login');
+        }
+    }
+});
 
 Route::filter('auth.basic', function()
 {

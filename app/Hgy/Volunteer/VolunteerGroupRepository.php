@@ -7,12 +7,16 @@
  */
 
 use Hgy\Core\EntityRepository;
+use Auth;
 
 class VolunteerGroupRepository extends EntityRepository {
+
+    private $currentUser;
 
     public function __construct(VolunteerGroup $group)
     {
         $this->model = $group;
+        $this->currentUser = Auth::user();
     }
 
     /**
@@ -24,4 +28,11 @@ class VolunteerGroupRepository extends EntityRepository {
         return $this->model->where('org_id', '=', $bisId)->get();
     }
 
+    public function getCurrentOrgGroup()
+    {
+        return $this->currentUser
+                    ->Orgs()
+                    ->first()
+                    ->volunteerGroup;
+    }
 }

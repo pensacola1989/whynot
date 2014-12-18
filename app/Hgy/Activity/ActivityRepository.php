@@ -169,7 +169,7 @@ class ActivityRepository extends EntityRepository
                     ->where('is_verify', '=', self::STATUS_VERIFIED)
                     ->where('start_time', '<', date('Y-m-d H:i:s',time()))
                     ->where('end_time', '>', date('Y-m-d H:i:s',time()))
-                    ->firstOrFail();
+                    ->first();
     }
 
     public function getCompleteAndUnSummaryActivity()
@@ -179,7 +179,6 @@ class ActivityRepository extends EntityRepository
                     ->Activities()
                     ->where('is_verify', '=', self::STATUS_VERIFIED)
                     ->where('end_time', '<', date('Y-m-d H:i:s',time()))
-                    ->where('status', '=', self::AT_COMPLETE)
                     ->first();
     }
 }

@@ -117,6 +117,7 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Volunteer
      */
+    Route::get('/group_user/{group_id}', 'VolunteerController@checkByGroup');
     Route::get('/volteer', 'VolunteerController@GetVolunteers');
     Route::get('/volteer_s', 'VolunteerController@GetVolSearch');
     Route::post('/volteer/lock', ['as' => 'lockvlt', 'uses' =>  'VolunteerController@LockVolunteer']);

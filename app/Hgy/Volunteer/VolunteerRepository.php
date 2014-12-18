@@ -8,15 +8,21 @@
 
 use Hgy\Core\EntityRepository;
 use Hgy\Account\User;
-use Illuminate\Support\Facades\DB;
+use Auth;
 
 class VolunteerRepository extends EntityRepository {
 
     const NUMBER_PER_PAGE = 8;
 
+    /**
+     * @var当前用户
+     */
+    private $currentUser;
+
     public function __construct(Volunteer $model)
     {
         $this->model = $model;
+        $this->currentUser = Auth::user();
     }
 
     /**
@@ -62,5 +68,30 @@ class VolunteerRepository extends EntityRepository {
     public function getVltDetailById(User $bisUser,$id)
     {
         return $bisUser->volunteers()->where('id', '=', $id)->first()->VolunteerAttrValues;
+    }
+
+    public function getCurrentOrgVltCount()
+    {
+        return $this->currentUser->Orgs()
+                                ->first()
+                                ->CVolunteers()
+                                ->count();
+    }
+
+    public function getVltByGroupId($groupid)
+    {
+//        return $this->_getOrg()
+//                    ->volunteerGroup()
+//                    ->find($groupid)
+//                    ->Volunteers;
+        return $this->_getOrg()
+                    ->volunteerGroup()
+                    ->with('Volunteers')
+                    ->find($groupid);
+    }
+
+    private function _getOrg()
+    {
+        return $this->currentUser->Orgs()->first();
     }
 }
