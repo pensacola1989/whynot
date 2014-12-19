@@ -45,6 +45,10 @@ Route::group(['before' => 'guest'], function () {
     Route::get('/org/register/{step?}/{uid?}', 'OrganizationController@register');
     Route::post('/org/register/{step?}/{uid?}', 'OrganizationController@add');
 });
+//----------------------------------移动端-----------------------------------------
+Route::get('mobile/home',['uses'    =>  'mobile\HomeController@index']);
+//---------------------------------------------------------------------------
+
 
 Route::group(['before'  =>  'auth'], function () {
     /*
