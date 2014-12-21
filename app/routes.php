@@ -46,7 +46,17 @@ Route::group(['before' => 'guest'], function () {
     Route::post('/org/register/{step?}/{uid?}', 'OrganizationController@add');
 });
 //----------------------------------移动端-----------------------------------------
+/**
+ * 组织
+ */
 Route::get('mobile/home',['uses'    =>  'mobile\HomeController@index']);
+Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
+Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
+/**
+ * 活动
+ */
+Route::get('mobile/activity/latest',['uses'    =>  'mobile\ActivityController@latest']);
+Route::get('mobile/activity/at_register',['uses'    =>  'mobile\ActivityController@atRegister']);
 //---------------------------------------------------------------------------
 
 

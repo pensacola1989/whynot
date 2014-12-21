@@ -14,7 +14,32 @@
     @yield('styles')
 </head>
 <body>
+<div class="">
+@if($header)
+<h2 class="hgy-mobile-header">
+
+    <div class="ui-avatar-one">
+        <span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>
+    </div>
+    <span>爱心社</span>
+
+</h2>
+@endif
+</div>
 {{ $content }}
+<div class="ui-btn-group ui-btn-group-bottom">
+    <button type="button">
+       <i class="fa fa-bank"></i> 组织名称
+    </button>
+    <button type="button">
+        <i class="fa fa-leaf"></i>
+        活动
+    </button>
+    <button type="button">
+        <i class="fa fa-user"></i>
+        我的
+    </button>
+</div>
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/1.0.0/frozen.js?_bid=304"></script>
 @yield('scripts')

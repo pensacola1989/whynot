@@ -16,4 +16,16 @@ class HomeController extends \BaseController {
         $this->title = '首页';
         $this->view('mobile.home');
     }
+
+    public function joinOrg()
+    {
+        $this->title = '加入组织';
+        $this->view('mobile.join_org');
+    }
+
+    public function joinSuccess()
+    {
+        $this->title = '加入成功';
+        $this->view('mobile.join_success');
+    }
 }
