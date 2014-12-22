@@ -57,6 +57,7 @@ Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSucce
  */
 Route::get('mobile/activity/latest',['uses'    =>  'mobile\ActivityController@latest']);
 Route::get('mobile/activity/at_register',['uses'    =>  'mobile\ActivityController@atRegister']);
+Route::get('mobile/activity/at_history', ['uses'    =>  'mobile\ActivityController@atHistory']);
 //---------------------------------------------------------------------------
 
 

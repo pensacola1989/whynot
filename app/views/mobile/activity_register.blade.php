@@ -1,6 +1,7 @@
 @section('styles')
 <style type="text/css">
 .ui-border-t i{ color:#7F8C8D;}
+/*.ui-scroller{height:100px;}*/
 </style>
 @endsection
 <div class="ui-slider">
@@ -15,6 +16,8 @@
         <li>3</li>
     </ul>
 </div>
+<div class="ui-scroller">
+
 <ul class="ui-list ui-list-text ui-list-cover ui-border-tb">
     <li class="ui-border-t">
         <p>
@@ -39,3 +42,43 @@
         </div>
     </li>
 </ul>
+<p class="container">报名信息填写</p>
+<div class="ui-form ui-border-t">
+    <form action="#" >
+        <div class="ui-form-item ui-border-b">
+            <label for="#">姓名</label>
+            <input type="text" placeholder="姓名">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label for="#">手机</label>
+            <input type="text" placeholder="手机">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label for="#">邮箱</label>
+            <input type="text" placeholder="邮箱">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label for="#">兴趣</label>
+            <input type="text" placeholder="兴趣">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-btn-wrap">
+            <button class="ui-btn-lg ui-btn-primary">确定</button>
+        </div>
+    </form>
+</div>
+
+@section('scripts')
+<script type="text/javascript">
+!function($) {
+    window.addEventListener('load', function() {
+//        var myScroll = new Scroll('.ui-scroller', {
+//            scrollY: true
+//        });
+    });
+}(Zepto)
+</script>
+@endsection

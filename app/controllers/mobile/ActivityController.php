@@ -29,4 +29,14 @@ class ActivityController extends \BaseController {
         $this->header = false;
         $this->view('mobile.activity_register');
     }
+
+    /**
+     * 活动历史
+     */
+    public function atHistory()
+    {
+        $this->title = '活动历史';
+        $this->header = false;
+        $this->view('mobile.activity_history');
+    }
 }
