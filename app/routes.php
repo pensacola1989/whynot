@@ -61,6 +61,13 @@ Route::get('mobile/activity/at_history', ['uses'    =>  'mobile\ActivityControll
 Route::get('mobile/vlt/index', ['uses'  =>  'mobile\VolunteerController@index']);
 Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
 Route::get('mobile/vlt/comment_detail', ['uses' =>  'mobile\VolunteerController@commentDetail']);
+/**
+ * hagongyi对用户的页面
+ */
+Route::get('mobile/hgy/vlt/info_modify', ['uses'    =>  'mobile\VolunteerController@infoModify']);
+Route::get('mobile/hgy/vlt/at_history', ['uses'    =>  'mobile\VolunteerController@atHistory']);
+Route::get('mobile/hgy/vlt/at_latest', ['uses'    =>  'mobile\VolunteerController@atLatest']);
+Route::get('mobile/hgy/vlt/org_search', ['uses'    =>  'mobile\VolunteerController@orgSearch']);
 //---------------------------------------------------------------------------
 
 

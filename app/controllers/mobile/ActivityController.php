@@ -39,4 +39,5 @@ class ActivityController extends \BaseController {
         $this->header = false;
         $this->view('mobile.activity_history');
     }
+
 }
