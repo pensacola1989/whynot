@@ -68,6 +68,10 @@ Route::get('mobile/hgy/vlt/info_modify', ['uses'    =>  'mobile\VolunteerControl
 Route::get('mobile/hgy/vlt/at_history', ['uses'    =>  'mobile\VolunteerController@atHistory']);
 Route::get('mobile/hgy/vlt/at_latest', ['uses'    =>  'mobile\VolunteerController@atLatest']);
 Route::get('mobile/hgy/vlt/org_search', ['uses'    =>  'mobile\VolunteerController@orgSearch']);
+Route::get('mobile/hgy/login', ['uses'    =>  'mobile\AuthController@loginToHgy']);
+Route::get('mobile/hgy/register', ['uses'    =>  'mobile\AuthController@register']);
+Route::post('mobile/hgy/register', ['as' =>  'mobile_reg', 'uses'   =>  'mobile\AuthController@postRegister']);
+Route::post('mobile/hgy/login', ['as'   =>  'loginToHgy', 'uses'    =>  'mobile\AuthController@checkLogin']);
 //---------------------------------------------------------------------------
 
 

@@ -35,6 +35,23 @@ class UserBaseRepository extends EntityRepository {
     }
 
 
+    /**
+     * 检查是否为Email
+     * @param $str
+     * @return int
+     */
+    public function isEmail($str)
+    {
+        $pattern = "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i";
+        return preg_match( $pattern, $str );
+    }
+
+    public function isMobile($str)
+    {
+        return intval($str) && strlen($str) == 11;
+    }
+
+
 
     public function saveUserInfo($uid)
     {
