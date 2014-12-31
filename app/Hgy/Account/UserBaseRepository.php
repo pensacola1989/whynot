@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Activity\ActivityAttributeValue;
 use Hgy\Core\EntityRepository;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,6 +28,29 @@ class UserBaseRepository extends EntityRepository {
 //            $this->_setDefaultRole($user);
             return $user;
         }
+    }
+
+    /**
+     * 参加的活动数
+     * @param $uid
+     * @return
+     */
+    public function getActivityCountByUid($uid)
+    {
+        return $this->model->find($uid)->attendActivities->count();
+    }
+
+    /**
+     * 评价次数，不为空的视为已经评价
+     * @param $uid
+     */
+    public function getCommentCountByUid($uid)
+    {
+        return $this->model
+                    ->find($uid)
+                    ->attendActivities()
+                    ->where('vol_reply', '!=', '')
+                    ->count();
     }
 
     public function getError()

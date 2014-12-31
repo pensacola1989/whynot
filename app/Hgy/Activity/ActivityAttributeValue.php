@@ -14,6 +14,18 @@ class ActivityAttributeValue extends Entity implements PresenterInterface {
     protected $table = 'activity_attrvalue';
 
     protected $guarded = [];
+
+//    public function activities()
+//    {
+//        return $this->belongsToMany(Activities::class,'activity_attrvalue','uid', 'activity_id')
+//            ->withPivot(['is_verify', 'value', 'vol_duration', 'vol_reply', 'at_reply']);
+//    }
+//
+//    public function activityCount()
+//    {
+//        return $this->belongsToMany(Activities::class,'activity_attrvalue','uid', 'activity_id')
+//            ->count();
+//    }
     /**
      * Get the presenter class.
      *

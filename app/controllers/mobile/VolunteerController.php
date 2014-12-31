@@ -1,4 +1,9 @@
 <?php namespace mobile;
+
+use Auth;
+use Hgy\Account\UserBaseRepository;
+use Hgy\Activity\ActivityRepository;
+
 /**
  * Created by PhpStorm.
  * User: danielwu
@@ -8,8 +13,17 @@
 
 class VolunteerController extends \BaseController {
 
+    private $userBase;
+
+    private $activity;
 
     protected $layout = 'layouts.mobilelayout';
+
+    public function __construct(UserBaseRepository $userBaseRepository, ActivityRepository $activityRepository)
+    {
+        $this->userBase = $userBaseRepository;
+        $this->activity = $activityRepository;
+    }
 
     /**
      * 微信端志愿者主页
@@ -18,7 +32,11 @@ class VolunteerController extends \BaseController {
     {
         $this->title = '志愿者主页';
         $this->header = false;
-        $this->view('mobile.vlt_index');
+
+        $activityCount = $this->userBase->getActivityCountByUid(Auth::user()->id);
+        $userData = $this->userBase->requireById(Auth::user()->id);
+        $commentCount = $this->userBase->getCommentCountByUid(Auth::user()->id);
+        $this->view('mobile.vlt_index', compact('commentCount', 'userData', 'activityCount'));
     }
 
     /**

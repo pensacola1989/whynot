@@ -60,7 +60,7 @@ function checkLogin() {
                     el.loading("hide");
                 },500);
                 if(data && data.errorCode == 0) {
-                    alert('success');
+                    window.location.href = '{{ URL::route('hgy_index') }}';
                 }
             });
         });

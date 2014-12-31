@@ -43,12 +43,12 @@
     <li class="ui-border-t">
         <p>
             <i class="fa fa-mobile"></i>&nbsp;&nbsp;
-            15995876379
+            {{ $userData->mobile }}
         </p>
     </li>
     <li class="ui-border-t">
         <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;
-        <p>qindongwoxin@gmail.com</p>
+        <p>{{ $userData->email }}</p>
     </li>
     <li class="ui-border-t">
         <i class="fa fa-heart-o"></i>&nbsp;&nbsp;
@@ -59,14 +59,14 @@
     <li class="grid-li">
         <a href="#">
             <i style="color:#2ECC71;" class="fa fa-leaf icon"></i>
-            <span class="item-num">20</span>
+            <span class="item-num">{{ $activityCount }}</span>
             <span class="item-des">参加活动次数</span>
         </a>
     </li>
     <li class="grid-li">
         <a href="#">
             <i style="color:#16A085;" class="fa fa-comment icon"></i>
-            <span class="item-num">10</span>
+            <span class="item-num">{{ $commentCount }}</span>
             <span class="item-des">评价次数</span>
         </a>
     </li>

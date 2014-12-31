@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Activity\ActivityAttributeValue;
 use Hgy\Core\Entity;
 use Hgy\Volunteer\Volunteer;
 use Illuminate\Auth\UserTrait;
@@ -36,6 +37,11 @@ class UserBase extends Entity implements UserInterface, RemindableInterface {
         'password_confirmation' => 'required|alpha_num|between:4,12'
 
     );
+
+    public function attendActivities()
+    {
+        return $this->hasMany(ActivityAttributeValue::class, 'uid');
+    }
 
     public function getRememberToken()
     {
