@@ -36,7 +36,7 @@
     <div class="ui-avatar-one">
         <span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>
     </div>
-    <span>WWW</span>
+    <span>{{ $userData->username }}</span>
 </h2>
 
 <ul class="ui-list ui-list-text ui-list-cover ui-border-tb">
@@ -73,7 +73,7 @@
     <li class="grid-li">
         <a href="#">
             <i style="color:#2980B9;" class="fa fa-clock-o icon"></i>
-            <span class="item-num">10</span>
+            <span class="item-num">{{ $totalTime }}</span>
             <span class="item-des">小时时间</span>
         </a>
     </li>

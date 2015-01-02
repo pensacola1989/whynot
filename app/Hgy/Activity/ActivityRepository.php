@@ -181,4 +181,11 @@ class ActivityRepository extends EntityRepository
                     ->where('end_time', '<', date('Y-m-d H:i:s',time()))
                     ->first();
     }
+    // -----------------哈公益微信端--------------------
+
+    public function getHgyLatestActivities()
+    {
+        return User::with('Activities', 'userinfos')->get();
+//        return $this->model->all()->groupBy('bizid');
+    }
 }

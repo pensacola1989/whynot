@@ -32,11 +32,13 @@ class VolunteerController extends \BaseController {
     {
         $this->title = '志愿者主页';
         $this->header = false;
-
-        $activityCount = $this->userBase->getActivityCountByUid(Auth::user()->id);
+        $isLogin = Auth::check();
+        $activityCount = !$isLogin ? 0 : $this->userBase->getActivityCountByUid(Auth::user()->id);
         $userData = $this->userBase->requireById(Auth::user()->id);
-        $commentCount = $this->userBase->getCommentCountByUid(Auth::user()->id);
-        $this->view('mobile.vlt_index', compact('commentCount', 'userData', 'activityCount'));
+        $commentCount = !$isLogin ? 0 : $this->userBase->getCommentCountByUid(Auth::user()->id);
+        $totalTime = !$isLogin ? 0 : $this->userBase->getTotalTimeByUid(Auth::user()->id);
+        $this->view('mobile.vlt_index',
+            compact('commentCount', 'userData', 'activityCount', 'totalTime'));
     }
 
     /**
@@ -88,7 +90,9 @@ class VolunteerController extends \BaseController {
     {
         $this->title = '所有最新活动';
         $this->header = false;
-        $this->view('mobile.hgy_atLatest');
+        $latestAts = $this->activity->getHgyLatestActivities();
+//        dd($latestAts);exit();
+        $this->view('mobile.hgy_atLatest', compact('latestAts'));
     }
 
     /**

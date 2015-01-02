@@ -53,6 +53,20 @@ class UserBaseRepository extends EntityRepository {
                     ->count();
     }
 
+    /**
+     * 获取志愿者的总时间
+     * @param $uid
+     */
+    public function getTotalTimeByUid($uid)
+    {
+        return $this->model
+                    ->find($uid)
+                    ->attendActivities()
+                    ->groupBy('uid')
+                    ->sum('vol_duration');
+    }
+
+
     public function getError()
     {
         return $this->errorMessage;
