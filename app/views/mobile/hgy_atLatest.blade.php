@@ -33,9 +33,15 @@ body{background-color: #FFF;}
                     {{ $a->start_time }}
                 </span>
             </p>
-            <div class="ui-btn">
+            @if($a->isRegister)
+            <a class="ui-btn" href="{{ URL::action('mobile\ActivityController@atRegister', $a->id) }}">
                 <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
+            </a>
+            @else
+            <a class="ui-btn" href="{{ URL::action('mobile\ActivityController@atRegister', $a->id) }}">
+                <i class="fa fa-send"></i>&nbsp;报名
+            </a>
+            @endif
         </div>
     </li>
     @endforeach

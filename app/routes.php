@@ -56,7 +56,7 @@ Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSucce
  * 活动
  */
 Route::get('mobile/activity/latest',['uses'    =>  'mobile\ActivityController@latest']);
-Route::get('mobile/activity/at_register',['uses'    =>  'mobile\ActivityController@atRegister']);
+Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
 Route::get('mobile/activity/at_history', ['uses'    =>  'mobile\ActivityController@atHistory']);
 Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
 Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
@@ -367,4 +367,8 @@ Route::get('testimg', function() {
 //    $imgRepo = new \Hgy\Image\ImageRepository(new \Hgy\Image\Image());
     $imgRepo = App::make('Hgy\Image\ImageRepository');
     $imgRepo->addImage('fuck');
+});
+
+Route::get('facade', function() {
+    \Hgy\Facades\TemplateFunc::test();
 });

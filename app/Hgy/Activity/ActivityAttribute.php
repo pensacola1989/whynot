@@ -6,7 +6,9 @@
  * Time: 3:01 PM
  */
 use Hgy\Core\Entity;
-class ActivityAttribute extends Entity {
+use McCool\LaravelAutoPresenter\PresenterInterface;
+
+class ActivityAttribute extends Entity implements PresenterInterface {
     protected $table = 'activity_attribute';
 
     protected $guarded = array('_token');
@@ -18,4 +20,13 @@ class ActivityAttribute extends Entity {
 //        'is_must' => 'required'
 //    );
 
+    /**
+     * Get the presenter class.
+     *
+     * @return string The class path to the presenter.
+     */
+    public function getPresenter()
+    {
+        return ActivityAttributePresenter::class;
+    }
 }

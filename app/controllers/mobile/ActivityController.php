@@ -1,4 +1,8 @@
 <?php namespace mobile;
+
+use Hgy\Activity\ActivityAttribute;
+use Hgy\Activity\ActivityAttributeRepository;
+use Hgy\Activity\ActivityRepository;
 /**
  * Created by PhpStorm.
  * User: danielwu
@@ -9,6 +13,25 @@
 class ActivityController extends \BaseController {
 
     protected $layout = 'layouts.mobilelayout';
+
+    /**
+     * Activity 代理
+     * @var
+     */
+    private $activity;
+    /**
+     * 报名字段代理
+     * @var
+     */
+    private $activityAttribute;
+
+    public function __construct(ActivityRepository $activityRepository,
+                                ActivityAttributeRepository $activityAttribute)
+    {
+        $this->activity = $activityRepository;
+        $this->activityAttribute = $activityAttribute;
+    }
+
 
     /**
      * 最新活动
@@ -23,11 +46,15 @@ class ActivityController extends \BaseController {
     /**
      * 活动报名
      */
-    public function atRegister()
+    public function atRegister($activity_id)
     {
-        $this->title = '湘西助学活动';
+//        $this->title = '湘西助学活动';
         $this->header = false;
-        $this->view('mobile.activity_register');
+        $activity = $this->activity->requireById($activity_id);
+        $this->title = $activity->title;
+        $attributes = $this->activityAttribute->getAttributeByActivityId($activity_id);
+        $this->view('mobile.activity_register',
+            compact('activity', 'attributes'));
     }
 
     /**

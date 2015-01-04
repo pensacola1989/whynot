@@ -6,6 +6,7 @@
  * Time: 3:02 PM
  */
 
+use Illuminate\Support\Facades\Auth;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 class ActivityPresenter extends BasePresenter {
@@ -106,7 +107,7 @@ class ActivityPresenter extends BasePresenter {
      */
     public function isBegin()
     {
-        return time() > intval($this->resource->start_time);
+        return date('Y-m-d H:i', time()) > $this->resource->start_time;
     }
 
     /**
@@ -115,6 +116,18 @@ class ActivityPresenter extends BasePresenter {
     public function isFinished()
     {
         return time() > intval(strtotime($this->resource->end_time));
+    }
+
+    /**
+     * 是否报名
+     */
+    public function isRegister()
+    {
+        $currentUid = Auth::user()->id;
+        $isRegister = ActivityAttributeValue::where('uid', '=', $currentUid)
+                                            ->where('activity_id', '=', $this->resource->id)
+                                            ->first();
+        return $isRegister != null;
     }
 
 }

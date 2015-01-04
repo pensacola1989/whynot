@@ -183,9 +183,17 @@ class ActivityRepository extends EntityRepository
     }
     // -----------------哈公益微信端--------------------
 
+    /**
+     * 获取未开始的活动
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getHgyLatestActivities()
     {
-        return User::with('Activities', 'userinfos')->get();
+//        echo date('Y-m-d H:i', time());exit();
+        return User::with(['Activities' =>  function($query) {
+            $query->where('start_time', '>', date('Y-m-d H:i', time()));
+        }])->with('userinfos')->get();
+//        return User::with('Activities', 'userinfos')->get();
 //        return $this->model->all()->groupBy('bizid');
     }
 }

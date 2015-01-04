@@ -73,4 +73,11 @@ class ActivityAttributeRepository extends EntityRepository
     {
         return $this->errorMessage;
     }
+
+    //------------------- for mobile -------------------
+
+    public function getAttributeByActivityId($activityId)
+    {
+        return Activities::find($activityId)->Attributes;
+    }
 }

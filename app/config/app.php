@@ -123,7 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider'
+		'Way\Generators\GeneratorsServiceProvider',
+        'Hgy\Facades\TemplateFuncServiceProvider'
 	),
 
 	/*
