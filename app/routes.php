@@ -57,6 +57,7 @@ Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSucce
  */
 Route::get('mobile/activity/latest',['uses'    =>  'mobile\ActivityController@latest']);
 Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
+Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\ActivityController@postAtRegister']);
 Route::get('mobile/activity/at_history', ['uses'    =>  'mobile\ActivityController@atHistory']);
 Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
 Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);

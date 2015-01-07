@@ -2,6 +2,8 @@
 <style type="text/css">
 .ui-border-t i{ color:#7F8C8D;}
 .ui-scroller{min-height:400px;height:auto;overflow: hidden;padding-bottom: 100px;}
+.ui-form-item{height:auto;}
+.ui-form-item label{color:#D35400;}
 /*.ui-form{background-color:#FFF;min-height: 100px;height:auto;overflow: hidden;}*/
 </style>
 @endsection
@@ -45,7 +47,7 @@
 </ul>
 <p class="container">报名信息填写</p>
 <div class="ui-form ui-border-t">
-    <form action="#" >
+    <form id="reg_form" action="{{ URL::action('mobile\ActivityController@postAtRegister', $activity_id) }}" method="post">
     @if(count($attributes))
     @foreach($attributes as $attr)
     @if($attr->attr_type == 'text')
@@ -58,40 +60,33 @@
     <div class="ui-form-item">
         <label for="#">{{ $attr->attr_name }}</label>
         <br/>
-    {{ $attr->parseEnum }}
+        {{ $attr->parseEnum }}
     </div>
+    @elseif($attr->attr_type == 'radio')
+    <div class="ui-form-item">
+        <label for="#">{{ $attr->attr_name }}</label>
+            <br/>
+    </div>
+    {{ $attr->parseRadio }}
     @endif
     @endforeach
     @endif
-        {{--<div class="ui-form-item ui-border-b">--}}
-            {{--<label for="#">姓名</label>--}}
-            {{--<input type="text" placeholder="姓名">--}}
-            {{--<a href="#" class="ui-icon-close"></a>--}}
-        {{--</div>--}}
-        {{--<div class="ui-form-item ui-border-b">--}}
-            {{--<label for="#">手机</label>--}}
-            {{--<input type="text" placeholder="手机">--}}
-            {{--<a href="#" class="ui-icon-close"></a>--}}
-        {{--</div>--}}
-        {{--<div class="ui-form-item ui-border-b">--}}
-            {{--<label for="#">邮箱</label>--}}
-            {{--<input type="text" placeholder="邮箱">--}}
-            {{--<a href="#" class="ui-icon-close"></a>--}}
-        {{--</div>--}}
-        {{--<div class="ui-form-item ui-border-b">--}}
-            {{--<label for="#">兴趣</label>--}}
-            {{--<input type="text" placeholder="兴趣">--}}
-            {{--<a href="#" class="ui-icon-close"></a>--}}
-        {{--</div>--}}
-        {{--<div class="ui-btn-wrap">--}}
-            {{--<button class="ui-btn-lg ui-btn-primary">确定</button>--}}
-        {{--</div>--}}
+        <div class="ui-form-item">
+            <div class="ui-btn-wrap">
+                <button class="ui-btn-lg ui-btn-danger">确定</button>
+            </div>
+        </div>
     </form>
 </div>
 
 @section('scripts')
 <script type="text/javascript">
 !function($) {
+    $('button').on('tap', function(e) {
+        e.preventDefault();
+        $('form').submit();
+        return false;
+    })
     window.addEventListener('load', function() {
 //        var myScroll = new Scroll('.ui-scroller', {
 //            scrollY: true

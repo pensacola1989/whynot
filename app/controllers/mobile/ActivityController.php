@@ -1,8 +1,10 @@
 <?php namespace mobile;
 
-use Hgy\Activity\ActivityAttribute;
+use Auth;
+use Illuminate\Support\Facades\Input;
 use Hgy\Activity\ActivityAttributeRepository;
 use Hgy\Activity\ActivityRepository;
+use Hgy\Activity\ActivityAttrValue;
 /**
  * Created by PhpStorm.
  * User: danielwu
@@ -24,12 +26,18 @@ class ActivityController extends \BaseController {
      * @var
      */
     private $activityAttribute;
+    /**
+     * @var字段值代理
+     */
+    private $activityAttrValue;
 
     public function __construct(ActivityRepository $activityRepository,
-                                ActivityAttributeRepository $activityAttribute)
+                                ActivityAttributeRepository $activityAttribute,
+                                ActivityAttrValue $activityAttributeValue)
     {
         $this->activity = $activityRepository;
         $this->activityAttribute = $activityAttribute;
+        $this->activityAttrValue = $activityAttributeValue;
     }
 
 
@@ -48,13 +56,12 @@ class ActivityController extends \BaseController {
      */
     public function atRegister($activity_id)
     {
-//        $this->title = '湘西助学活动';
         $this->header = false;
         $activity = $this->activity->requireById($activity_id);
         $this->title = $activity->title;
         $attributes = $this->activityAttribute->getAttributeByActivityId($activity_id);
         $this->view('mobile.activity_register',
-            compact('activity', 'attributes'));
+            compact('activity', 'attributes', 'activity_id'));
     }
 
     /**
@@ -65,6 +72,18 @@ class ActivityController extends \BaseController {
         $this->title = '活动历史';
         $this->header = false;
         $this->view('mobile.activity_history');
+    }
+
+    public function postAtRegister($activity_id)
+    {
+        $data = Input::all();
+        $data = json_encode($data);
+        $obj['activity_id'] = $activity_id;
+        $obj['uid'] = Auth::user()->id;
+        $obj['value'] = $data;
+
+        $ret = $this->activityAttrValue->storeData($obj);
+        
     }
 
 }

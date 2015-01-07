@@ -26,6 +26,7 @@ class ActivityAttributeRepository extends EntityRepository
         $ret = $this->save($attr);
         if (!$ret) {
             $this->errorMessage = $attr->errors();
+            return null;
         } else {
             return $attr;
         }
@@ -80,4 +81,5 @@ class ActivityAttributeRepository extends EntityRepository
     {
         return Activities::find($activityId)->Attributes;
     }
+
 }
