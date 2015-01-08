@@ -1,6 +1,7 @@
 <?php namespace mobile;
 
 use Auth;
+use Input;
 use Hgy\Account\UserBaseRepository;
 use Hgy\Activity\ActivityRepository;
 
@@ -17,7 +18,8 @@ class VolunteerController extends \BaseController {
 
     private $activity;
 
-    protected $layout = 'layouts.mobilelayout';
+//    protected $layout = 'layouts.mobilelayout';
+    protected $layout = 'layouts.hgy_layout';
 
     public function __construct(UserBaseRepository $userBaseRepository, ActivityRepository $activityRepository)
     {
@@ -103,5 +105,19 @@ class VolunteerController extends \BaseController {
         $this->title = '组织查询';
         $this->header = false;
         $this->view('mobile.org_search');
+    }
+
+    /**
+     * 用户修改在哈公益中的信息
+     */
+    public function postInfoForHgyEdit($uid)
+    {
+        if(Auth::user()->id != $uid)
+            return ['errorCode'=>401, 'message'=>'没有权限'];
+        $user = $this->userBase->requireById($uid);
+        if($user == null)
+            return ['errorCode'=>404, 'message'=>'未找到用户'];
+        
+//        dd(Input::all());
     }
 }

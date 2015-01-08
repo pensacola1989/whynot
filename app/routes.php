@@ -66,6 +66,7 @@ Route::get('mobile/vlt/comment_detail', ['uses' =>  'mobile\VolunteerController@
  * hagongyi对用户的页面
  */
 Route::get('mobile/hgy/vlt/info_modify', ['uses'    =>  'mobile\VolunteerController@infoModify']);
+Route::post('mobile/hgy/vlt/info_modify/{uid}', ['uses'    =>  'mobile\VolunteerController@postInfoForHgyEdit']);
 Route::get('mobile/hgy/vlt/at_history', ['uses'    =>  'mobile\VolunteerController@atHistory']);
 Route::get('mobile/hgy/vlt/at_latest', ['uses'    =>  'mobile\VolunteerController@atLatest']);
 Route::get('mobile/hgy/vlt/org_search', ['uses'    =>  'mobile\VolunteerController@orgSearch']);

@@ -32,13 +32,26 @@
 .item-des{color:#9d9d9d;}
 </style>
 @endsection
-<h2 class="hgy-mobile-header">
-    <div class="ui-avatar-one">
-        <span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>
-    </div>
-    <span>{{ $userData->username }}</span>
-</h2>
+{{--<h2 class="hgy-mobile-header">--}}
+    {{--<div class="ui-avatar-one">--}}
+        {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>--}}
+    {{--</div>--}}
+    {{--<span>{{ $userData->username }}</span>--}}
 
+{{--</h2>--}}
+<h2 class="hgy-mobile-header">
+    <img src="{{ URL::asset('images/home/hagongyi-3.png') }}" style="height:45px;" alt=""/>
+    {{--<span style="font-size: 35px;">登录哈公益</span>--}}
+</h2>
+  <a href="{{ URL::action('mobile\VolunteerController@infoModify') }}" style="display: block;">
+<ul class="ui-list ui-list-text ui-border-tb">
+    <li class="ui-border-t ui-list-item-link">
+
+            <p><i class="fa fa-pencil"></i>&nbsp;&nbsp;修改个人信息</p>
+
+    </li>
+</ul>
+</a>
 <ul class="ui-list ui-list-text ui-list-cover ui-border-tb">
     <li class="ui-border-t">
         <p>

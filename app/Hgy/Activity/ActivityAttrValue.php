@@ -29,4 +29,26 @@ class ActivityAttrValue extends EntityRepository {
             return $attr;
         }
     }
+
+    /**
+     * 判断用户是否报名
+     * @param $uid
+     * @param $activityId
+     * @return bool
+     */
+    public function isRegister($uid, $activityId)
+    {
+        $model = $this->model->where('uid', '=', $uid)
+                            ->where('activity_id', '=', $activityId)
+                            ->first();
+        return $model != null;
+    }
+
+
+    public function getAttrByUidAndAtId($uid, $activityId)
+    {
+        return $this->model->where('uid', '=', $uid)
+                            ->where('activity_id', '=', $activityId)
+                            ->first();
+    }
 }

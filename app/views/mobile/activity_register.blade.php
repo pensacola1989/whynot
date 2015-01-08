@@ -45,6 +45,7 @@
         </div>
     </li>
 </ul>
+@if(!$isRegister)
 <p class="container">报名信息填写</p>
 <div class="ui-form ui-border-t">
     <form id="reg_form" action="{{ URL::action('mobile\ActivityController@postAtRegister', $activity_id) }}" method="post">
@@ -73,12 +74,31 @@
     @endif
         <div class="ui-form-item">
             <div class="ui-btn-wrap">
-                <button class="ui-btn-lg ui-btn-danger">确定</button>
+                <button class="ui-btn-lg ui-btn-danger">报名</button>
             </div>
         </div>
     </form>
 </div>
-
+@else
+<table class="ui-table ui-border-tb">
+    @if(count($attributes))
+    <thead>
+        <tr><th>报名字段</th><th>报名值</th></tr>
+    </thead>
+    <tbody>
+    @foreach($attributes as $attr)
+        <tr>
+            <td>{{ $attr->attr_name }}</td>
+            <td>{{ !empty($userData[$attr->attr_field_name]) ? $userData[$attr->attr_field_name] : ''}}</td>
+        </tr>
+    @endforeach
+    </tbody>
+    @endif
+</table>
+<div class="ui-btn-wrap">
+    <button class="ui-btn-lg ui-btn-danger active">您已经报名</button>
+</div>
+@endif
 @section('scripts')
 <script type="text/javascript">
 !function($) {
