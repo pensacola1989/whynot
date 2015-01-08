@@ -74,6 +74,11 @@ Route::get('mobile/hgy/login', ['uses'    =>  'mobile\AuthController@loginToHgy'
 Route::get('mobile/hgy/register', ['uses'    =>  'mobile\AuthController@register']);
 Route::post('mobile/hgy/register', ['as' =>  'mobile_reg', 'uses'   =>  'mobile\AuthController@postRegister']);
 Route::post('mobile/hgy/login', ['as'   =>  'loginToHgy', 'uses'    =>  'mobile\AuthController@checkLogin']);
+
+Route::get('mobile/hgy/mod_pass', ['as'=>'mod_pass', 'uses'=>'mobile\AuthController@updatePass']);
+Route::post('mobile/hgy/check_pass', ['as'=>'check_pass', 'uses'=>'mobile\AuthController@checkPass']);
+Route::post('mobile/hgy/update_pass', ['as'=>'update_pass', 'uses'=>'mobile\AuthController@postUpdatePass']);
+
 //---------------------------------------------------------------------------
 
 

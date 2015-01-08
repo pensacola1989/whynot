@@ -70,6 +70,9 @@ function getData() {
             if(d && d.errorCode == 0) {
                 window.location.href = '{{ URL::route('hgy_index') }}';
             }
+            else if(d && d.errorCode == 101) {
+                alert(d.message);
+            }
          });
         e.preventDefault();
         return false;

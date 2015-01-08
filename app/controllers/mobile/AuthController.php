@@ -1,6 +1,7 @@
 <?php namespace mobile;
 
 use Hgy\Account\UserBase;
+use Illuminate\Support\Facades\Hash;
 use Input;
 use Auth;
 use Hgy\Account\UserBaseRepository;
@@ -90,6 +91,43 @@ class AuthController extends \BaseController {
             return $this->redirectAction('mobile\VolunteerController@index');
         else
             return $this->redirectBack(['errors'=>$this->userBase->getError()]);
+    }
+
+    /**
+     * HTTPGET
+     * 修改密码页面
+     */
+    public function updatePass()
+    {
+        $this->title = '密码修改';
+        $this->header = false;
+        $this->view('mobile.mod_pass');
+    }
+
+
+    /**
+     * HTTPPOST
+     * 修改密码
+     */
+    public function postUpdatePass()
+    {
+        $newPass = Input::get('new_pass');
+        if(empty($newPass)) return ['errorCode'=>101, 'message'=>'密码不为空'];
+        if(!$this->userBase->updateUserPass(Auth::user()->id, $newPass))
+            return ['errorCode'=>101, 'message'=>'操作失败'];
+        return ['errorCode'=>0, 'message'=>'操作成功'];
+    }
+
+    /**
+     * HTTPPOST
+     * 检查密码是否正确
+     */
+    public function checkPass()
+    {
+        $uid = Auth::user()->id;
+        $oldPass = Input::get('old_pass');
+        $realOld = $this->userBase->requireById($uid)->password;
+        return intval(Hash::check($oldPass, $realOld));
     }
 
 }

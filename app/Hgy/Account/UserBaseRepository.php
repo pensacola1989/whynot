@@ -102,6 +102,32 @@ class UserBaseRepository extends EntityRepository {
         return $userBase;
     }
 
+    public function updateUserBaseInfo($uid, $info)
+    {
+        $user = $this->model->find($uid);
+        $user->email = $info['email'];
+        $user->mobile = $info['mobile'];
+        $user->username = $info['username'];
+        $this->_ignoreRules($user);
+        return $user->save();
+    }
+
+    public function updateUserPass($uid, $newPass)
+    {
+        $user = $this->model->find($uid);
+        $user->password = $newPass;
+        $this->_ignoreRules($user);
+        return $user->save();
+    }
+
+    private function _ignoreRules($user)
+    {
+        if ($user->exists)
+        {
+            $user::$rules['password'] = '';
+            $user::$rules['password_confirmation'] = '';
+        }
+    }
     private function _setDefaultRole(User $user)
     {
 //        $role = \App::make('Hgy\ACL\Role')->getDefaultRole();

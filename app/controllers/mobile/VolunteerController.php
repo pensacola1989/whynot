@@ -117,7 +117,10 @@ class VolunteerController extends \BaseController {
         $user = $this->userBase->requireById($uid);
         if($user == null)
             return ['errorCode'=>404, 'message'=>'未找到用户'];
-        
-//        dd(Input::all());
+        if ($ret = $this->userBase->updateUserBaseInfo($uid, Input::all()))
+            return ['errorCode'=>0, 'message'=>'修改成功！'];
+        else
+            return ['errorCode'=>101, 'message'=>'操作失败！'];
+
     }
 }
