@@ -70,7 +70,7 @@
 </ul>
 <ul class="grid-ul">
     <li class="grid-li">
-        <a href="#">
+        <a href="{{ URL::action('mobile\VolunteerController@atHistory') }}">
             <i style="color:#2ECC71;" class="fa fa-leaf icon"></i>
             <span class="item-num">{{ $activityCount }}</span>
             <span class="item-des">参加活动次数</span>

@@ -49,7 +49,7 @@ Route::group(['before' => 'guest'], function () {
 /**
  * 组织
  */
-Route::get('mobile/home',['uses'    =>  'mobile\HomeController@index']);
+Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
 Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
 Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
 /**
@@ -78,6 +78,10 @@ Route::post('mobile/hgy/login', ['as'   =>  'loginToHgy', 'uses'    =>  'mobile\
 Route::get('mobile/hgy/mod_pass', ['as'=>'mod_pass', 'uses'=>'mobile\AuthController@updatePass']);
 Route::post('mobile/hgy/check_pass', ['as'=>'check_pass', 'uses'=>'mobile\AuthController@checkPass']);
 Route::post('mobile/hgy/update_pass', ['as'=>'update_pass', 'uses'=>'mobile\AuthController@postUpdatePass']);
+/*
+ * 搜索
+ */
+Route::post('mobile/hgy/vlt/org_search', ['as'=>'org_search', 'uses'    =>  'mobile\VolunteerController@postSearch']);
 
 //---------------------------------------------------------------------------
 

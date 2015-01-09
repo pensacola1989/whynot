@@ -1,6 +1,7 @@
 <?php namespace mobile;
 
 use Auth;
+use Hgy\Account\UserRepository;
 use Input;
 use Hgy\Account\UserBaseRepository;
 use Hgy\Activity\ActivityRepository;
@@ -14,6 +15,8 @@ use Hgy\Activity\ActivityRepository;
 
 class VolunteerController extends \BaseController {
 
+    private $organization;
+
     private $userBase;
 
     private $activity;
@@ -21,10 +24,13 @@ class VolunteerController extends \BaseController {
 //    protected $layout = 'layouts.mobilelayout';
     protected $layout = 'layouts.hgy_layout';
 
-    public function __construct(UserBaseRepository $userBaseRepository, ActivityRepository $activityRepository)
+    public function __construct(UserBaseRepository $userBaseRepository,
+                                ActivityRepository $activityRepository,
+                                UserRepository $userRepository)
     {
         $this->userBase = $userBaseRepository;
         $this->activity = $activityRepository;
+        $this->organization = $userRepository;
     }
 
     /**
@@ -105,6 +111,17 @@ class VolunteerController extends \BaseController {
         $this->title = '组织查询';
         $this->header = false;
         $this->view('mobile.org_search');
+    }
+
+    /**
+     * post搜索
+     */
+    public function postSearch()
+    {
+        $orgName = Input::get('org_name');
+        $type = Input::get('org_type');
+        $ret = $this->organization->searchOrgs($orgName, $type);
+        return $ret;
     }
 
     /**

@@ -34,9 +34,35 @@ class UserRepository extends EntityRepository {
         return $this->errorMessage;
     }
 
-     public function saveUserInfo($uid)
+     public function getTotalCompleteActivities($uid)
      {
+        return $this->model->find($uid)->Activities()
+                                        ->where('status', '=', 1)
+                                        ->count();
 
+     }
+
+     public function getTotalVolunteers($uid)
+     {
+         return $this->model->find($uid)
+                             ->CVolunteers()
+                             ->count();
+     }
+
+     public function getUserInfoByUid($uid)
+     {
+         return UserInfo::where('uid', '=', $uid)
+                            ->first();
+     }
+
+     public function searchOrgs($orgName, $type)
+     {
+         $searchChain = UserInfo::where('u_username', 'LIKE', '%'. $orgName .'%');
+
+         if(!empty($type) && $type != '')
+             $searchChain->where('u_pw_industry', '=', $type);
+
+         return $searchChain->get();
      }
 
      private function _setDefaultRole(User $user)

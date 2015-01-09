@@ -181,19 +181,27 @@ class ActivityRepository extends EntityRepository
                     ->where('end_time', '<', date('Y-m-d H:i:s',time()))
                     ->first();
     }
-    // -----------------哈公益微信端--------------------
 
+    // -----------------哈公益微信端--------------------
     /**
      * 获取未开始的活动
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getHgyLatestActivities()
     {
-//        echo date('Y-m-d H:i', time());exit();
         return User::with(['Activities' =>  function($query) {
             $query->where('start_time', '>', date('Y-m-d H:i', time()));
         }])->with('userinfos')->get();
-//        return User::with('Activities', 'userinfos')->get();
-//        return $this->model->all()->groupBy('bizid');
+    }
+
+    /**
+     * 获取某个组织的最新活动
+     * @param $orgId
+     */
+    public function getLatestActivityByOrgId($orgId)
+    {
+        return $this->model->where('start_time', '>', date('Y-m-d H:i', time()))
+                            ->where('bizid', '=', $orgId)
+                            ->get();
     }
 }
