@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Activity\Activities;
 use Hgy\Activity\ActivityAttributeValue;
 use Hgy\Core\EntityRepository;
 use Illuminate\Support\Facades\Hash;
@@ -120,6 +121,39 @@ class UserBaseRepository extends EntityRepository {
         return $user->save();
     }
 
+    public function getUserAttendAtHistory($uid)
+    {
+        return User::whereHas('Activities', function($q) use ($uid) {
+            $q->whereHas('Attendees', function($q) use ($uid) {
+                $q->where('uid', '=', $uid);
+            });
+        })
+        ->with(['Activities'  =>  function($q) use ($uid) {
+            $q->whereHas('Attendees', function($q) use ($uid) {
+                $q->where('uid', '=', $uid);
+            });
+        } ])->get();
+//        return User::whereHas('Activities', function($q) use ($uid) {
+//            $q->whereHas('Attendees', function($q) use ($uid) {
+//                $q->where('uid', '=', $uid);
+//            });
+//        })->get();
+//        $count =  User::with(['Activities' =>  function($q) use ($uid) {
+//            $q->whereHas('Attendees', function($q) use ($uid) {
+//                $q->where('uid', '=', $uid);
+//            })->get();
+//        }])->count();
+//        echo $count;exit();
+//        return User::with(['Activities' =>  function($q) use ($uid) {
+//            $q->whereHas('Attendees', function($q) use ($uid) {
+//                $q->where('uid', '=', $uid);
+//            })->get();
+//        }]);
+//        return Activities::whereHas('Attendees', function($q) use ($uid) {
+//            $q->where('uid', '=', $uid);
+//        })->groupBy('bizid')->get();
+    }
+
     private function _ignoreRules($user)
     {
         if ($user->exists)
@@ -128,6 +162,9 @@ class UserBaseRepository extends EntityRepository {
             $user::$rules['password_confirmation'] = '';
         }
     }
+
+
+
     private function _setDefaultRole(User $user)
     {
 //        $role = \App::make('Hgy\ACL\Role')->getDefaultRole();

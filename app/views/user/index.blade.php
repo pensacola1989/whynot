@@ -44,13 +44,13 @@ h3,p{color:#34495E;}
     <h3>活动情况</h3>
     <p>
         <em>正在开展的活动：</em>
-        <b style="color:#2ECC71;">{{ $currentActivity->title ? $currentActivity->title: '' }}</b>
+        <b style="color:#2ECC71;">{{ $currentActivity ? $currentActivity->title: '' }}</b>
     </p>
     <p>
         <em>报名数/审核数：</em>
-        <b style="color:#2ECC71;">{{ $currentActivity->request_num ? $currentActivity->request_num : '' }}</b>
+        <b style="color:#2ECC71;">{{ $currentActivity ? $currentActivity->request_num : '' }}</b>
         /
-        <b>{{ $currentActivity->approve_num }}</b>
+        <b>{{ $currentActivity ? $currentActivity->approve_num : 0}}</b>
     </p>
     <hr class="dot-line"/>
     <p>

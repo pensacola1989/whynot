@@ -83,6 +83,9 @@ class ActivityController extends \BaseController {
     {
         $this->title = '活动历史';
         $this->header = false;
+
+//        $ret = $this->activity->getHistoryActivityByUid(Auth::user()->id);
+//        dd($ret);exit();
         $this->view('mobile.activity_history');
     }
 

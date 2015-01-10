@@ -43,13 +43,19 @@
     <img src="{{ URL::asset('images/home/hagongyi-3.png') }}" style="height:45px;" alt=""/>
     {{--<span style="font-size: 35px;">登录哈公益</span>--}}
 </h2>
-  <a href="{{ URL::action('mobile\VolunteerController@infoModify') }}" style="display: block;">
+<a href="{{ URL::action('mobile\VolunteerController@infoModify') }}" style="display: block;">
 <ul class="ui-list ui-list-text ui-border-tb">
     <li class="ui-border-t ui-list-item-link">
-
-            <p><i class="fa fa-pencil"></i>&nbsp;&nbsp;修改个人信息</p>
-
+        <p><i class="fa fa-pencil"></i>&nbsp;&nbsp;修改个人信息</p>
     </li>
+
+</ul>
+</a>
+<a href="{{ URL::route('mod_pass')}}" style="display: block;">
+<ul class="ui-list ui-list-text ui-border-tb">
+<li class="ui-border-t ui-list-item-link">
+    <p><i class="fa fa-lock"></i>&nbsp;&nbsp;修改密码</p>
+</li>
 </ul>
 </a>
 <ul class="ui-list ui-list-text ui-list-cover ui-border-tb">

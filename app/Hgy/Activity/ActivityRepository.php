@@ -7,6 +7,7 @@
  */
 
 use Hgy\Account\User;
+use Hgy\Account\UserBase;
 use Hgy\Core\EntityRepository;
 use Auth;
 
@@ -109,6 +110,12 @@ class ActivityRepository extends EntityRepository
         return $this->_updateAttendeeInfo($activity, $attendeeId, $info);
     }
 
+    public function updateVolunteerReply($activityId, $attendId, $reply)
+    {
+        $activity = $this->model->find($activityId);
+        return $this->_updateAttendeeInfo($activity, $attendId, ['vlt_reply'=>$reply]);
+    }
+
     public function saveNewActivity(User $user, $inputs)
     {
         $obj = $this->getNew($inputs);
@@ -203,5 +210,10 @@ class ActivityRepository extends EntityRepository
         return $this->model->where('start_time', '>', date('Y-m-d H:i', time()))
                             ->where('bizid', '=', $orgId)
                             ->get();
+    }
+
+    public function getHistoryActivityByUid($uid)
+    {
+        return ActivityAttributeValue::where('uid', '=', $uid)->get();
     }
 }

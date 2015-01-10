@@ -13,131 +13,136 @@ body{background-color: #FFF;}
 </div>
 
 <ul class="ui-list ui-border-tb">
+@foreach($attendAtHistory as $user)
     <li>
-        <span class="ui-txt-highlight org-span">基金会</span>
+        <span class="ui-txt-highlight org-span">{{ $user->userinfos->u_username }}</span>
     </li>
+    @if(count($user->Activities))
+    @foreach($user->Activities as $at)
     <li>
         <div class="ui-avatar-s">
            <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
         </div>
         <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
+            <h4>{{ $at->title }}</h4>
             <p>
-                活动1描述
+                {{ $at->content }}
                 <span class="date-holder">
-                    2014-12-22
+                    {{ $at->start_time }}
                 </span>
             </p>
-            <div class="ui-btn">
+            <a class="ui-btn" href="{{ URL::action('mobile\VolunteerController@commentDetail', $at->id) }}">
                 <i class="fa fa-comment-o"></i>&nbsp;评价
-            </div>
+            </a>
         </div>
     </li>
+    @endforeach
+    @endif
+@endforeach
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+           {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动1</h4>--}}
+            {{--<p>--}}
+                {{--活动1描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</li>--}}
+    {{--<li>--}}
+        {{--<span class="ui-txt-highlight org-span">爱心社</span>--}}
+    {{--</li>--}}
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+           {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动1</h4>--}}
+            {{--<p>--}}
+                {{--活动1描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</li>--}}
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+           {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动1</h4>--}}
+            {{--<p>--}}
+                {{--活动1描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</li>--}}
 
-    <li>
-        <div class="ui-avatar-s">
-           <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
-            <p>
-                活动1描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-        </div>
-    </li>
-    <li>
-        <span class="ui-txt-highlight org-span">爱心社</span>
-    </li>
-    <li>
-        <div class="ui-avatar-s">
-           <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
-            <p>
-                活动1描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ui-avatar-s">
-           <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
-            <p>
-                活动1描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-        </div>
-    </li>
-
-    <li>
-        <div class="ui-avatar-s">
-           <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
-            <p>
-                活动1描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ui-avatar-s">
-           <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动1</h4>
-            <p>
-                活动1描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="ui-avatar-s">
-            <span  style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-        </div>
-        <div class="ui-list-info ui-border-t">
-            <h4>活动2</h4>
-            <p>
-                活动2描述
-                <span class="date-holder">
-                    2014-12-22
-                </span>
-            </p>
-            <div class="ui-btn">
-                <i class="fa fa-eye"></i>&nbsp;查看
-            </div>
-      </div>
-    </li>
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+           {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动1</h4>--}}
+            {{--<p>--}}
+                {{--活动1描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</li>--}}
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+           {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动1</h4>--}}
+            {{--<p>--}}
+                {{--活动1描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</li>--}}
+    {{--<li>--}}
+        {{--<div class="ui-avatar-s">--}}
+            {{--<span  style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>--}}
+        {{--</div>--}}
+        {{--<div class="ui-list-info ui-border-t">--}}
+            {{--<h4>活动2</h4>--}}
+            {{--<p>--}}
+                {{--活动2描述--}}
+                {{--<span class="date-holder">--}}
+                    {{--2014-12-22--}}
+                {{--</span>--}}
+            {{--</p>--}}
+            {{--<div class="ui-btn">--}}
+                {{--<i class="fa fa-eye"></i>&nbsp;查看--}}
+            {{--</div>--}}
+      {{--</div>--}}
+    {{--</li>--}}
 </ul>

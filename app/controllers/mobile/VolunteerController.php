@@ -62,14 +62,19 @@ class VolunteerController extends \BaseController {
     /**
      * 评价页
      */
-    public function commentDetail()
+    public function commentDetail($activityId)
     {
         $this->title = '评价活动';
         $this->header = false;
-        $this->view('mobile.comment_detail');
+        $currentAt = $this->activity->requireById($activityId);
+        $this->view('mobile.comment_detail', compact('currentAt'));
     }
 
 
+    public function postComment($activityId)
+    {
+
+    }
     /**
      * 个人信息修改
      */
@@ -88,7 +93,8 @@ class VolunteerController extends \BaseController {
     {
         $this->title = '活动历史';
         $this->header = false;
-        $this->view('mobile.hgy_atHistory');
+        $attendAtHistory = $this->userBase->getUserAttendAtHistory(Auth::user()->id);
+        $this->view('mobile.hgy_atHistory', compact('attendAtHistory'));
     }
 
     /**

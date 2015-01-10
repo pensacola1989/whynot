@@ -14,14 +14,20 @@ h2.hgy-mobile-header i{color:#FFF;}
 <ul class="ui-list ui-list-text ui-list-cover ui-border-tb">
     <li class="ui-border-t">
         <p class="ui-txt-info">
+            <i class="fa fa-file-text-o"></i>
+            活动标题： {{ $currentAt->title }}
+        </p>
+    </li>
+    <li class="ui-border-t">
+        <p class="ui-txt-info">
             <i class="fa fa-clock-o"></i>
-            时间： 2014－12-30
+            时间： {{ $currentAt->start_time }}
         </p>
     </li>
     <li class="ui-border-t">
         <p class="ui-txt-info">
             <i class="fa fa-map-marker"></i>
-            地点：上海浦东新区
+            地点：{{ $currentAt->area }}
         </p>
     </li>
 </ul>
@@ -42,4 +48,8 @@ h2.hgy-mobile-header i{color:#FFF;}
             <textarea placeholder="在这里留下您都评价"></textarea>
         </div>
     </form>
+</div>
+
+<div class="ui-btn-wrap">
+    <button class="ui-btn-lg ui-btn-primary">提交</button>
 </div>
