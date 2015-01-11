@@ -7,6 +7,7 @@
  */
 
 use Hgy\Core\Entity;
+use Hgy\Account\User;
 use Hgy\Volunteer\Volunteer;
 use McCool\LaravelAutoPresenter\PresenterInterface;
 
@@ -16,6 +17,10 @@ class Activities extends Entity implements PresenterInterface {
 
     protected $guarded = array('_token');
 
+    public function BelongOrg()
+    {
+        return $this->belongsTo(User::class, 'bizid');
+    }
 
     public static $rules = array(
         'title'	=> 'required',

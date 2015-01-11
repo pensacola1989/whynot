@@ -163,7 +163,13 @@ class UserBaseRepository extends EntityRepository {
         }
     }
 
-
+    public function getUserCommentList($uid, $needComment)
+    {
+        $query = $this->model->find($uid)->attendActivities();
+        if(intval($needComment) == 1)
+            return $query->where('vol_reply', '=', null)->get();
+        return $query->where('vol_reply', '!=', '')->get();
+    }
 
     private function _setDefaultRole(User $user)
     {

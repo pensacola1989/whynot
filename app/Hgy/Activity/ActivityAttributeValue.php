@@ -9,7 +9,7 @@ use McCool\LaravelAutoPresenter\PresenterInterface;
  * Time: 1:44 AM
  */
 
-class ActivityAttributeValue extends Entity implements PresenterInterface {
+class ActivityAttributeValue extends Entity {
 
     protected $table = 'activity_attrvalue';
 

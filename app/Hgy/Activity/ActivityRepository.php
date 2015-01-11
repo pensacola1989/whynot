@@ -113,7 +113,7 @@ class ActivityRepository extends EntityRepository
     public function updateVolunteerReply($activityId, $attendId, $reply)
     {
         $activity = $this->model->find($activityId);
-        return $this->_updateAttendeeInfo($activity, $attendId, ['vlt_reply'=>$reply]);
+        return $this->_updateAttendeeInfo($activity, $attendId, ['vol_reply'=>$reply]);
     }
 
     public function saveNewActivity(User $user, $inputs)
@@ -215,5 +215,13 @@ class ActivityRepository extends EntityRepository
     public function getHistoryActivityByUid($uid)
     {
         return ActivityAttributeValue::where('uid', '=', $uid)->get();
+    }
+
+    public function getUserComment($activityId, $uid)
+    {
+        return $this->model->find($activityId)
+                            ->Attendees()
+                            ->where('uid', '=', $uid)
+                            ->first();
     }
 }

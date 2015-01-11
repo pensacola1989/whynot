@@ -67,13 +67,22 @@ class VolunteerController extends \BaseController {
         $this->title = '评价活动';
         $this->header = false;
         $currentAt = $this->activity->requireById($activityId);
-        $this->view('mobile.comment_detail', compact('currentAt'));
+        $comment = $this->activity->getUserComment($activityId, Auth::user()->id)
+                                    ->pivot->vol_reply;
+
+        $this->view('mobile.comment_detail',
+            compact('currentAt', 'comment'));
     }
 
 
     public function postComment($activityId)
     {
-
+        if(empty($activityId)) return ['errorCode'=>401,'message'=>'操作失败'];
+        $comment = Input::get('comment');
+        $rank = Input::get('rank');
+        $ret = $this->activity->updateVolunteerReply($activityId, Auth::user()->id, $comment);
+        if($ret) return ['errorCode'=>0, 'message'=>'操作成功'];
+        else    return ['errorCode'=>101, 'message'=>'操作失败'];
     }
     /**
      * 个人信息修改
@@ -145,5 +154,17 @@ class VolunteerController extends \BaseController {
         else
             return ['errorCode'=>101, 'message'=>'操作失败！'];
 
+    }
+
+    /**
+     * 用户评价历史纪录
+     */
+    public function commentHistory($needComment=false)
+    {
+        $this->title = '评价列表';
+        $this->header = false;
+        $uid = Auth::user()->id;
+        $userCommentList = $this->userBase->getUserCommentList($uid, $needComment);
+        $this->view('mobile.user_comment_list', compact('userCommentList'));
     }
 }

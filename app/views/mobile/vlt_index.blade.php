@@ -83,10 +83,10 @@
         </a>
     </li>
     <li class="grid-li">
-        <a href="#">
+        <a href="{{ URL::action('mobile\VolunteerController@commentHistory') }}">
             <i style="color:#16A085;" class="fa fa-comment icon"></i>
             <span class="item-num">{{ $commentCount }}</span>
-            <span class="item-des">评价次数</span>
+            <span class="item-des">已评价次数</span>
         </a>
     </li>
     <li class="grid-li">
@@ -94,6 +94,13 @@
             <i style="color:#2980B9;" class="fa fa-clock-o icon"></i>
             <span class="item-num">{{ $totalTime }}</span>
             <span class="item-des">小时时间</span>
+        </a>
+    </li>
+    <li class="grid-li">
+        <a href="{{ URL::action('mobile\VolunteerController@commentHistory', 1) }}">
+            <i style="color:#e91e63;" class="fa fa-comment-o icon"></i>
+            <span class="item-num">1</span>
+            <span class="item-des">等待评价</span>
         </a>
     </li>
 </ul>
