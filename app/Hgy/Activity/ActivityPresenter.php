@@ -130,4 +130,6 @@ class ActivityPresenter extends BasePresenter {
         return $isRegister != null;
     }
 
+
+
 }

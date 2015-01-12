@@ -7,16 +7,10 @@ use Hgy\Activity\ActivityRepository;
 use Hgy\Activity\ActivityAttrValue;
 use Illuminate\Support\Facades\Session;
 
-/**
- * Created by PhpStorm.
- * User: danielwu
- * Date: 12/22/14
- * Time: 12:31 AM
- */
 
-class ActivityController extends \BaseController {
+class WcActivityController extends WechatMobileController {
 
-    protected $layout = 'layouts.hgy_layout';
+    protected $layout = 'layouts.mobilelayout';
 
     /**
      * Activity 代理
@@ -37,6 +31,7 @@ class ActivityController extends \BaseController {
                                 ActivityAttributeRepository $activityAttribute,
                                 ActivityAttrValue $activityAttributeValue)
     {
+        parent::__construct();
         $this->activity = $activityRepository;
         $this->activityAttribute = $activityAttribute;
         $this->activityAttrValue = $activityAttributeValue;
@@ -45,13 +40,14 @@ class ActivityController extends \BaseController {
 
     /**
      * 最新活动
+     * @param $orgId
      */
-    public function latest($activityId)
+    public function latest($orgId)
     {
         $this->title = '最新活动';
         $this->header = false;
-        $lastAt = $this->activity->getLatestActivityByOrgId($activityId);
-        $this->view('mobile.activity_new', compact('lastAt'));
+        $lastAt = $this->activity->getLatestActivityByOrgId($orgId);
+        $this->view('mobile.activity_new', compact('lastAt', 'orgId'));
     }
 
     /**
@@ -77,12 +73,15 @@ class ActivityController extends \BaseController {
 
     /**
      * 活动历史
+     * @param $orgId
      */
-    public function atHistory()
+    public function atHistory($orgId)
     {
         $this->title = '活动历史';
         $this->header = false;
-        $this->view('mobile.activity_history');
+        $atHistory = $this->activity->getHistoryActivityByOrgId($orgId);
+
+        $this->view('mobile.activity_history', compact('atHistory', 'orgId'));
     }
 
     public function postAtRegister($activity_id)

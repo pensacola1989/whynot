@@ -63,6 +63,10 @@ Route::filter('mobile-auth', function()
     }
 });
 
+Route::filter('wechat-bind', function() {
+    return Redirect::guest('mobile/home/join');
+});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();

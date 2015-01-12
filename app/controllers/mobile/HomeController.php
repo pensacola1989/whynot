@@ -2,6 +2,8 @@
 
 use Hgy\Account\UserRepository;
 use Hgy\Activity\ActivityRepository;
+use Input;
+use Illuminate\Support\Facades\Route;
 /**
  * Created by PhpStorm.
  * User: danielwu
@@ -9,17 +11,19 @@ use Hgy\Activity\ActivityRepository;
  * Time: 1:31 AM
  */
 
-class HomeController extends \BaseController {
+class HomeController extends WechatMobileController {
 
     private $orgRepository;
 
     private $activityRepository;
 
-    protected $layout = 'layouts.mobilelayout';
+//    protected $layout = 'layouts.mobilelayout';
 
     public function __construct(UserRepository $userRepository,
                                 ActivityRepository $activityRepository)
     {
+        parent::__construct();
+//        dd(Route::current()->parameters());exit();
         $this->orgRepository = $userRepository;
         $this->activityRepository = $activityRepository;
     }
@@ -38,7 +42,7 @@ class HomeController extends \BaseController {
 
     public function joinOrg()
     {
-        $this->title = '加入组织';
+        $this->title = '绑定用户';
         $this->view('mobile.join_org');
     }
 

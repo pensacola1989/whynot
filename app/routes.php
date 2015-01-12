@@ -38,6 +38,9 @@ Route::get('/page', 'HomeController@getPage');
 Route::post('/user/login', 'AuthController@login');
 
 Route::group(['before' => 'guest'], function () {
+
+    Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
+
     Route::get('/user/login','AuthController@getLogin');
     Route::get('/user/register/{step?}/{uid?}', 'UserController@register');
     Route::post('/user/register/{step?}/{uid?}', 'UserController@add');
@@ -46,19 +49,25 @@ Route::group(['before' => 'guest'], function () {
     Route::post('/org/register/{step?}/{uid?}', 'OrganizationController@add');
 });
 //----------------------------------移动端-----------------------------------------
+Route::group(['before' => 'wechat-bind'], function() {
+//    Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
+});
+
+Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
 /**
  * 组织
  */
-Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
-Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
+//Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
 Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
 /**
  * 活动
  */
-Route::get('mobile/activity/latest',['uses'    =>  'mobile\ActivityController@latest']);
+
+Route::get('mobile/vlt/wc_index/{orgId}', ['uses'=>'mobile\WcVltController@index']);
+Route::get('mobile/activity/latest/{orgId}',['uses'    =>  'mobile\WcActivityController@latest']);
 Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
 Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\ActivityController@postAtRegister']);
-Route::get('mobile/activity/at_history', ['uses'    =>  'mobile\ActivityController@atHistory']);
+Route::get('mobile/activity/at_history/{orgId}', ['uses'    =>  'mobile\WcActivityController@atHistory']);
 Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
 Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
 Route::get('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@commentDetail']);

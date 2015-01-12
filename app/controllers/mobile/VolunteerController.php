@@ -34,17 +34,18 @@ class VolunteerController extends \BaseController {
     }
 
     /**
-     * 微信端志愿者主页
+     * 微信端志愿者主页 for 哈公益
      */
     public function index()
     {
         $this->title = '志愿者主页';
         $this->header = false;
+        $uid = $this->getUid();
         $isLogin = Auth::check();
-        $activityCount = !$isLogin ? 0 : $this->userBase->getActivityCountByUid(Auth::user()->id);
-        $userData = $this->userBase->requireById(Auth::user()->id);
-        $commentCount = !$isLogin ? 0 : $this->userBase->getCommentCountByUid(Auth::user()->id);
-        $totalTime = !$isLogin ? 0 : $this->userBase->getTotalTimeByUid(Auth::user()->id);
+        $activityCount = !$isLogin ? 0 : $this->userBase->getActivityCountByUid($uid);
+        $userData = $this->userBase->requireById($uid);
+        $commentCount = !$isLogin ? 0 : $this->userBase->getCommentCountByUid($uid);
+        $totalTime = !$isLogin ? 0 : $this->userBase->getTotalTimeByUid($uid);
         $this->view('mobile.vlt_index',
             compact('commentCount', 'userData', 'activityCount', 'totalTime'));
     }
@@ -67,9 +68,10 @@ class VolunteerController extends \BaseController {
         $this->title = '评价活动';
         $this->header = false;
         $currentAt = $this->activity->requireById($activityId);
-        $comment = $this->activity->getUserComment($activityId, Auth::user()->id)
-                                    ->pivot->vol_reply;
-
+//        $comment = $this->activity->getUserComment($activityId, $this->getUid())
+//                                    ->pivot->vol_reply;
+        $cmtModel = $this->activity->getUserComment($activityId, $this->getUid());
+        $comment = $cmtModel != null ? $cmtModel->pivot->vol_reply : '';
         $this->view('mobile.comment_detail',
             compact('currentAt', 'comment'));
     }
@@ -80,7 +82,7 @@ class VolunteerController extends \BaseController {
         if(empty($activityId)) return ['errorCode'=>401,'message'=>'操作失败'];
         $comment = Input::get('comment');
         $rank = Input::get('rank');
-        $ret = $this->activity->updateVolunteerReply($activityId, Auth::user()->id, $comment);
+        $ret = $this->activity->updateVolunteerReply($activityId, $this->getUid(), $comment);
         if($ret) return ['errorCode'=>0, 'message'=>'操作成功'];
         else    return ['errorCode'=>101, 'message'=>'操作失败'];
     }
@@ -114,7 +116,6 @@ class VolunteerController extends \BaseController {
         $this->title = '所有最新活动';
         $this->header = false;
         $latestAts = $this->activity->getHgyLatestActivities();
-//        dd($latestAts);exit();
         $this->view('mobile.hgy_atLatest', compact('latestAts'));
     }
 
@@ -144,7 +145,7 @@ class VolunteerController extends \BaseController {
      */
     public function postInfoForHgyEdit($uid)
     {
-        if(Auth::user()->id != $uid)
+        if($this->getUid() != $uid)
             return ['errorCode'=>401, 'message'=>'没有权限'];
         $user = $this->userBase->requireById($uid);
         if($user == null)
@@ -163,7 +164,7 @@ class VolunteerController extends \BaseController {
     {
         $this->title = '评价列表';
         $this->header = false;
-        $uid = Auth::user()->id;
+        $uid = $this->getUid();
         $userCommentList = $this->userBase->getUserCommentList($uid, $needComment);
         $this->view('mobile.user_comment_list', compact('userCommentList'));
     }

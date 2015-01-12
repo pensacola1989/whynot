@@ -1,7 +1,7 @@
 <div class="ui-tab">
     <ul class="ui-tab-nav ui-border-b">
         <li>
-            <a href="#">最新活动</a>
+            <a href="{{ URL::action('mobile\WcActivityController@latest', $orgId) }}">最新活动</a>
         </li>
         <li>
             <a href="">活动签到</a>
@@ -23,125 +23,33 @@
 
             <div class="ui-scroller">
             <ul class="ui-list ui-border-tb">
+                @if(count($atHistory))
+                @foreach($atHistory as $at)
                 <li>
                     <div class="ui-avatar-s">
                        <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
                     </div>
                     <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
+                        <h4>{{ $at->title }}</h4>
                         <p>
-                            活动1描述
+                            {{ $at->content }}
                             <span class="date-holder">
-                                2014-12-22
+                                {{ $at->end_time }}
                             </span>
                         </p>
-                        <div class="ui-btn">
+                        @if($at->isRegister)
+                        <a href="{{ URL::action('mobile\VolunteerController@commentDetail', $at->id) }}" class="link-a ui-btn">
                             <i class="fa fa-comment-o"></i>&nbsp;评价
-                        </div>
+                        </a>
+                        @else
+                        <a href="{{ URL::route('mobile_regat', $at->id) }}" class="link-a ui-btn">
+                            <i class="fa fa-comment-o"></i>&nbsp;查看
+                        </a>
+                        @endif
                     </div>
                 </li>
-                <li>
-                    <div class="ui-avatar-s">
-                       <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
-                        <p>
-                            活动1描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-eye"></i>&nbsp;查看
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui-avatar-s">
-                       <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
-                        <p>
-                            活动1描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-pencil"></i>&nbsp;报名
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui-avatar-s">
-                       <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
-                        <p>
-                            活动1描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-pencil"></i>&nbsp;报名
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui-avatar-s">
-                       <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
-                        <p>
-                            活动1描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-pencil"></i>&nbsp;报名
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui-avatar-s">
-                       <span style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动1</h4>
-                        <p>
-                            活动1描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-pencil"></i>&nbsp;报名
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ui-avatar-s">
-                        <span  style="background-image:url(http://icase.tencent.com/vlabs/img/?100*100)"></span>
-                    </div>
-                    <div class="ui-list-info ui-border-t">
-                        <h4>活动2</h4>
-                        <p>
-                            活动2描述
-                            <span class="date-holder">
-                                2014-12-22
-                            </span>
-                        </p>
-                        <div class="ui-btn">
-                            <i class="fa fa-pencil"></i>&nbsp;报名
-                        </div>
-                  </div>
-                </li>
+                @endforeach
+                @endif
             </ul>
         </div>
         </li>
@@ -151,7 +59,10 @@
 <script type="text/javascript">
 !function($) {
     $(document).ready(function() {
-        var scroller = new Scroll('.ui-scroller');
+        $('.link-a').on('tap', function() {
+            window.location.href = $(this).attr('href');
+        });
+//        var scroller = new Scroll('.ui-scroller');
     });
 }(Zepto)
 </script>

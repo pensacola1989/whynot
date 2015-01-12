@@ -32,7 +32,7 @@ class UserBaseRepository extends EntityRepository {
     }
 
     /**
-     * 参加的活动数
+     * 参加的活动数 哈公益 总活动数
      * @param $uid
      * @return
      */
@@ -41,8 +41,17 @@ class UserBaseRepository extends EntityRepository {
         return $this->model->find($uid)->attendActivities->count();
     }
 
+    public function getActivityCountByUidAndOrgId($uid, $orgId)
+    {
+        return $this->model->find($uid)
+                            ->attendActivities()
+                            ->whereHas('Activity', function ($q) use ($orgId) {
+                                $q->where('bizid', $orgId);
+                            })->count();
+    }
+
     /**
-     * 评价次数，不为空的视为已经评价
+     * 评价次数，不为空的视为已经评价  对哈公益的，所有组织的所有活动的评价数
      * @param $uid
      */
     public function getCommentCountByUid($uid)
@@ -53,6 +62,23 @@ class UserBaseRepository extends EntityRepository {
                     ->where('vol_reply', '!=', '')
                     ->count();
     }
+
+    /** 志愿者对于某个组织的评价总数
+     * @param $uid
+     * @param $orgId
+     * @return mixed
+     */
+    public function getCommentCountByUidAndOrgId($uid, $orgId)
+    {
+        return $this->model->find($uid)
+                            ->attendActivities()
+                            ->whereHas('Activity', function ($q) use ($orgId) {
+                                $q->where('bizid', $orgId);
+                            })
+                            ->where('vol_reply', '!=', '')
+                            ->count();
+    }
+
 
     /**
      * 获取志愿者的总时间
@@ -67,6 +93,16 @@ class UserBaseRepository extends EntityRepository {
                     ->sum('vol_duration');
     }
 
+    public function getTotalTimeByUidAndOrgId($uid, $orgId)
+    {
+        return $this->model
+                    ->find($uid)
+                    ->attendActivities()
+                    ->whereHas('Activity', function ($q) use ($orgId) {
+                        $q->where('bizid', $orgId);
+                    })
+                    ->sum('vol_duration');
+    }
 
     public function getError()
     {

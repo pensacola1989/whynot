@@ -27,21 +27,29 @@
 @endif
 </div>
 {{ $content }}
-<div class="ui-btn-group ui-btn-group-bottom">
-    <button type="button">
-       <i class="fa fa-bank"></i> 组织名称
-    </button>
-    <button type="button">
-        <i class="fa fa-leaf"></i>
-        活动
-    </button>
-    <button type="button">
-        <i class="fa fa-user"></i>
-        我的
-    </button>
-</div>
+{{ $footer }}
+{{--<div class="ui-btn-group ui-btn-group-bottom">--}}
+    {{--<button type="button">--}}
+       {{--<i class="fa fa-bank"></i> 组织首页--}}
+    {{--</button>--}}
+    {{--<button type="button">--}}
+        {{--<i class="fa fa-leaf"></i>--}}
+        {{--活动--}}
+    {{--</button>--}}
+    {{--<button type="button">--}}
+        {{--<i class="fa fa-user"></i>--}}
+        {{--我的--}}
+    {{--</button>--}}
+{{--</div>--}}
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/1.0.0/frozen.js?_bid=304"></script>
+<script type="text/javascript">
+!function($) {
+    $('.nav-btn').on('tap', function() {
+        window.location.href = $(this).attr('url');
+    })
+} (Zepto)
+</script>
 @yield('scripts')
 </body>
 </html>

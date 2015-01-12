@@ -212,11 +212,30 @@ class ActivityRepository extends EntityRepository
                             ->get();
     }
 
+    /** 获取某个用户参加的活动历史
+     * @param $uid
+     * @return mixed
+     */
     public function getHistoryActivityByUid($uid)
     {
         return ActivityAttributeValue::where('uid', '=', $uid)->get();
     }
 
+    /** 获取某个组织对活动纪录(已完成)
+     * @param $orgId
+     */
+    public function getHistoryActivityByOrgId($orgId)
+    {
+        return $this->model->where('bizid', '=', $orgId)
+                            ->where('end_time', '<', date('Y-m-d H:i', time()))
+                            ->get();
+    }
+
+    /** 获取某个用户对某个活动对评价
+     * @param $activityId
+     * @param $uid
+     * @return mixed
+     */
     public function getUserComment($activityId, $uid)
     {
         return $this->model->find($activityId)

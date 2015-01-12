@@ -19,7 +19,7 @@ class AuthController extends \BaseController {
      */
     private $userBase;
 
-    protected $layout = 'layouts.mobilelayout';
+    protected $layout = 'layouts.hgy_layout';
 
     public function __construct(UserBaseRepository $userBaseRepository)
     {
@@ -113,7 +113,7 @@ class AuthController extends \BaseController {
     {
         $newPass = Input::get('new_pass');
         if(empty($newPass)) return ['errorCode'=>101, 'message'=>'密码不为空'];
-        if(!$this->userBase->updateUserPass(Auth::user()->id, $newPass))
+        if(!$this->userBase->updateUserPass($this->getUid(), $newPass))
             return ['errorCode'=>101, 'message'=>'操作失败'];
         return ['errorCode'=>0, 'message'=>'操作成功'];
     }
