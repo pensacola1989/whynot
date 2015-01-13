@@ -26,20 +26,36 @@
 
 <ul class="ui-list ui-list-text ui-border-tb">
     <li class="ui-border-t ui-list-item-link">
+    <a class="link-a" href="{{ URL::action('mobile\WcVltController@userActivityHistory', [$orgId, 1]) }}">
         <div class="ui-list-info">
-            <h4>您参加活动的总数</h4>
+            <h4>
+                <i class="fa fa-leaf"></i>
+                &nbsp;&nbsp;
+                您参加活动的总数
+            </h4>
         </div>
-        <div class="ui-badge">{{ $activityCount }}</div>
+        <div class="ui-badge">{{ $userActivities->count() }}</div>
+    </a>
     </li>
     <li class="ui-border-t ui-list-item-link">
+    <a class="link-a" href="{{ URL::action('mobile\WcVltController@userActivityHistory', [$orgId, 0]) }}">
         <div class="ui-list-info">
-            <h4>您评价的次数</h4>
+            <h4>
+                <i class="fa fa-comment"></i>
+                &nbsp;&nbsp;
+                您评价的次数
+            </h4>
         </div>
-        <div class="ui-badge">{{ $commentCount }}</div>
+        <div class="ui-badge">{{ $userComments->count() }}</div>
+    </a>
     </li>
     <li class="ui-border-t  ui-list-item-link">
         <div class="ui-list-info">
-            <h4>您的活动总小时数</h4>
+            <h4>
+                <i class="fa fa-clock-o"></i>
+                &nbsp;&nbsp;
+                您的活动总小时数
+            </h4>
         </div>
         <div class="ui-badge">{{ $totalTime }}</div>
     </li>

@@ -4,6 +4,7 @@ use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
 use Hgy\VltField\VltAttribute;
 use Hgy\Volunteer\Volunteer;
+use Hgy\WechatBind\OrgWechatBind;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -67,6 +68,11 @@ class User extends Entity implements UserInterface, RemindableInterface {
     public function VltAttributes()
     {
         return $this->hasMany(VltAttribute::class,'vol_id');
+    }
+
+    public function Tokens()
+    {
+        return $this->hasMany(OrgWechatBind::class, 'org_id');
     }
 
     //弃用

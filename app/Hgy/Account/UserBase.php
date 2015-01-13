@@ -3,6 +3,7 @@
 use Hgy\Activity\ActivityAttributeValue;
 use Hgy\Core\Entity;
 use Hgy\Volunteer\Volunteer;
+use Hgy\WechatBind\UserWechatBind;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -58,6 +59,16 @@ class UserBase extends Entity implements UserInterface, RemindableInterface {
         return $this->belongsToMany(User::class, 'admin_user', 'user_id', 'org_id');
     }
 
+    public function openIds()
+    {
+        return $this->hasMany(UserWechatBind::class, 'uid');
+    }
+
+    public function JoinedOrgs()
+    {
+        return $this->belongsToMany(User::class,'user_volunteer','vol_id','org_id')
+                    ->withPivot(['group_id']);
+    }
     /**
      * 普通用户，有一个userBase，就会产生一个Volunteer
      */

@@ -41,13 +41,13 @@ class UserBaseRepository extends EntityRepository {
         return $this->model->find($uid)->attendActivities->count();
     }
 
-    public function getActivityCountByUidAndOrgId($uid, $orgId)
+    public function getActivitiesUidAndOrgId($uid, $orgId)
     {
         return $this->model->find($uid)
                             ->attendActivities()
                             ->whereHas('Activity', function ($q) use ($orgId) {
                                 $q->where('bizid', $orgId);
-                            })->count();
+                            })->get();
     }
 
     /**
@@ -68,7 +68,7 @@ class UserBaseRepository extends EntityRepository {
      * @param $orgId
      * @return mixed
      */
-    public function getCommentCountByUidAndOrgId($uid, $orgId)
+    public function getCommentsByUidAndOrgId($uid, $orgId)
     {
         return $this->model->find($uid)
                             ->attendActivities()
@@ -76,7 +76,7 @@ class UserBaseRepository extends EntityRepository {
                                 $q->where('bizid', $orgId);
                             })
                             ->where('vol_reply', '!=', '')
-                            ->count();
+                            ->get();
     }
 
 

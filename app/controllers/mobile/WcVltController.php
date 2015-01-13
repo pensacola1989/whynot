@@ -43,12 +43,29 @@ class WcVltController extends WechatMobileController {
         $this->header = false;
         $uid = $this->getUid();
         $isLogin = Auth::check();
-        $activityCount = !$isLogin ? 0 : $this->userBase->getActivityCountByUidAndOrgId($uid, $this->orgId);
+        $userActivities = !$isLogin ? 0 : $this->userBase->getActivitiesUidAndOrgId($uid, $this->orgId);
         $userData = $this->userBase->requireById($uid);
-        $commentCount = !$isLogin ? 0 : $this->userBase->getCommentCountByUidAndOrgId($uid, $this->orgId);
+        $userComments = !$isLogin ? 0 : $this->userBase->getCommentsByUidAndOrgId($uid, $this->orgId);
         $totalTime = !$isLogin ? 0 : $this->userBase->getTotalTimeByUidAndOrgId($uid, $this->orgId);
+        $orgId = $this->orgId;
 
         $this->view('mobile.org_vlt_index',
-            compact('commentCount', 'userData', 'activityCount', 'totalTime'));
+            compact('userComments', 'userData', 'userActivities', 'totalTime', 'orgId'));
+    }
+
+    /** 用户对某个组织对活动参加历史
+     * @param $orgId
+     * @param $type
+     */
+    public function userActivityHistory($orgId, $type)
+    {
+        $this->title = $type == 1 ? '参加活动历史' : '您的评价历史';
+        $this->header = false;
+        if($type == 1) { // 参加活动对历史
+            $activities = $this->userBase->getActivitiesUidAndOrgId($this->getUid(), $orgId);
+        } elseif($type == 0) { // 评价历史
+            $activities = $this->userBase->getCommentsByUidAndOrgId($this->getUid(), $orgId);
+        }
+        $this->view('mobile.user_history', compact('activities', 'type'));
     }
 }

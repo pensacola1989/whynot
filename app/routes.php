@@ -50,10 +50,10 @@ Route::group(['before' => 'guest'], function () {
 });
 //----------------------------------移动端-----------------------------------------
 Route::group(['before' => 'wechat-bind'], function() {
-//    Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
+    Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
 });
 
-Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
+//Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
 /**
  * 组织
  */
@@ -64,6 +64,9 @@ Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSucce
  */
 
 Route::get('mobile/vlt/wc_index/{orgId}', ['uses'=>'mobile\WcVltController@index']);
+Route::get('mobile/vlt/history/user_attend/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
+Route::get('mobile/vlt/history/user_comment/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
+Route::get('mobile/vlt/u_attend_history/{orgId}', ['uses'=>'mobile\WcVltController@userAttendHistory']);
 Route::get('mobile/activity/latest/{orgId}',['uses'    =>  'mobile\WcActivityController@latest']);
 Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
 Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\ActivityController@postAtRegister']);
@@ -394,4 +397,12 @@ Route::get('testimg', function() {
 
 Route::get('facade', function() {
     \Hgy\Facades\TemplateFunc::test();
+});
+
+Route::get('testopenid', function() {
+//    return \Hgy\WechatBind\UserWechatBind::where('openid', '=', 'open234ijdf0')
+//                        ->first()->User;
+//    return \Hgy\Account\UserBase::find(20)->JoinedOrgs;
+    $obj = new \Hgy\WechatBind\UserWehatRepository(new \Hgy\WechatBind\UserWechatBind());
+    return $obj->UserBindOrg('open234ijdf0', 1);
 });
