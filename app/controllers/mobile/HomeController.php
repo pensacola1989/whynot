@@ -1,9 +1,11 @@
 <?php namespace mobile;
 
+use Hgy\Account\UserBase;
 use Hgy\Account\UserRepository;
 use Hgy\Activity\ActivityRepository;
+use Hgy\VltField\VltAttributeRepository;
 use Hgy\WechatBind\UserWehatRepository;
-
+use Auth;
 use Input;
 use Illuminate\Support\Facades\Route;
 /**
@@ -21,16 +23,20 @@ class HomeController extends WechatMobileController {
 
     private $userWechatRepository;
 
+    private $vltAttributeRepository;
+
 //    protected $layout = 'layouts.mobilelayout';
 
     public function __construct(UserRepository $userRepository,
                                 ActivityRepository $activityRepository,
-                                UserWehatRepository $userWehatRepository)
+                                UserWehatRepository $userWehatRepository,
+                                VltAttributeRepository $vltAttributeRepository)
     {
         parent::__construct();
         $this->orgRepository = $userRepository;
         $this->activityRepository = $activityRepository;
         $this->userWechatRepository = $userWehatRepository;
+        $this->vltAttributeRepository = $vltAttributeRepository;
     }
 
     public function index($orgId)
@@ -48,7 +54,10 @@ class HomeController extends WechatMobileController {
     public function joinOrg($orgId)
     {
         $this->title = '绑定用户';
-        $this->view('mobile.join_org', compact('orgId'));
+        // 获取组织需要用户填写的自定义信息
+        $orgModel = $this->orgRepository->requireById($orgId);
+        $vltAttributes = $orgModel ? $orgModel->VltAttributes : null;
+        $this->view('mobile.join_org', compact('orgId', 'vltAttributes'));
     }
 
     public function postJoinOrg($orgId)
@@ -60,7 +69,8 @@ class HomeController extends WechatMobileController {
 
         $ret = $this->userWechatRepository->bindUserToOrg($openid, $orgId, [
             'userEmail' =>  $userEmail,
-            'userMobile'    =>  $userMobile
+            'userMobile'    =>  $userMobile,
+            'userName'  =>  $userName
         ]);
         return ['errorCode'=>0, 'message'=>'绑定成功'];
 

@@ -80,9 +80,9 @@ function getPostData() {
 !function($) {
     $('#submit').on('tap', function() {
         var data = getPostData();
-        el = $.loading({
-            content:'正在绑定...'
-        });
+//        el = $.loading({
+//            content:'正在绑定...'
+//        });
         $.post('{{ URL::route('join_org', $orgId) }}', data, function(d) {
             setTimeout(function() {
                 el.loading("hide");

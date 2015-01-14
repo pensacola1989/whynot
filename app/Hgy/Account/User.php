@@ -67,7 +67,7 @@ class User extends Entity implements UserInterface, RemindableInterface {
 
     public function VltAttributes()
     {
-        return $this->hasMany(VltAttribute::class,'vol_id');
+        return $this->hasMany(VltAttribute::class,'vol_id');// 这里的vol_id值得就是org_id
     }
 
     public function Tokens()

@@ -64,23 +64,46 @@ class UserWehatRepository extends EntityRepository {
         $userBaseRepo = App::make('Hgy\Account\UserBaseRepository');
         $userBaseModel = $userBaseRepo->getUserBaseByCredentails($userBaseCredential);
         if($userBaseModel) {
-            // 插一条数据到User_Volunteer表
-//            $userBaseModel->JoinedOrgs()->save([
-//                'org_id'    =>  $orgId,
-//                'vol_id'    =>  $uid
+            $this->saveOpenIdAndAttachOrg($openid, $userBaseModel, $orgId);
+            // 在openid_uid的map表里新增一条纪录
+//            $newObj = $this->getNew([
+//                'openid'    =>  $openid,
+//                'uid'       =>  $userBaseModel->id
 //            ]);
-//             在openid_uid的map表里新增一条纪录
-            $newObj = $this->getNew([
-                'openid'    =>  $openid,
-                'uid'       =>  $userBaseModel->id
-            ]);
-            $this->save($newObj);
-            // 并且在user_volunteer表里新增一条map纪录，可能分表处理会有问题
-            $userBaseModel->BelongOrgs()->attach($orgId);
+//            $this->save($newObj);
+//            // 并且在user_volunteer表里新增一条map纪录，可能分表处理会有问题
+//            $userBaseModel->BelongOrgs()->attach($orgId);
 
         } else {
             // 2.否则，新增一条纪录，取得uid
+            $newUserBaseModel = $userBaseRepo->getNew([
+                'username'  =>  $userBaseCredential['userName'],
+                'email'     =>  $userBaseCredential['userEmail'],
+                'mobile'    =>  $userBaseCredential['userMobile'],
+                'password'  =>  'password01'
+            ]);
+            $newUserBaseModel::$rules['password'] = '';
+            $newUserBaseModel::$rules['password_confirmation'] = '';
+            $userBaseRepo->save($newUserBaseModel);
+
+            $this->saveOpenIdAndAttachOrg($openid, $newUserBaseModel, $orgId);
         }
+    }
+
+    /** 在openid_uid的map表里新增一条纪录，并且在user_volunteer表里新增一条map纪录，可能分表处理会有问题
+     * @param $openid
+     * @param $userBaseModel
+     * @param $orgId
+     * @internal param $uid
+     */
+    public function saveOpenIdAndAttachOrg($openid, $userBaseModel, $orgId)
+    {
+        $newObj = $this->getNew([
+            'openid'    =>  $openid,
+            'uid'       =>  $userBaseModel->id
+        ]);
+        $this->save($newObj);
+        $userBaseModel->BelongOrgs()->attach($orgId);
     }
 
     /** 通过openid去换uid
