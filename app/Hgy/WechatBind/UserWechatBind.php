@@ -12,6 +12,8 @@ use Hgy\Core\Entity;
 
 class UserWechatBind extends Entity {
 
+    public $timestamps = false;
+
     protected $table = 'wechat_userbase';
 
     protected $guarded = [];

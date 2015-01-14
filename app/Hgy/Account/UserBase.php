@@ -77,6 +77,15 @@ class UserBase extends Entity implements UserInterface, RemindableInterface {
         return $this->hasOne(Volunteer::class, 'u_base_id');
     }
 
+    /** 获取用户的组织绑定关系
+     * @return $this
+     */
+    public function BelongOrgs()
+    {
+        return $this->belongsToMany(User::class,'user_volunteer','vol_id','org_id')
+                    ->withPivot(['group_id']);
+    }
+
     public function beforeSave()
     {
         // if there's a new password, hash it

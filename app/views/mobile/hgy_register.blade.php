@@ -107,7 +107,7 @@ function checkNull(e) {
                 return false;
             }
         }
-    })
+    });
     if($('input[name=password]').val() != $('#password_confirmation').val()) {
         $.dialog({
             title: '错误提示',

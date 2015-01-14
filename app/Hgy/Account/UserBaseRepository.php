@@ -207,6 +207,16 @@ class UserBaseRepository extends EntityRepository {
         return $query->where('vol_reply', '!=', '')->get();
     }
 
+    /** 通过手机和Email获得用户基础数据
+     * @param $credential
+     */
+    public function getUserBaseByCredentails($credential)
+    {
+        return $this->model->where('mobile', '=', $credential['userMobile'])
+                            ->orWhere('email', '=', $credential['userEmail'])
+                            ->first();
+    }
+
     private function _setDefaultRole(User $user)
     {
 //        $role = \App::make('Hgy\ACL\Role')->getDefaultRole();

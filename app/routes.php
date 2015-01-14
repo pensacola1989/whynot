@@ -39,7 +39,7 @@ Route::post('/user/login', 'AuthController@login');
 
 Route::group(['before' => 'guest'], function () {
 
-    Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
+    Route::get('mobile/home/join/{orgId}', ['as'=>'get_join_org', 'uses'  =>  'mobile\HomeController@joinOrg']);
 
     Route::get('/user/login','AuthController@getLogin');
     Route::get('/user/register/{step?}/{uid?}', 'UserController@register');
@@ -57,8 +57,13 @@ Route::group(['before' => 'wechat-bind'], function() {
 /**
  * 组织
  */
-//Route::get('mobile/home/join', ['uses'  =>  'mobile\HomeController@joinOrg']);
+Route::get('mobile/home/join/{orgId}', ['uses'  =>  'mobile\HomeController@joinOrg']);
 Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
+
+/**
+ * 加入组织post请求
+ */
+Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeController@postJoinOrg']);
 /**
  * 活动
  */

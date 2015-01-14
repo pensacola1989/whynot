@@ -65,14 +65,16 @@ Route::filter('mobile-auth', function()
 
 Route::filter('wechat-bind', function() {
     // 测试openid
-    $openid = 'open234ijdf0';
+//    $openid = 'open234ijdf0';
+    $openid = 'openisf23sfdsfxx';
     $orgId = Route::current()->parameters()['orgId'];
 
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 
-    $isBind = $bindRepo->UserBindOrg($openid, $orgId) != null;
-
-    if(!$isBind) return Redirect::guest('mobile/home/join');
+    $uid = $bindRepo->getUidByOpenid($openid);
+    if(!$uid) return Redirect::route('get_join_org', ['orgId'=>$orgId]);
+    $isBind = $bindRepo->UserBindOrg($uid, $orgId) != null;
+    if(!$isBind) return Redirect::route('get_join_org', ['orgId'=>$orgId]);
 });
 
 Route::filter('auth.basic', function()
