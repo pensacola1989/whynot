@@ -67,11 +67,16 @@ class HomeController extends WechatMobileController {
         $userEmail = Input::get('userEmail');
         $userMobile = Input::get('userMobile');
 
+        $userValues = Input::get('values');
+
         $ret = $this->userWechatRepository->bindUserToOrg($openid, $orgId, [
             'userEmail' =>  $userEmail,
             'userMobile'    =>  $userMobile,
             'userName'  =>  $userName
         ]);
+        // 开始绑定组织需要用户填写的自定义信息
+        $this->userWechatRepository->saveUserCustomizeInfo($orgId, $ret->id, $userValues);
+
         return ['errorCode'=>0, 'message'=>'绑定成功'];
 
     }

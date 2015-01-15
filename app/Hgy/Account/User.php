@@ -87,6 +87,15 @@ class User extends Entity implements UserInterface, RemindableInterface {
                     ->withPivot(['group_id']);
     }
 
+    /**
+     * 有合表的可能
+     */
+    public function VltValues()
+    {
+        return $this->belongsToMany(UserBase::class,'volinfo_value','org_id','vol_id')
+                    ->withPivot(['value']);
+    }
+
     public function volunteerGroup()
     {
         return $this->hasMany('Hgy\Volunteer\VolunteerGroup','org_id');

@@ -67,7 +67,8 @@ Route::filter('wechat-bind', function() {
     // 测试openid
 //    $openid = 'open234ijdf0';
 //    $openid = 'openisf23sfdsfxx';
-    $openid = 'openisf23sfdsfxx_';
+//    $openid = 'openisf23sfdsfxx_';
+    $openid = 'open123123xxx-';
     $orgId = Route::current()->parameters()['orgId'];
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 

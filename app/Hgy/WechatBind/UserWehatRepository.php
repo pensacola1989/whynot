@@ -1,6 +1,7 @@
 <?php namespace Hgy\WechatBind;
 
 use App;
+use Hgy\Account\User;
 use Hgy\Core\EntityRepository;
 
 /**
@@ -64,7 +65,7 @@ class UserWehatRepository extends EntityRepository {
         $userBaseRepo = App::make('Hgy\Account\UserBaseRepository');
         $userBaseModel = $userBaseRepo->getUserBaseByCredentails($userBaseCredential);
         if($userBaseModel) {
-            $this->saveOpenIdAndAttachOrg($openid, $userBaseModel, $orgId);
+            return $this->saveOpenIdAndAttachOrg($openid, $userBaseModel, $orgId);
             // 在openid_uid的map表里新增一条纪录
 //            $newObj = $this->getNew([
 //                'openid'    =>  $openid,
@@ -85,8 +86,8 @@ class UserWehatRepository extends EntityRepository {
             $newUserBaseModel::$rules['password'] = '';
             $newUserBaseModel::$rules['password_confirmation'] = '';
             $userBaseRepo->save($newUserBaseModel);
-
             $this->saveOpenIdAndAttachOrg($openid, $newUserBaseModel, $orgId);
+
         }
     }
 
@@ -104,6 +105,7 @@ class UserWehatRepository extends EntityRepository {
         ]);
         $this->save($newObj);
         $userBaseModel->BelongOrgs()->attach($orgId);
+        return $userBaseModel;
     }
 
     /** 通过openid去换uid
@@ -113,8 +115,19 @@ class UserWehatRepository extends EntityRepository {
     public function getUidByOpenid($openid)
     {
         $model = $this->model->where('openid', '=', $openid)->first();
-
         return $model == null ? -1 : $model->uid;
+    }
+
+    /** 保存组织需要用户填写的字段信息json
+     * @param $orgId
+     * @param $uid
+     * @param $infos
+     */
+    public function saveUserCustomizeInfo($orgId, $uid, $infos)
+    {
+        $orgModel = User::find($orgId)
+                        ->VltValues()
+                        ->attach($uid, ['value' =>  $infos]);
     }
 
 }
