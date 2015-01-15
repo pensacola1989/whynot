@@ -124,7 +124,8 @@ return array(
 		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
-        'Hgy\Facades\TemplateFuncServiceProvider'
+        'Hgy\Facades\TemplateFuncServiceProvider',
+        'Hgy\Wechat\WechatServiceProvider'
 	),
 
 	/*
@@ -191,7 +192,9 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Entrust' 		  => 'Zizaco\Entrust\EntrustFacade'
+		'Entrust' 		  => 'Zizaco\Entrust\EntrustFacade',
+        'WeChatServer'    => 'Hgy\Wechat\Facades\WeChatServer',
+        'WeChatClient'    => 'Hgy\Wechat\Facades\WeChatClient'
 	),
 
 );

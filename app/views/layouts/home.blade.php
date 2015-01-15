@@ -100,7 +100,7 @@
         </li>
         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('＃','互联网渠道设置') }}</li>
+            <li class="child_item">{{ HTML::link('/channel/index','互联网渠道设置') }}</li>
             <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
           </ul>
         </li>

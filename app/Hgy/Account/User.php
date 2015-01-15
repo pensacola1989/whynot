@@ -4,6 +4,7 @@ use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
 use Hgy\VltField\VltAttribute;
 use Hgy\Volunteer\Volunteer;
+use Hgy\Wechat\Channel;
 use Hgy\WechatBind\OrgWechatBind;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
@@ -137,5 +138,10 @@ class User extends Entity implements UserInterface, RemindableInterface {
     public function Admins()
     {
         return $this->belongsToMany(UserBase::class, 'admin_user', 'org_id', 'user_id');
+    }
+
+    public function Channel()
+    {
+        return $this->hasOne(Channel::class, 'orgid');
     }
 }

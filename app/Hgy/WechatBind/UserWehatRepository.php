@@ -86,7 +86,7 @@ class UserWehatRepository extends EntityRepository {
             $newUserBaseModel::$rules['password'] = '';
             $newUserBaseModel::$rules['password_confirmation'] = '';
             $userBaseRepo->save($newUserBaseModel);
-            $this->saveOpenIdAndAttachOrg($openid, $newUserBaseModel, $orgId);
+            return $this->saveOpenIdAndAttachOrg($openid, $newUserBaseModel, $orgId);
 
         }
     }
