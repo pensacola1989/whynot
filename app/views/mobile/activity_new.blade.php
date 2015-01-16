@@ -21,7 +21,7 @@
             @if(count($lastAt))
             @foreach($lastAt as $at)
                 <li class="ui-border-t">
-                    <a href="{{ URL::action('mobile\ActivityController@atRegister', $at->id) }}">
+                    <a href="{{ URL::action('mobile\WcActivityController@atRegister', $at->id) }}">
                         <p>{{ $at->title }}</p>
                     </a>
                 </li>

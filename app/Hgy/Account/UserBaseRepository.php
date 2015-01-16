@@ -43,11 +43,14 @@ class UserBaseRepository extends EntityRepository {
 
     public function getActivitiesUidAndOrgId($uid, $orgId)
     {
-        return $this->model->find($uid)
-                            ->attendActivities()
-                            ->whereHas('Activity', function ($q) use ($orgId) {
-                                $q->where('bizid', $orgId);
-                            })->get();
+        $model = $this->model->find($uid);
+        if($model != null) {
+            return $model->attendActivities()
+                         ->whereHas('Activity', function ($q) use ($orgId) {
+                            $q->where('bizid', $orgId);
+                         })->get();
+        }
+        return null;
     }
 
     /**
