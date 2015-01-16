@@ -1,5 +1,6 @@
 <?php namespace mobile;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Hgy\Wechat\WechatHelper;
 /**
