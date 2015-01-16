@@ -7,6 +7,7 @@
  */
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 class ActivityPresenter extends BasePresenter {
