@@ -109,6 +109,7 @@ function getFieldData() {
 
 function getPostData() {
     var data = {};
+    var isValid = true;
     data['userName'] = $('#userName').val();
     data['userMobile'] = $('#userMobile').val();
     data['userEmail'] = $('#userEmail').val();
@@ -123,7 +124,7 @@ function getPostData() {
                 button:["确认","取消"]
             });
             $(this).focus();
-
+            isValid = false;
             return false;
         }
 
@@ -135,10 +136,11 @@ function getPostData() {
                 button:["确认","取消"]
             });
             $(this).focus();
+            isValid = false;
             return false;
         }
     })
-    return data;
+    return isValid == true ? data : false;
 }
 
 !function($) {
