@@ -111,7 +111,7 @@ function postComment() {
             el.loading("hide");
         },500);
         if(data && data.errorCode == 0) {
-          //  window.location.href = '{{ URL::route('hgy_index') }}';
+            location.href = '{{ URL::route('hgy_index') }}';
         }
     });
 }

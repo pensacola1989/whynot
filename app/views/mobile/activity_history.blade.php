@@ -12,14 +12,14 @@
     </ul>
     <ul class="ui-tab-content">
         <li>
-            <h2 class="hgy-mobile-header">
+            {{--<h2 class="hgy-mobile-header">--}}
 
-                <div class="ui-avatar-one">
-                    <span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>
-                </div>
-                <span style="font-size: .8em;">爱心社活动历史</span>
+                {{--<div class="ui-avatar-one">--}}
+                    {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>--}}
+                {{--</div>--}}
+                {{--<span style="font-size: .8em;">爱心社活动历史</span>--}}
 
-            </h2>
+            {{--</h2>--}}
 
             <div class="ui-scroller">
             <ul class="ui-list ui-border-tb">

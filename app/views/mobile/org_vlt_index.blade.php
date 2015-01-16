@@ -21,7 +21,15 @@
             </p>
         </a>
     </li>
-
+    <li class="ui-border-t">
+        <a class="link-a" href="">
+            <p>
+                <i class="fa fa-leaf"></i>
+                &nbsp;&nbsp;
+                登录哈公益
+            </p>
+        </a>
+    </li>
 </ul>
 
 <ul class="ui-list ui-list-text ui-border-tb">
@@ -34,7 +42,7 @@
                 您参加活动的总数
             </h4>
         </div>
-        <div class="ui-badge">{{ $userActivities->count() }}</div>
+        <div class="ui-badge">{{ $userActivities ? $userActivities->count() : 0 }}</div>
     </a>
     </li>
     <li class="ui-border-t ui-list-item-link">
@@ -46,7 +54,7 @@
                 您评价的次数
             </h4>
         </div>
-        <div class="ui-badge">{{ $userComments->count() }}</div>
+        <div class="ui-badge">{{ $userComments ? $userComments->count() : 0}}</div>
     </a>
     </li>
     <li class="ui-border-t  ui-list-item-link">
