@@ -5,6 +5,7 @@
  * Date: 1/11/15
  * Time: 9:15 PM
  */
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
@@ -28,10 +29,16 @@ class WechatMobileController extends \BaseController {
      */
     private $footerData = [];
 
+    /**
+     * @var 操作openid等表字段
+     */
+    private $userWechatRepository;
+
     public function  __construct()
     {
         $this->orgId = $this->_getOrgId();
         $this->footerData['orgId'] = $this->orgId;
+        $this->userWechatRepository = App::make('\Hgy\WechatBind\UserWehatRepository');
     }
 
     protected function view($path, $data = [])
@@ -53,5 +60,12 @@ class WechatMobileController extends \BaseController {
             return intval($routeObj['orgId']);
         }
         return  -1;
+    }
+
+    public function getUidForHgy()
+    {
+        if($openid = Session::get('openid') != null)
+            return $this->userWechatRepository->getUidByOpenid($openid);
+        return -1;
     }
 }
