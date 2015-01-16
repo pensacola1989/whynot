@@ -64,8 +64,10 @@ class WechatMobileController extends \BaseController {
 
     public function getUidForHgy()
     {
-        if($openid = Session::get('openid') != null)
+        $openid = Session::get('openid');
+        if($openid != null)
             return $this->userWechatRepository->getUidByOpenid($openid);
-        return -1;
+        else
+            return -1;
     }
 }
