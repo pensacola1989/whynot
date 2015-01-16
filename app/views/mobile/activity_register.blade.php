@@ -48,7 +48,7 @@
 @if(!$isRegister)
 <p class="container">报名信息填写</p>
 <div class="ui-form ui-border-t">
-    <form id="reg_form" action="{{ URL::action('mobile\ActivityController@postAtRegister', $activity_id) }}" method="post">
+    <form id="reg_form" action="{{ URL::action('mobile\WcActivityController@postAtRegister', $activity_id) }}" method="post">
     @if(count($attributes))
     @foreach($attributes as $attr)
     @if($attr->attr_type == 'text')
@@ -96,13 +96,13 @@
     @endif
 </table>
 <div class="ui-btn-wrap">
-    <button class="ui-btn-lg ui-btn-danger active">您已经报名</button>
+    <button id="submit" class="ui-btn-lg ui-btn-danger active">您已经报名</button>
 </div>
 @endif
 @section('scripts')
 <script type="text/javascript">
 !function($) {
-    $('button').on('tap', function(e) {
+    $('button#submit').on('tap', function(e) {
         e.preventDefault();
         $('form').submit();
         return false;
@@ -112,6 +112,6 @@
 //            scrollY: true
 //        });
     });
-}(Zepto)
+}(Zepto);
 </script>
 @endsection

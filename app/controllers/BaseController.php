@@ -58,8 +58,9 @@ class BaseController extends Controller
         return Redirect::to($default);
     }
 
-    public function getUid()
+    public function getUid($isForWechat=false)
     {
+
         return Auth::user()->id;
     }
 
