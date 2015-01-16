@@ -243,4 +243,13 @@ class ActivityRepository extends EntityRepository
                             ->where('uid', '=', $uid)
                             ->first();
     }
+
+
+    // -----------------公众号微信端--------------------
+    public function getOrgIdByActivityId($activityId)
+    {
+        $activity = $this->model->find($activityId);
+        if($activityId != null)
+            return $activity->BelongOrg->id;
+    }
 }
