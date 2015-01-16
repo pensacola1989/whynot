@@ -63,10 +63,10 @@ Route::group(['before' => 'wechat-bind'], function() {
     Route::get('mobile/vlt/history/user_comment/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
     Route::get('mobile/vlt/u_attend_history/{orgId}', ['uses'=>'mobile\WcVltController@userAttendHistory']);
     Route::get('mobile/activity/latest/{orgId}',['uses'    =>  'mobile\WcActivityController@latest']);
-//    Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
-//    Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\ActivityController@postAtRegister']);
+    Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\WcActivityController@atRegister']);
+    Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\WcActivityController@postAtRegister']);
     Route::get('mobile/activity/at_history/{orgId}', ['uses'    =>  'mobile\WcActivityController@atHistory']);
-    Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
+
     Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
 //    Route::get('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@commentDetail']);
 //    Route::post('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@postComment']);
@@ -92,8 +92,8 @@ Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeC
 //Route::get('mobile/vlt/history/user_comment/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
 //Route::get('mobile/vlt/u_attend_history/{orgId}', ['uses'=>'mobile\WcVltController@userAttendHistory']);
 //Route::get('mobile/activity/latest/{orgId}',['uses'    =>  'mobile\WcActivityController@latest']);
-Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\ActivityController@atRegister']);
-Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\ActivityController@postAtRegister']);
+//Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\WcActivityController@atRegister']);
+//Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\WcActivityController@postAtRegister']);
 //Route::get('mobile/activity/at_history/{orgId}', ['uses'    =>  'mobile\WcActivityController@atHistory']);
 //Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
 //Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
@@ -102,6 +102,7 @@ Route::post('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\Volunt
 /**
  * hagongyi对用户的页面
  */
+Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
 Route::get('mobile/hgy/vlt/info_modify', ['uses'    =>  'mobile\VolunteerController@infoModify']);
 Route::post('mobile/hgy/vlt/info_modify/{uid}', ['uses'    =>  'mobile\VolunteerController@postInfoForHgyEdit']);
 Route::get('mobile/hgy/vlt/at_history', ['uses'    =>  'mobile\VolunteerController@atHistory']);
