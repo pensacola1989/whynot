@@ -26,7 +26,7 @@ class WechatAuthController extends WechatMobileController {
         $openid = $this->wechatHelper->getOpenidByOauth($code);
         if($openid != -1) {
             Session::set('openid', $openid);
-            return $this->redirectTo(URL::route('mobile\WcVltController@index', Session::get('current_org_id')));
+            return $this->redirectTo(URL::action('mobile\WcVltController@index', Session::get('current_org_id')));
         }
     }
 }
