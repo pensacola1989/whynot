@@ -147,12 +147,12 @@ function getPostData(ev) {
     $('#submit').on('tap', function(e) {
         var data = getPostData(e);
         data['values'] = getFieldData();
-//        el = $.loading({
-//            content:'正在绑定...'
-//        });
+        el = $.loading({
+            content:'正在绑定...'
+        });
         $.post('{{ URL::route('join_org', $orgId) }}', data, function(d) {
             setTimeout(function() {
-//                el.loading("hide");
+                el.loading("hide");
             },500);
             if(d && d.errorCode == 0) {
                 return false;
