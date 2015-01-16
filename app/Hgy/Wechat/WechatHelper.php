@@ -1,9 +1,10 @@
 <?php namespace Hgy\Wechat;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-
 
 /**
  * Created by PhpStorm.
@@ -56,5 +57,20 @@ class WechatHelper {
             return $ret != null ? $ret['openid'] : -1;
         }
         return -1;
+    }
+
+    /**
+     * 获得组织id，以后改变此方法的位置
+     * 判断路由参数，有orgId的直接拿，没有的通过activityid拿
+     */
+    public function getOrgId()
+    {
+        $parameters = Route::current()->parameters();
+        if(isset($parameters['orgId']))
+            return $parameters['orgId'];
+
+
+        return App::make('\Hgy\Activity\ActivityRepository')
+                ->getOrgIdByActivityId($parameters['activity_id']);
     }
 }

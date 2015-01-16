@@ -65,15 +65,11 @@ Route::filter('mobile-auth', function()
 
 Route::filter('wechat-bind', function() {
     // 测试openid
-//    $openid = 'open234ijdf0';
-//    $openid = 'openisf23sfdsfxx';
-//    $openid = 'openisf23sfdsfxx_';
-//    $openid = 'open123123xxx-';
 
     $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
     $openid = $wechatHelper->getOpenId();
     if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
-    $orgId = Route::current()->parameters()['orgId'];
+    $orgId = $wechatHelper->getOrgId();
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 
     if($orgId != null) \Illuminate\Support\Facades\Session::set('current_org_id', $orgId);
