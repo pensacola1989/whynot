@@ -107,7 +107,7 @@ function getFieldData() {
     return JSON.stringify(obj);
 }
 
-function getPostData(ev) {
+function getPostData() {
     var data = {};
     data['userName'] = $('#userName').val();
     data['userMobile'] = $('#userMobile').val();
@@ -122,7 +122,6 @@ function getPostData(ev) {
                 content:'请填写所有内容',
                 button:["确认","取消"]
             });
-            ev.preventDefault();
             $(this).focus();
 
             return false;
@@ -135,7 +134,6 @@ function getPostData(ev) {
                 content: ERROR_MSG[_key],
                 button:["确认","取消"]
             });
-            ev.preventDefault();
             $(this).focus();
             return false;
         }
@@ -146,6 +144,10 @@ function getPostData(ev) {
 !function($) {
     $('#submit').on('tap', function(e) {
         var data = getPostData(e);
+        if(!data) {
+            e.preventDefault();
+            return false;
+        }
         data['values'] = getFieldData();
         el = $.loading({
             content:'正在绑定...'
