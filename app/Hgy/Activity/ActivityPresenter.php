@@ -123,7 +123,15 @@ class ActivityPresenter extends BasePresenter {
      */
     public function isRegister()
     {
-        $currentUid = Auth::user()->id;
+        if(Auth::user()) {
+            $currentUid = Auth::user()->id;
+        } else {
+            $wechatRepo = App::make('\Hgy\Wechat\WechatHelper');
+            $openid = $wechatRepo->getOpenId();
+            if($openid != null)
+                $currentUid = App::make('\Hgy\WechatBind\UserWehatRepository')->getUidByOpenid($openid);
+        }
+
         $isRegister = ActivityAttributeValue::where('uid', '=', $currentUid)
                                             ->where('activity_id', '=', $this->resource->id)
                                             ->first();
