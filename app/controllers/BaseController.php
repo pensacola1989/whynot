@@ -1,5 +1,7 @@
 <?php
 
+use App;
+
 class BaseController extends Controller
 {
 
@@ -58,10 +60,15 @@ class BaseController extends Controller
         return Redirect::to($default);
     }
 
-    public function getUid($isForWechat=false)
+    public function getUid()
     {
+        if(Auth::user())
+            return Auth::user()->id;
 
-        return Auth::user()->id;
+        $wechatRepo = App::make('\Hgy\Wechat\WechatHelper');
+        $openid = $wechatRepo->getOpenId();
+        if($openid != null)
+            return App::make('\Hgy\Wechat\UserWehatRepository')->getUidByOpenid($openid);
     }
 
     /**
