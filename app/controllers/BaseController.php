@@ -1,6 +1,6 @@
 <?php
 
-use App;
+use Illuminate\Support\Facades\App;
 
 class BaseController extends Controller
 {
@@ -68,7 +68,7 @@ class BaseController extends Controller
         $wechatRepo = App::make('\Hgy\Wechat\WechatHelper');
         $openid = $wechatRepo->getOpenId();
         if($openid != null)
-            return App::make('\Hgy\Wechat\UserWehatRepository')->getUidByOpenid($openid);
+            return App::make('\Hgy\WechatBind\UserWehatRepository')->getUidByOpenid($openid);
     }
 
     /**
