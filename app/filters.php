@@ -72,6 +72,7 @@ Route::filter('wechat-bind', function() {
 
     $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
     $openid = $wechatHelper->getOpenId();
+
     $orgId = Route::current()->parameters()['orgId'];
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 
