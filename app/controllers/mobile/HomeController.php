@@ -62,7 +62,9 @@ class HomeController extends WechatMobileController {
 
     public function postJoinOrg($orgId)
     {
-        $openid = 'open123123xxx-';
+//        $openid = 'open123123xxx-';
+        $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
+        $openid = $wechatHelper->getOpenId();
         $userName = Input::get('userName');
         $userEmail = Input::get('userEmail');
         $userMobile = Input::get('userMobile');

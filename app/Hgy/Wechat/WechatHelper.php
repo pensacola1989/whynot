@@ -52,7 +52,7 @@ class WechatHelper {
     {
         if(!empty($code)) {
             $ret = $this->wechatClient->getAccessTokenByCode($code);
-            return $ret['openid'];
+            return $ret != null ? $ret['openid'] : -1;
         }
         return -1;
     }
