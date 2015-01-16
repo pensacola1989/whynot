@@ -7,6 +7,7 @@ use Hgy\VltField\VltAttributeRepository;
 use Hgy\WechatBind\UserWehatRepository;
 use Auth;
 use Input;
+use App;
 use Illuminate\Support\Facades\Route;
 /**
  * Created by PhpStorm.
