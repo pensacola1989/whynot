@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 
 /**
@@ -26,7 +27,7 @@ class WechatHelper {
 
     public function __construct ()
     {
-        $this->wechatClient = new WeChatClient('xxx', 'xx');
+        $this->wechatClient = new WeChatClient('wx236de42b1edcd623', '8d6c2cd8e8c3db33bc51541e1f31e09d');
         $this->rediret_url = URL::action('mobile\WechatAuthController@redirectForWechat');
     }
 
