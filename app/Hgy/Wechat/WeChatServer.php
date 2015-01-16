@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Config as Config;
 /**
  * Class WeChatServer 微信服务
  *
- * @package Cooper\Wechat
+ * @package Hgy\Wechat
  */
 class WeChatServer {
 
@@ -92,6 +92,7 @@ class WeChatServer {
      */
     private function _checkSignature()
     {
+        return true;
         $signature = Input::get('signature');
         $timestamp = Input::get('timestamp');
         $nonce     = Input::get('nonce');

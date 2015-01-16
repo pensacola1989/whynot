@@ -18,12 +18,16 @@
 |
 */
 
+Route::any('/weixin', function() {
+//    $wechatServer = new \Hgy\Wechat\WeChatServer(1989);
+    return \Illuminate\Support\Facades\Redirect::to('/redirect');
+});
+
+Route::get('/redirect', 'mobile\WechatAuthController@redirectForWechat');
+
 Route::get('/test2', function() {
     header("Content-type: application/json; charset=utf-8");
     dd(Hgy\Account\User::with(['Admins', 'userinfos'])->where('is_verify', '=', 1)->get());
-//    $ret = App::make('Hgy\PlatForm\PlatformRepository')->getAllOrgsPaginate();
-//    return $ret->first()->Admins->first()->Volunteer->volunteer_name;
-//    return Hgy\Account\User::paginate(10);
 });
 
 Route::get('/wechat', function() {

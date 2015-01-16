@@ -6,6 +6,7 @@
  * Time: 1:06 AM
  */
 use Hgy\Wechat\ChannelRepository;
+use Illuminate\Support\Facades\Session;
 
 class ChannelController extends BaseController {
 
@@ -24,7 +25,9 @@ class ChannelController extends BaseController {
     public function index()
     {
         $this->title = '渠道设置';
-
+        if(Session::get('success') == 1) {
+            echo '<script type="text/javascript">alert("更新成功！");</script>';
+        }
         $WechatChannel = $this->channel->getOrgChannel();
         $this->view('channel.index', compact('WechatChannel'));
     }
@@ -37,6 +40,6 @@ class ChannelController extends BaseController {
         else
             $ret = $this->channel->saveWechatChannel($inputs);
 
-        if($ret) return $this->redirectBack();
+        if($ret) return $this->redirectBack(['success'=>1]);
     }
 }

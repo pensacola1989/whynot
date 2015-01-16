@@ -5,6 +5,7 @@
  * Date: 1/11/15
  * Time: 9:15 PM
  */
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +44,14 @@ class WechatMobileController extends \BaseController {
 
     private function _getOrgId()
     {
+        if(Session::get('current_org_id') != null) {
+            return Session::get('current_org_id');
+        }
         $routeObj = Route::current()->parameters();
-        return $routeObj != null ? intval($routeObj['orgId']) : -1;
+        if($routeObj != null) {
+            Session::set('current_org_id', intval($routeObj['orgId']));
+            return intval($routeObj['orgId']);
+        }
+        return  -1;
     }
 }
