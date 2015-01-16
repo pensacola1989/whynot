@@ -59,13 +59,13 @@ class WcActivityController extends WechatMobileController {
     {
         if(Session::get('msg'))
             echo '<script>alert("报名成功！");</script>';
-        $isRegister = $this->activityAttrValue->isRegister($this->getUid(), $activity_id);
+        $isRegister = $this->activityAttrValue->isRegister($this->getUidForHgy(), $activity_id);
         $this->header = false;
         $activity = $this->activity->requireById($activity_id);
         $this->title = $activity->title;
         $attributes = $this->activityAttribute->getAttributeByActivityId($activity_id);
         if($isRegister) {
-            $userData = $this->_parseUserData($activity_id, $this->getUid());
+            $userData = $this->_parseUserData($activity_id, $this->getUidForHgy());
         }
         $this->view('mobile.activity_register',
             compact('userData', 'regDetail', 'activity', 'attributes', 'activity_id', 'isRegister'));
@@ -99,7 +99,7 @@ class WcActivityController extends WechatMobileController {
     private function _parseUserData($activityId, $value)
     {
         $ret = [];
-        $regDetail = $this->activityAttrValue->getAttrByUidAndAtId($this->getUid(), $activityId)->value;
+        $regDetail = $this->activityAttrValue->getAttrByUidAndAtId($this->getUidForHgy(), $activityId)->value;
         $regDetail = json_decode($regDetail, true);
         $attributes = $this->activityAttribute->getAttributeByActivityId($activityId);
         foreach($attributes as $attr) {
