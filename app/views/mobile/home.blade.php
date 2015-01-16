@@ -32,7 +32,7 @@
         <div class="ui-list-info ui-border-t">
             <h4>{{ $at->title }}</h4>
         </div>
-        <a href="{{ URL::action('mobile\ActivityController@atRegister', $at->id) }}" class="ui-btn">
+        <a href="{{ URL::action('mobile\WcActivityController@atRegister', $at->id) }}" class="ui-btn">
             <i class="fa fa-eye"></i>&nbsp;&nbsp;查看
         </a>
     </li>
