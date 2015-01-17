@@ -155,7 +155,7 @@ function getPostData() {
             content:'正在绑定...'
         });
         $.post('{{ URL::route('join_org', $orgId) }}', data, function(d) {
-            alert(d);
+            alert(d.message);
             setTimeout(function() {
                 el.loading("hide");
             },500);
