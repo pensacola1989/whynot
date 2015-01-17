@@ -79,13 +79,14 @@ Route::group(['before' => 'wechat-bind'], function() {
 Route::group(['before'  =>  'bind-page'], function() {
     Route::get('mobile/home/join/{orgId}', ['uses'  =>  'mobile\HomeController@joinOrg']);
     Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
+    Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeController@postJoinOrg']);
 });
 
 
 /**
  * 加入组织post请求
  */
-Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeController@postJoinOrg']);
+//Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeController@postJoinOrg']);
 /**
  * 活动
  */
