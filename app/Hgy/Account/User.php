@@ -144,4 +144,5 @@ class User extends Entity implements UserInterface, RemindableInterface {
     {
         return $this->hasOne(Channel::class, 'orgid');
     }
+
 }
