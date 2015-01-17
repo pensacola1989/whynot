@@ -37,7 +37,6 @@ class WechatHelper {
      */
     public function getOpenId()
     {
-
         if(Session::get('openid') != null)
             return Session::get('openid');
         $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
@@ -65,12 +64,26 @@ class WechatHelper {
      */
     public function getOrgId()
     {
+        if(Session::get('current_org_id') != null)
+            return Session::get('current_org_id');
+
         $parameters = Route::current()->parameters();
-        if(isset($parameters['orgId']))
+        if(isset($parameters['orgId'])) {
+            Session::set('current_org_id', $parameters['orgId']);
             return $parameters['orgId'];
+        }
+        else {
 
+            $orgId = App::make('\Hgy\Activity\ActivityRepository')
+                        ->getOrgIdByActivityId($parameters['activity_id']);
+            Session::set('current_org_id', $orgId);
+            return $orgId;
+        }
 
-        return App::make('\Hgy\Activity\ActivityRepository')
-                ->getOrgIdByActivityId($parameters['activity_id']);
+    }
+
+    private function getWechatCredentailByOrgId($orgId)
+    {
+
     }
 }

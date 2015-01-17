@@ -67,14 +67,20 @@ Route::filter('wechat-bind', function() {
     // 测试openid
 
     $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
+
     $openid = $wechatHelper->getOpenId();
 
     if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
 
+
     $orgId = $wechatHelper->getOrgId();
+//    if($orgId != null) \Illuminate\Support\Facades\Session::set('current_org_id', $orgId);
+
+    $openid = $wechatHelper->getOpenId();
+//    if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
+
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 
-    if($orgId != null) \Illuminate\Support\Facades\Session::set('current_org_id', $orgId);
     $uid = $bindRepo->getUidByOpenid($openid);
     if(!$uid) return Redirect::route('get_join_org', ['orgId'=>$orgId]);
     $isBind = $bindRepo->UserBindOrg($uid, $orgId) != null;
