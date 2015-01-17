@@ -160,7 +160,7 @@ function getPostData() {
             },500);
             if(d && d.errorCode == 0) {
                 return false;
-                window.location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
+                location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
             }
         });
     });
