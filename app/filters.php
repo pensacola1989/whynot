@@ -82,6 +82,10 @@ Route::filter('wechat-bind', function() {
     if(!$isBind) return Redirect::route('get_join_org', ['orgId'=>$orgId]);
 });
 
+Route::filter('bind-page', function() {
+    App::make('\Hgy\Wechat\WechatHelper')->getOpenId();
+});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
