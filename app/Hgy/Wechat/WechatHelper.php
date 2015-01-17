@@ -40,7 +40,7 @@ class WechatHelper {
         if(Session::get('openid') != null)
             return Session::get('openid');
         $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
-        return Redirect::to($requestOauthUrl);
+        Redirect::to($requestOauthUrl);
     }
 
     /**
