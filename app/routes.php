@@ -76,10 +76,10 @@ Route::group(['before' => 'wechat-bind'], function() {
 /**
  * 加入组织
  */
-Route::group(['before'  =>  'bind-page', function() {
+Route::group(['before'  =>  'bind-page'], function() {
     Route::get('mobile/home/join/{orgId}', ['uses'  =>  'mobile\HomeController@joinOrg']);
     Route::get('mobile/join/success', ['uses'   =>  'mobile\HomeController@joinSuccess']);
-}]);
+});
 
 
 /**
