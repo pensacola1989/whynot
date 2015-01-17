@@ -72,7 +72,6 @@ Route::filter('wechat-bind', function() {
     if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
 
     $orgId = $wechatHelper->getOrgId();
-
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
 
     if($orgId != null) \Illuminate\Support\Facades\Session::set('current_org_id', $orgId);
