@@ -37,10 +37,12 @@ class WechatHelper {
      */
     public function getOpenId()
     {
-        if(Session::get('openid') != null)
+        if(Session::get('openid') != null) {
             return Session::get('openid');
-        $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
-        Redirect::to($requestOauthUrl);
+        } else {
+            $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
+            Redirect::to($requestOauthUrl);
+        }
     }
 
     /**
