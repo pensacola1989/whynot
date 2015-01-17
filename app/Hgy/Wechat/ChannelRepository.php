@@ -54,4 +54,6 @@ class ChannelRepository extends EntityRepository {
         return $this->currentUser->Orgs()->first()->Channel;
     }
 
+    // --------------------- for wechat frontend--------------------
+
 }
