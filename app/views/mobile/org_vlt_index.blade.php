@@ -22,7 +22,7 @@
         </a>
     </li>
     <li class="ui-border-t">
-        <a class="link-a" href="">
+        <a class="link-a" href="{{ URL::action('mobile\AuthController@loginToHgy') }}">
             <p>
                 <i class="fa fa-leaf"></i>
                 &nbsp;&nbsp;
