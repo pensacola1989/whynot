@@ -66,7 +66,7 @@ class HomeController extends WechatMobileController {
 //        $openid = 'open123123xxx-';
         $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
         $openid = $wechatHelper->getOpenId();
-        echo $openid;exit();
+        
         $userName = Input::get('userName');
         $userEmail = Input::get('userEmail');
         $userMobile = Input::get('userMobile');

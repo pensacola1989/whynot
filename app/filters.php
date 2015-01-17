@@ -89,6 +89,7 @@ Route::filter('wechat-bind', function() {
 
 Route::filter('bind-page', function() {
     $requestUrl = Request::fullUrl();
+  
     \Illuminate\Support\Facades\Session::set('redirect_url', $requestUrl);
     App::make('\Hgy\Wechat\WechatHelper')->getOpenId();
 });
