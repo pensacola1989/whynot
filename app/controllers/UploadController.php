@@ -20,10 +20,11 @@ class UploadController extends BaseController {
 
         // Create target dir
         if (!file_exists($targetDir)) {
-            if(@mkdir($targetDir,0777,true)){
-                echo "目录创建成功";
-            }
-                echo "目录创建失败";
+            @mkdir($targetDir,0777,true);
+//            if(@mkdir($targetDir,0777,true)){
+//                echo "目录创建成功";
+//            }
+//                echo "目录创建失败";
         }
 
         // Get a file name

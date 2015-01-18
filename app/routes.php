@@ -18,10 +18,10 @@
 |
 */
 
-Route::any('/weixin', function() {
-//    $wechatServer = new \Hgy\Wechat\WeChatServer(1989);
-    return \Illuminate\Support\Facades\Redirect::to('/redirect');
-});
+Route::any('/weixin',['as'=>'wechatEnter', function() {
+    $wechatServer = new \Hgy\Wechat\WeChatServer(1989);
+//    return \Illuminate\Support\Facades\Redirect::to('/redirect');
+}]);
 
 Route::get('/redirect', 'mobile\WechatAuthController@redirectForWechat');
 
