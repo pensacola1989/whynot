@@ -1,60 +1,39 @@
-<div class="container org-des">
-<p>感谢您愿意成为我们的会员，完成下列资料
-
-   填写即成为我们的会员！
-</p>
-</div>
+<p class="container">请填写组织用户自定信息</p>
 <div class="ui-form ui-border-t">
-        <div class="ui-form-item ui-border-b">
-            <label for="#">姓名</label>
-            <input class="base" id="userName" name="userName" type="text" placeholder="姓名">
-            <a href="#" class="ui-icon-close"></a>
-        </div>
-        <div class="ui-form-item ui-border-b">
-            <label for="#">手机</label>
-            <input class="base" name="userMobile" id="userMobile" type="text" placeholder="手机">
-            <a href="#" class="ui-icon-close"></a>
-        </div>
-        <div class="ui-form-item ui-border-b">
-            <label for="#">邮箱</label>
-            <input class="base" name="userEmail" id="userEmail" type="text" placeholder="邮箱">
-            <a href="#" class="ui-icon-close"></a>
-        </div>
-
-    <p class="container">请填写组织用户自定信息</p>
-    <div class="ui-form ui-border-t">
-        @if(count($vltAttributes))
-        @foreach($vltAttributes as $attr)
-        @if($attr->attr_type == 'text')
-        <div class="customizeText ui-border-b">
-            <label for="#">{{ $attr->attr_name }}</label>
-            <input name="{{ $attr->attr_field_name }}" type="text" placeholder="{{ $attr->attr_name }}">
-            <a href="#" class="ui-icon-close"></a>
-        </div>
-        @elseif($attr->attr_type == 'enum')
-        <div class="customizeEnum">
-            <label for="#">{{ $attr->attr_name }}</label>
-            <br/>
-            {{ $attr->parseEnum }}
-        </div>
-        @elseif($attr->attr_type == 'radio')
-        <div class="customizeRadio">
-            <label for="#">{{ $attr->attr_name }}</label>
-                <br/>
-
-        {{ $attr->parseRadio }}
-        </div>
-        @endif
-        @endforeach
-        @endif
-        <div class="ui-btn-wrap" id="submit" style="margin-top:100px;margin-bottom:50px;">
-            <button onclick="javascript:void(null);" class="ui-btn-lg ui-btn-primary">提交</button>
-        </div>
+    @if(count($vltAttributes))
+    @foreach($vltAttributes as $attr)
+    @if($attr->attr_type == 'text')
+    <div val_type="{{ $attr->attr_type }}" key="{{ $attr->attr_field_name }}" class="customizeText ui-border-b">
+        <label for="#">{{ $attr->attr_name }}</label>
+        <input name="{{ $attr->attr_field_name }}"
+               type="text"
+               placeholder="{{ $attr->attr_name }}"
+               value="{{ $vltValue[$attr->attr_field_name] }}">
+        <a href="#" class="ui-icon-close"></a>
     </div>
+    @elseif($attr->attr_type == 'enum')
+    <div val_type="{{ $attr->attr_type }}" key="{{ $attr->attr_field_name }}" class="customizeEnum">
+        <label for="#">{{ $attr->attr_name }}</label>
+        <br/>
+        {{ $attr->parseEnum }}
+    </div>
+    @elseif($attr->attr_type == 'radio')
+    <div val_type="{{ $attr->attr_type }}" key="{{ $attr->attr_field_name }}" class="customizeRadio">
+        <label for="#">{{ $attr->attr_name }}</label>
+            <br/>
 
+    {{ $attr->parseRadio }}
+    </div>
+    @endif
+    @endforeach
+    @endif
+    <div class="ui-btn-wrap" id="submit" style="margin-top:100px;margin-bottom:50px;">
+        <button onclick="javascript:void(null);" class="ui-btn-lg ui-btn-primary">确认修改</button>
+    </div>
 </div>
 @section('scripts')
 <script type="text/javascript">
+{{--var jsonData = JSON.parse('{{ $vltValue }}');--}}
 var RULES = {
     'userEmail':    /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/,
     'userMobile':   /^(13[0-9]{9})|(15[89][0-9]{8})$/,
@@ -145,27 +124,27 @@ function getPostData() {
 
 !function($) {
     $('#submit').on('tap', function(e) {
-        var data = getPostData(e);
-        if(!data) {
-            e.preventDefault();
-            return false;
-        }
+        var data = {};
+//        var data = getPostData(e);
+//        if(!data) {
+//            e.preventDefault();
+//            return false;
+//        }
         data['values'] = getFieldData();
         el = $.loading({
             content:'正在绑定...'
         });
-        $.post('{{ URL::route('join_org', $orgId) }}', data, function(d) {
-            alert(d.message);
-            setTimeout(function() {
-                el.loading("hide");
-            },500);
-            if(d && d.errorCode == 0) {
-<<<<<<< HEAD
-                // return false;
-=======
->>>>>>> 66ef6d9d2e749b9e001345d660e8a3f99a0615d7
-                location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
-            }
+        $.post('{{ URL::action('mobile\HomeController@postModifyVolInfo', $orgId) }}',
+            data,
+            function(d) {
+                setTimeout(function() {
+                    el.loading("hide");
+                },500);
+                if(d && d.errorCode == 0) {
+                    alert(d.message);
+                    //location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
+                    history.go(-1);
+                }
         });
     });
 } (Zepto)

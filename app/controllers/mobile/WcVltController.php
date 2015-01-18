@@ -10,6 +10,7 @@
 use Auth;
 use Hgy\Account\UserRepository;
 use Input;
+use Hgy\Wechat\WechatHelper;
 use Hgy\Account\UserBaseRepository;
 use Hgy\Activity\ActivityRepository;
 
@@ -21,17 +22,21 @@ class WcVltController extends WechatMobileController {
 
     private $activity;
 
+    private $wechatHelper;
+
     protected $layout = 'layouts.mobilelayout';
 //    protected $layout = 'layouts.hgy_layout';
 
     public function __construct(UserBaseRepository $userBaseRepository,
                                 ActivityRepository $activityRepository,
-                                UserRepository $userRepository)
+                                UserRepository $userRepository,
+                                WechatHelper $wechatHelper)
     {
         parent::__construct();
         $this->userBase = $userBaseRepository;
         $this->activity = $activityRepository;
         $this->organization = $userRepository;
+        $this->wechatHelper = $wechatHelper;
     }
 
     /**
@@ -41,9 +46,8 @@ class WcVltController extends WechatMobileController {
     {
         $this->title = '志愿者主页';
         $this->header = false;
-        $uid = $this->getUidForHgy();
+        // $uid = $this->getUidForHgy();
         $isLogin = $uid != -1;
-        // $uid=20;
         $uid = $this->getUid();
         $userActivities = !$isLogin ? 0 : $this->userBase->getActivitiesUidAndOrgId($uid, $this->orgId);
         $userData = $this->userBase->requireById($uid);

@@ -81,4 +81,13 @@ class UserRepository extends EntityRepository {
         $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
          $user->attachRole($role);
      }
+
+     public function getVolValueByOrgIdAndUid($orgId, $uid)
+     {
+         return $this->requireById($orgId)
+                    ->VltValues()
+                    ->where('vol_id', '=', $uid)
+                    ->first();
+
+     }
 }

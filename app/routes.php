@@ -56,6 +56,10 @@ Route::group(['before' => 'guest'], function () {
 });
 //----------------------------------移动端-----------------------------------------
 Route::group(['before' => 'wechat-bind'], function() {
+
+    Route::get('mobile/home/modify_volInfo/{orgId}',['uses'    =>  'mobile\HomeController@modifyVolInfo']);
+    Route::post('mobile/home/modify_volInfo/{orgId}', ['uses'   =>  'mobile\HomeController@postModifyVolInfo']);
+
     Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
 
     Route::get('mobile/vlt/wc_index/{orgId}', ['uses'=>'mobile\WcVltController@index']);
@@ -72,7 +76,8 @@ Route::group(['before' => 'wechat-bind'], function() {
 //    Route::post('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@postComment']);
 });
 
-//Route::get('mobile/home/{orgId}',['uses'    =>  'mobile\HomeController@index']);
+//Route::get('mobile/home/modify_volInfo/{orgId}',['uses'    =>  'mobile\HomeController@modifyVolInfo']);
+//Route::post('mobile/home/modify_volInfo/{orgId}', ['uses'   =>  'mobile\HomeController@postModifyVolInfo']);
 /**
  * 加入组织
  */
