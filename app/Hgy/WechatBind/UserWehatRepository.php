@@ -130,4 +130,13 @@ class UserWehatRepository extends EntityRepository {
                         ->attach($uid, ['value' =>  $infos]);
     }
 
+    /** 更新用户自定义信息
+     * @param $orgId
+     * @param $uid
+     * @param $infos
+     */
+    public function updateUserCustomizeInfo($orgId, $uid, $infos)
+    {
+        return User::find($orgId)->VltValues()->updateExistingPivot($uid, $infos);
+    }
 }
