@@ -23,7 +23,7 @@ Route::any('/weixin', function() {
     return \Illuminate\Support\Facades\Redirect::to('/redirect');
 });
 
-Route::get('/redirect', 'mobile\WechatAuthController@redirectForWechat');
+Route::any('/redirect', 'mobile\WechatAuthController@redirectForWechat');
 
 Route::get('/test2', function() {
     header("Content-type: application/json; charset=utf-8");

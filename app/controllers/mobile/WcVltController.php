@@ -43,7 +43,8 @@ class WcVltController extends WechatMobileController {
         $this->header = false;
         $uid = $this->getUidForHgy();
         $isLogin = $uid != -1;
-        $uid=20;
+        // $uid=20;
+        $uid = $this->getUid();
         $userActivities = !$isLogin ? 0 : $this->userBase->getActivitiesUidAndOrgId($uid, $this->orgId);
         $userData = $this->userBase->requireById($uid);
         $userComments = !$isLogin ? 0 : $this->userBase->getCommentsByUidAndOrgId($uid, $this->orgId);
