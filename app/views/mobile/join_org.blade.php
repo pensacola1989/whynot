@@ -159,7 +159,6 @@ function getPostData() {
                 el.loading("hide");
             },500);
             if(d && d.errorCode == 0) {
-                return false;
                 location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
             }
         });
