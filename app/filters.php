@@ -68,15 +68,12 @@ Route::filter('wechat-bind', function() {
 
     $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
 
-    $openid = $wechatHelper->getOpenId();
-
-    if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
-
 
     $orgId = $wechatHelper->getOrgId();
 //    if($orgId != null) \Illuminate\Support\Facades\Session::set('current_org_id', $orgId);
 
     $openid = $wechatHelper->getOpenId();
+    echo $openid;exit();
 //    if($openid != null) \Illuminate\Support\Facades\Session::set('openid', $openid);
 
     $bindRepo = App::make('\Hgy\WechatBind\UserWehatRepository');
@@ -89,7 +86,7 @@ Route::filter('wechat-bind', function() {
 
 Route::filter('bind-page', function() {
     $requestUrl = Request::fullUrl();
-  
+
     \Illuminate\Support\Facades\Session::set('redirect_url', $requestUrl);
     App::make('\Hgy\Wechat\WechatHelper')->getOpenId();
 });

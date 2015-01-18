@@ -28,9 +28,7 @@ class WechatHelper {
 
     public function __construct ()
     {
-        $credentails = $this->getWechatCredentailByOrgId($this->getOrgId());
-        $this->wechatClient = new WeChatClient($credentails->apid, $credentails->appsecret);
-//        $this->wechatClient = new WeChatClient('wx236de42b1edcd623', '8d6c2cd8e8c3db33bc51541e1f31e09d');
+        $this->wechatClient = new WeChatClient('wx236de42b1edcd623', '8d6c2cd8e8c3db33bc51541e1f31e09d');
         $this->rediret_url = URL::action('mobile\WechatAuthController@redirectForWechat');
     }
 
@@ -42,6 +40,7 @@ class WechatHelper {
         if(Session::get('openid') != null)
             return Session::get('openid');
         $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
+        // echo $requestOauthUrl;exit();
         return Redirect::to($requestOauthUrl);
     }
 
@@ -84,13 +83,8 @@ class WechatHelper {
 
     }
 
-    /** 获得微信的appid和appsecret
-     * @param $orgId
-     * @return mixed
-     */
     private function getWechatCredentailByOrgId($orgId)
     {
-        $repo = App::make('\Hgy\Account\UserRepository');
-        return $repo->getOrgWechatCredentail($orgId);
+
     }
 }
