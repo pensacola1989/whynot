@@ -24,11 +24,13 @@ class WechatHelper {
     /**
      * 回调地址
      */
-    private $rediret_url;
+    public $rediret_url;
 
     public function __construct ()
     {
-        $this->wechatClient = new WeChatClient('wx236de42b1edcd623', '8d6c2cd8e8c3db33bc51541e1f31e09d');
+        $credentails = $this->getWechatCredentailByOrgId($this->getOrgId());
+        $this->wechatClient = new WeChatClient($credentails->appid, $credentails->appsecret);
+//        $this->wechatClient = new WeChatClient('wx236de42b1edcd623', '8d6c2cd8e8c3db33bc51541e1f31e09d');
         $this->rediret_url = URL::action('mobile\WechatAuthController@redirectForWechat');
     }
 
@@ -37,10 +39,21 @@ class WechatHelper {
      */
     public function getOpenId()
     {
-        if(Session::get('openid') != null)
+        if(Session::has('openid')) {
             return Session::get('openid');
-        $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
-        Redirect::to($requestOauthUrl);
+        }
+        return -1;
+//        if(Session::has('openid')) {
+//            return Session::get('openid');
+//        } else {
+//            $requestOauthUrl = $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
+//            Redirect::to($requestOauthUrl);
+//        }
+    }
+
+    public function generateOauthUrl()
+    {
+        return $this->wechatClient->getOAuthConnectUri($this->rediret_url, 3);
     }
 
     /**
@@ -64,26 +77,31 @@ class WechatHelper {
      */
     public function getOrgId()
     {
-        if(Session::get('current_org_id') != null)
+        if(Session::has('current_org_id'))
             return Session::get('current_org_id');
 
         $parameters = Route::current()->parameters();
         if(isset($parameters['orgId'])) {
-            Session::set('current_org_id', $parameters['orgId']);
+            Session::put('current_org_id', $parameters['orgId']);
             return $parameters['orgId'];
         }
         else {
 
             $orgId = App::make('\Hgy\Activity\ActivityRepository')
                         ->getOrgIdByActivityId($parameters['activity_id']);
-            Session::set('current_org_id', $orgId);
+            Session::put('current_org_id', $orgId);
             return $orgId;
         }
 
     }
 
+    /** 获得微信的appid和appsecret
+     * @param $orgId
+     * @return mixed
+     */
     private function getWechatCredentailByOrgId($orgId)
     {
-
+        $repo = App::make('\Hgy\Account\UserRepository');
+        return $repo->getOrgWechatCredentail($orgId);
     }
 }

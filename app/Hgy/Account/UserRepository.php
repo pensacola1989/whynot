@@ -65,6 +65,17 @@ class UserRepository extends EntityRepository {
          return $searchChain->get();
      }
 
+     /**
+      * 获取组织用户的appid和appsecret
+      * @param $orgId
+      * @return \LaravelBook\Ardent\Ardent|\LaravelBook\Ardent\Collection
+      */
+     public function getOrgWechatCredentail($orgId)
+     {
+         $model = $this->model->find($orgId);
+         return $model != null ? $model->Channel : null;
+     }
+
      private function _setDefaultRole(User $user)
      {
         $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
