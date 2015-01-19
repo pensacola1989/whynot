@@ -84,6 +84,39 @@ class HomeController extends WechatMobileController {
 
     }
 
+
+    /** 修改用户对组织对自定义信息
+     * @param $orgId
+     * @return array
+     */
+    public function postModifyVolInfo($orgId)
+    {
+        $wechatHelper = App::make('\Hgy\Wechat\WechatHelper');
+        $openid = $wechatHelper->getOpenId();
+        $userValues = Input::get('values');
+        $uid = $this->userWechatRepository->getUidByOpenid($openid);
+//        $uid = 32;
+        $this->userWechatRepository->updateUserCustomizeInfo($orgId, $uid, ['value'=>$userValues]);
+
+        return ['errorCode'=>0, 'message'=>'更新成功'];
+    }
+
+    /**
+     * 修改用户对某个组织对个人信息
+     */
+    public function modifyVolInfo($orgId)
+    {
+        $this->title = '修改自定义信息';
+        $uid = $this->getUid();
+        $orgModel = $this->orgRepository->requireById($orgId);
+        $vltAttributes = $orgModel ? $orgModel->VltAttributes : null;
+        $jsonVltValues = $this->orgRepository->getVolValueByOrgIdAndUid($orgId, $uid);
+//        $vltValue = json_decode($jsonVltValues->pivot->value, true);
+        $vltValue = $jsonVltValues;
+        $this->view('mobile.vltinfo_org', compact('orgId', 'vltValue', 'vltAttributes'));
+    }
+
+
     public function joinSuccess()
     {
         $this->title = '加入成功';

@@ -28,8 +28,9 @@ class ChannelController extends BaseController {
         if(Session::get('success') == 1) {
             echo '<script type="text/javascript">alert("更新成功！");</script>';
         }
+        $interfaceInfos = $this->channel->generateWechatUrlAndToken();
         $WechatChannel = $this->channel->getOrgChannel();
-        $this->view('channel.index', compact('WechatChannel'));
+        $this->view('channel.index', compact('WechatChannel', 'interfaceInfos'));
     }
 
     public function postChannelEdit($channelId=null)

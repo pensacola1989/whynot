@@ -55,10 +55,12 @@ h3,p{color:#34495E;}
     <hr class="dot-line"/>
     <p>
         <em>需总结的活动：</em>
-        <b style="color:#2ECC71;">{{ $needSummary->title ? $needSummary->title : '' }}</b>
+        @if($needSummary)
+        <b style="color:#2ECC71;">{{ $needSummary->title }}</b>
         <a role="button" href="{{ action('AtSummaryController@editSummary', $needSummary->id) }}" class="btn btn-default">
             总结 »
         </a>
+        @endif
     </p>
     <p>
         <em>默认活动时间</em>

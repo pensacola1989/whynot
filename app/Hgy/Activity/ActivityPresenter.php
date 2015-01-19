@@ -87,7 +87,9 @@ class ActivityPresenter extends BasePresenter {
 
     public function planDuration()
     {
-        return $this->countDuration(intval(strtotime($this->resource->end_time)),$this->resource->start_time);
+        $count = intval(strtotime($this->resource->end_time) - $this->resource->start_time);
+        return floor($count % 86300 / 3600 ) . '小时';
+//        return $this->countDuration(intval(strtotime($this->resource->end_time)),$this->resource->start_time);
     }
 
     private function countDuration($endTime,$startTime)
