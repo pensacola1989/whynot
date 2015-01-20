@@ -1,31 +1,72 @@
 @section('styles')
 <style type="text/css">
-.page-input{width:120px;}
+.menu-container{width:300px;}
+.menu-ul{}
+.menu-ul li{
+    background-color:#009688;
+    color:#FFF;
+    padding: 5px;
+    margin: 10px;
+}
+.sub-li{color:#FFF;background-color: #B2DFDB !important;}
 </style>
 @endsection
-<h2>menu</h2>
+<div class="page-header">
+    <h2>
+        微信自定义菜单配置
+        <small>配置微信自定义菜单</small>
+    </h2>
+</div>
 <div class="container" ng-app="page" ng-controller="myCtrl">
 <div class="menu-container">
     <ul class="menu-ul">
         <li ng-repeat="m in menu.button">
-            <p><%m.name%>   <div class="help-block"><%(m.type=='view') ? m.url : m.type%></div></p>
+            <p ng-show="<%!m.sub_button%>">
+                <%m.name%>
+                <div class="help-block">
+                    <%(m.type=='view') ? m.url : m.type%>
+                </div>
+            </p>
+            <p ng-show="<%m.sub_button%>">
+                <%m.name%>
+                <ul class="sub-ul">
+                    <li class="sub-li" ng-repeat="s in m.sub_button">
+                        <%s.name%>
+                        <div class="help-block">
+                            <%(s.type=='view') ? s.url : s.type%>
+                        </div>
+                    </li>
+                </ul>
+            </p>
         </li>
     </ul>
-    <ul class="menu-ul">
-        <li class="menu-li">parent1</li>
-        <li class="menu-li">parent2</li>
-        <li class="menu-li">
-            parent3
-            <ul class="sub-ul">
-                <li class="sub-li">child1</li>
-                <li class="sub-li">child2</li>
-            </ul>
-        </li>
-    </ul>
+    {{--<ul class="menu-ul">--}}
+        {{--<li class="menu-li">--}}
+            {{--<p>parent1<div class="help-block">http://weibo.com</div></p>--}}
+        {{--</li>--}}
+        {{--<li class="menu-li">--}}
+            {{--<p>parent2<div class="help-block">http://weibo.com</div></p>--}}
+        {{--</li>--}}
+        {{--<li class="menu-li">--}}
+            {{--parent3--}}
+            {{--<ul class="sub-ul">--}}
+                {{--<li class="sub-li">child1</li>--}}
+                {{--<li class="sub-li">child2</li>--}}
+            {{--</ul>--}}
+        {{--</li>--}}
+    {{--</ul>--}}
 
     <button modal-btn class="btn btn-primary">
-        <i class="fa fa-check"></i>
+        <i class="fa fa-plus"></i>
         添加
+    </button>
+    <button ng-click="saveMenu()" class="btn btn-success">
+        <i class="fa fa-check"></i>
+        保存
+    </button>
+    <button ng-click="generateMenu()" class="btn btn-danger">
+        <i class="fa fa-list-ul"></i>
+        生成菜单
     </button>
   {{--</div>--}}
 </div>
@@ -115,7 +156,7 @@ var page = angular.module('page', [], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
-page.factory('helper', function() {
+page.factory('helper', function($http) {
     return {
         getParentByName: function(name) {
             if(typeof name == 'undefined'
@@ -134,12 +175,27 @@ page.factory('helper', function() {
                 }
             }
             return _targetObj;
+        },
+        saveMenu: function(menuData) {
+            return $http.post('{{ URL::action('MenuController@postEditMenu') }}', menuData);
+        },
+        getMenu: function() {
+            return $http.get('{{ URL::action('MenuController@getMenu')  }}');
         }
     };
 });
 page.controller('myCtrl',function($scope, helper) {
+
+    helper.getMenu()
+            .success(function(data) {
+                if(data) {
+                    data = JSON.parse(data);
+                    $scope.menu = data.menu_str;
+                }
+            });
+
     $scope.menu = {
-        button: []
+        button: button.button
     };
 
     $scope.status = {
@@ -160,6 +216,16 @@ page.controller('myCtrl',function($scope, helper) {
             $scope.editModel.parentName = '';
             return false;
         }
+    };
+
+    $scope.saveMenu = function() {
+        helper.saveMenu({menu_json: JSON.stringify($scope.menu)})
+              .success(function(data) {
+                    console.log(data);
+              })
+    };
+    $scope.generateMenu = function() {
+
     };
 });
 page.directive('modalBtn', function() {
@@ -232,6 +298,7 @@ page.directive('modalBtn', function() {
                     _parent.sub_button.push(_newMenu);
                     clearEditModel();
                     console.log(scope.menu);
+                    scope.save(scope.menu);
                 }
             };
 

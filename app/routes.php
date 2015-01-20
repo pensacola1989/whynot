@@ -140,6 +140,8 @@ Route::group(['before'  =>  'auth'], function () {
      * 自定义菜单
      */
     Route::get('/wechatMenu/index', 'MenuController@index');
+    Route::get('/wechatMenu/get', 'MenuController@getMenu');
+    Route::post('/wechatMenu/edit', 'MenuController@postEditMenu');
     /**
      * Channel
      */
