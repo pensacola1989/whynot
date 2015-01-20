@@ -92,7 +92,7 @@
           <a><i class="glyphicon glyphicon-phone"></i>组织名片</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('＃','名片版式') }}</li>
-            <li class="child_item">{{ HTML::link('＃','菜单设置') }}</li>
+            <li class="child_item">{{ HTML::link('/wechatMenu/index','菜单设置') }}</li>
             <li class="child_item">{{ HTML::link('＃','细节设置') }}</li>
             <!-- <li class="child_item"><a>分类页面</a></li> -->
 
