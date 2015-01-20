@@ -108,7 +108,7 @@ class HomeController extends WechatMobileController {
     public function modifyVolInfo($orgId)
     {
         $this->title = '修改自定义信息';
-        $uid = 32;
+        $uid = $this->getUid();
         $orgModel = $this->orgRepository->requireById($orgId);
         $vltAttributes = $orgModel ? $orgModel->VltAttributes : null;
         $jsonVltValues = $this->orgRepository->getVolValueByOrgIdAndUid($orgId, $uid);

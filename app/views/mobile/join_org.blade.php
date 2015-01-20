@@ -160,10 +160,6 @@ function getPostData() {
                 el.loading("hide");
             },500);
             if(d && d.errorCode == 0) {
-<<<<<<< HEAD
-                // return false;
-=======
->>>>>>> 66ef6d9d2e749b9e001345d660e8a3f99a0615d7
                 location.href = '{{ URL::action('mobile\HomeController@index', $orgId) }}';
             }
         });

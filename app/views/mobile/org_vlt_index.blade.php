@@ -13,7 +13,7 @@
 </h2>
 <ul style="margin-bottom: 20px;" class="ui-list ui-list-text ui-list-link ui-border-tb">
     <li class="ui-border-t">
-        <a class="link-a" href="">
+        <a class="link-a" href="{{ URL::action('mobile\HomeController@modifyVolInfo', $orgId) }}">
             <p>
                 <i class="fa fa-pencil"></i>
                 &nbsp;&nbsp;
