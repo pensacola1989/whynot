@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Wechat\Menu;
 use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
 use Hgy\VltField\VltAttribute;
@@ -143,6 +144,11 @@ class User extends Entity implements UserInterface, RemindableInterface {
     public function Channel()
     {
         return $this->hasOne(Channel::class, 'orgid');
+    }
+
+    public function Menu()
+    {
+        return $this->hasOne(Menu::class, 'org_id');
     }
 
 }

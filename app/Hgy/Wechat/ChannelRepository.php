@@ -2,6 +2,7 @@
 
 use Auth;
 use Hgy\Core\EntityRepository;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Created by PhpStorm.
@@ -49,11 +50,23 @@ class ChannelRepository extends EntityRepository {
                     ->update($channelInfos);
     }
 
+    /** 获得某个组织下的微信渠道信息
+     * @return mixed
+     */
     public function getOrgChannel()
     {
         return $this->currentUser->Orgs()->first()->Channel;
     }
 
+    /** 获取微信的回调地址和token
+     * @return array
+     */
+    public function generateWechatUrlAndToken()
+    {
+        $orgId = $this->currentUser->Orgs()->first()->id;
+        $urlBase = URL::route('wechatEnter');
+        return ['callback_url'   =>  $urlBase . '/' . $orgId, 'token'    =>  '1989'];
+    }
     // --------------------- for wechat frontend--------------------
 
 }

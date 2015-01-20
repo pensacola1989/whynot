@@ -6,6 +6,7 @@
  * Time: 11:08 PM
  */
 use Hgy\Account\User;
+use Hgy\Account\UserBase;
 
 class AuthController extends BaseController {
 
@@ -28,7 +29,7 @@ class AuthController extends BaseController {
                 ->first();
             $isVerify = $user->Orgs()->first()->is_verify;
             if($isVerify) {
-                Auth::login(User::find($user->id));
+                Auth::login(UserBase::find($user->id));
                 return $this->redirectIntended('user/index');
             }
             else {

@@ -9,13 +9,13 @@
   <div class="form-group">
     <label for="token" style="text-align:right;" class="col-sm-2 control-label">接口地址</label>
     <div class="col-sm-10">
-    http://hagongyi.com/18
+    {{ $interfaceInfos['callback_url'] }}
     </div>
   </div>
   <div class="form-group">
       <label for="token" style="text-align:right;" class="col-sm-2 control-label">接口token</label>
       <div class="col-sm-10">
-      4x40g
+      {{ $interfaceInfos['token']}}
       </div>
     </div>
   <div class="form-group">
