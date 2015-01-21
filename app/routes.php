@@ -137,6 +137,12 @@ Route::post('mobile/hgy/vlt/org_search', ['as'=>'org_search', 'uses'    =>  'mob
 
 Route::group(['before'  =>  'auth'], function () {
     /**
+     * 自定义菜单
+     */
+    Route::get('/wechatMenu/index', 'MenuController@index');
+    Route::get('/wechatMenu/get', 'MenuController@getMenu');
+    Route::post('/wechatMenu/edit', 'MenuController@postEditMenu');
+    /**
      * Channel
      */
     Route::get('/channel/index', 'ChannelController@index');
