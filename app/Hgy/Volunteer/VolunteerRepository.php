@@ -38,15 +38,27 @@ class VolunteerRepository extends EntityRepository {
 //                        ->paginate(self::NUMBER_PER_PAGE);
     }
 
+//    public function updateVltStatus(User $bisUser,$id,$status)
+//    {
+//        $bisUser->volunteers()->where('id', '=', $id)->update(['is_verify'   =>  $status]);
+//    }
     public function updateVltStatus(User $bisUser,$id,$status)
     {
-        $bisUser->volunteers()->where('id', '=', $id)->update(['is_verify'   =>  $status]);
+        $bisUser->CVolunteers()
+                ->updateExistingPivot($id, ['is_lock' =>  $status]);
     }
 
     public function updateVltStatusWithIds(User $bisUser,$ids,$status)
     {
-        $bisUser->Volunteers()->whereIn('id',$ids)->update(['is_verify' => $status]);
+        foreach($ids as $id) {
+            $bisUser->CVolunteers()->updateExistingPivot($id,['is_lock'   =>  $status]);
+        }
     }
+
+//    public function updateVltStatusWithIds(User $bisUser,$ids,$status)
+//    {
+//        $bisUser->Volunteers()->whereIn('id',$ids)->update(['is_verify' => $status]);
+//    }
 
     public function updateGroupWithIds (User $bisUser, $ids, $targetGroup)
     {

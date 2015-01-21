@@ -41,20 +41,6 @@ class VolunteerPresenter extends BasePresenter {
         return $user->volunteerGroup()
                     ->where('id', '=', $user->pivot->group_id)
                     ->pluck('group_name');
-
-//        $groupId = $this->resource
-//                    ->Organizations
-//                    ->pivot
-//                    ->group_id;
-//
-//        return $user->CVolunteers->pivot->group_id;
-//        $repo = App::make('Hgy\Account\UserRepository');
-//        $user = $repo->requireById(Auth::user()->id);
-
-//        $ret = $user->volunteerGroup()
-//                    ->where('id', '=', $this->resource->groupd_id)
-//                    ->pluck('group_name');
-//        return $ret;
     }
 
     public function orgGroup()

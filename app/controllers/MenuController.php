@@ -1,7 +1,9 @@
 <?php
 
 use Hgy\Wechat\MenuRepository;
+use Hgy\Wechat\WechatHelper;
 use Hgy\Wechat\WeChatClient;
+use Hgy\Account\UserRepository;
 
 /**
  * Created by PhpStorm.
@@ -16,13 +18,17 @@ class MenuController extends BaseController {
 
     private $menuRepository;
 
-    public function __construct(MenuRepository $menuRepository)
+    private $userRepository;
+
+    public function __construct(MenuRepository $menuRepository, UserRepository $userRepository)
     {
         $this->menuRepository = $menuRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index()
     {
+        $this->title = '微信自定义菜单';
         $this->view('channel.menu');
     }
 
@@ -40,6 +46,10 @@ class MenuController extends BaseController {
 
     public function generateMenu()
     {
-
+        $orgId = Auth::user()->Orgs()->first()->id;
+        $wechatCredentails = $this->userRepository->getOrgWechatCredentail($orgId);
+        $wechatClient = new WeChatClient($wechatCredentails->appid, $wechatCredentails->appsecret);
+        $menuStr = $this->menuRepository->getMenuByOrgUser();
+        return $wechatClient->setMenu($menuStr->menu_str);
     }
 }

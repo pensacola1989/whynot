@@ -16,7 +16,8 @@ class VolunteerController extends BaseController {
     /**
      * lock status code
      */
-    const VLT_STATUS_LOCK = 3;
+    const VLT_STATUS_LOCK = 0;
+    const VLT_STATUS_UNLOCK = 1;
     /**
      * verifying
      */
@@ -79,13 +80,16 @@ class VolunteerController extends BaseController {
 
     public function LockVolunteer()
     {
-        $vltId = Input::get('id');
+        $vltId = intval(Input::get('id'));
         $islock = Input::get('type');
 
         $currentUser = $this->getCurrentUser();
         if(!$currentUser->volunteers()->where('id', '=', $vltId))
             return ['errorCode'  =>  12, 'message'   =>  '更新失败'];
-        $this->volunteers->updateVltStatus($currentUser,$vltId,$islock ? self::VLT_STATUS_VRFD :self::VLT_STATUS_LOCK);
+        $this->volunteers->updateVltStatus($currentUser,$vltId,$islock ? self::VLT_STATUS_LOCK :self::VLT_STATUS_UNLOCK);
+        $queries = DB::getQueryLog();
+        $last_query = end($queries);
+        dd($last_query);exit();
         return ['errorCode'  =>  0, 'message'    =>  '更新成功'];
     }
 
@@ -95,9 +99,9 @@ class VolunteerController extends BaseController {
         $type = Input::get('type');
         $ids = json_decode(Input::get('ids'));
         if($type == 'lock')
-            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_LOCK);
+            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_UNLOCK);
         if($type == 'unlock')
-            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_VRFD);
+            $this->volunteers->updateVltStatusWithIds($bisUser,$ids,self::VLT_STATUS_LOCK);
         if($type == 'changegroup'){
             $this->volunteers->updateGroup($bisUser, $ids, Input::get('target'));
         }
