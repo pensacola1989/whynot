@@ -8,18 +8,18 @@
 |____.idea
 | |____dictionaries
 | |____scopes
-|____app
-| |____commands
-| |____config
-| | |____local
+|____app //应用主目录，主要工作目录
+| |____commands 
+| |____config //应用配置
+| | |____local //本地配置存放
 | | |____packages
 | | |____testing
-| |____controllers
+| |____controllers //控制器存放点
 | | |____mobile
-| |____database
+| |____database //数据库相关配置
 | | |____migrations
 | | |____seeds
-| |____Hgy
+| |____Hgy //哈公益主要仓库及操作 主要工作目录
 | | |____Account
 | | |____ACL
 | | |____Activity
@@ -34,17 +34,17 @@
 | | |____Wechat
 | | | |____Facades
 | | |____WechatBind
-| |____lang
+| |____lang //语言文件
 | | |____en
-| |____start
-| |____storage
+| |____start //启动配置
+| |____storage //缓存存放地址
 | | |____cache
 | | |____logs
 | | |____meta
 | | |____sessions
 | | |____views
 | |____tests
-| |____views
+| |____views //视图文件 主要工作目录
 | | |____activity
 | | |____channel
 | | |____emails
@@ -56,8 +56,8 @@
 | | |____test
 | | |____user
 | | |____volunteer
-|____bootstrap
-|____public
+|____bootstrap //框架启动使用目录
+|____public //公有文件存放目录
 | |____images
 | | |____home
 | |____packages
@@ -97,7 +97,7 @@
 | | |____20141207
 | | |____20141208
 | | |____20150115
-|____vendor
+|____vendor //公共类库存放地点
 | |____bin
 | |____classpreloader
 | | |____classpreloader
@@ -849,3 +849,122 @@ CONTRIBUTING.md Laravel初始文件
 phpunit.xml ？
 readme.md git说明文件
 server.php Laravel初始文件
+
+
+
+Controllers文件说明
+.
+|____.DS_Store
+|____.gitkeep
+|____mobile //移动端使用（微信）
+| |____.DS_Store
+| |____ActivityController.php //活动控制
+| |____AuthController.php //人员认证控制
+| |____HomeController.php //哈公益绑定控制
+| |____VolunteerController.php //志愿者微信端主页控制
+| |____WcActivityController.php //微信端报名控制
+| |____WcVltController.php //志愿者微信端（组织内）控制
+| |____WechatAuthController.php //微信认证控制
+| |____WechatHandlerController.php //微信消息控制
+| |____WechatMobileController.php //微信端展示控制
+
+-----------------------------------------------后端
+
+|____ActivityController.php //活动操作控制
+|____AtRegisterController.php //报名控制
+|____AtSignController.php //签到控制
+|____AtSummaryController.php //活动总结
+|____AuthController.php //认证控制
+|____BaseController.php //基本控制
+|____ChannelController.php //渠道控制
+|____HomeController.php //（测试）
+|____MenuController.php //菜单控制
+|____OrganizationController.php //组织控制
+|____PlatformController.php //平台操作控制
+|____UploadController.php //上传控制
+|____UserController.php //用户控制（与组织有何区别？）
+|____VlrInfoController.php //志愿者信息自定义控制
+|____VolgroupController.php //志愿者分组控制
+|____VolunteerController.php //志愿者控制
+
+
+HGY文件说明
+.
+|____.DS_Store
+|____Account
+| |____.DS_Store
+| |____User.php //用户基表模型
+| |____UserBase.php //哈公益用户信息模型
+| |____UserBaseRepository.php //哈公益用户信息函数仓库
+| |____UserInfo.php //用户信息
+| |____UserInfoPresenter.php
+| |____UserInfoRepository.php //用户信息函数仓库
+| |____UserRepository.php //用户信息函数仓库
+|____ACL
+| |____Permission.php //权限设置
+| |____Role.php //角色设置 -- zizcao
+|____Activity
+| |____Activities.php //活动概况模型
+| |____ActivityAttribute.php //活动属性模型
+| |____ActivityAttributePresenter.php //活动属性表格模型
+| |____ActivityAttributeRepository.php //活动属性表格函数仓库
+| |____ActivityAttributeValue.php //活动属性报名者信息模型(?)
+| |____ActivityAttrValue.php //活动属性报名者信息模型
+| |____ActivityAttrValuePresenter.php //活动属性报名者信息表格模型
+| |____ActivityComplete.php //活动完成信息
+| |____ActivityCompletePresenter.php //活动完成信息表格模型
+| |____ActivityPresenter.php //活动概况表格模型
+| |____ActivityRegister.php //活动注册(?)
+| |____ActivityRepository.php //活动概况函数仓库
+| |____ActivitySign.php //活动签到模型
+| |____ActivitySummaryRepository.php //活动总结函数仓库
+| |____AtSignRepository.php //活动签到函数仓库
+| |____AtSummaryPresenter.php //活动总结信息表格模型
+|____Core //核心库
+| |____.DS_Store
+| |____Entity.php
+| |____EntityRepository.php
+| |____Exceptions
+| | |____EntityNotFoundException.php
+|____Facades // Facades定义IoC容器
+| |____TemplateFunc.php
+| |____TemplateFuncServiceProvider.php
+|____Image //图像处理
+| |____Image.php
+| |____ImageRepository.php
+|____Platform
+| |____PlatformRepository.php //组织管理函数仓库
+|____Test
+| |____Test.php
+| |____TestPresenter.php
+| |____TestRepository.php
+|____VltField
+| |____VltAttribute.php //志愿者个性信息模型
+| |____VltAttributePresenter.php //志愿者个性信息填写模型
+| |____VltAttributeRepository.php //志愿者个性信息函数仓库
+| |____VltAttributeValue.php //志愿者个性信息填写记录
+|____Volunteer
+| |____Volunteer.php //志愿者信息模型
+| |____VolunteerGroup.php //志愿者分组模型
+| |____VolunteerGroupRepository.php //志愿者分组函数仓库
+| |____VolunteerPresenter.php //志愿者信息表格模型
+| |____VolunteerRepository.php //志愿者信息函数仓库
+| |____VolunteerSearch.php // 志愿者搜索
+|____Wechat
+| |____Channel.php //渠道模型
+| |____ChannelRepository.php //渠道函数仓库
+| |____Facades
+| | |____WeChatClient.php //微信客户端facade定义
+| | |____WeChatServer.php //微信服务器端facade定义
+| |____Menu.php //菜单模型
+| |____MenuRepository.php //菜单函数仓库
+| |____WeChatClient.php //微信发送操作定义
+| |____WeChatEmoji.php //微信表情
+| |____WechatHelper.php //微信基础通信函数
+| |____WeChatServer.php //微信接收操作定义
+| |____WechatServiceProvider.php //微信服务注册
+|____WechatBind
+| |____OrgBindRepository.php //组织绑定函数仓库
+| |____OrgWechatBind.php //组织绑定模型
+| |____UserWechatBind.php //用户绑定模型
+| |____UserWehatRepository.php //用户绑定函数仓库
