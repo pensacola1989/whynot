@@ -60,6 +60,10 @@ class BaseController extends Controller
         return Redirect::to($default);
     }
 
+    /** 如果已经登陆哈公益，直接拿Auth id 即 uid
+     *  如果没有通过openid换取uid，从map表
+     * @return mixed
+     */
     public function getUid()
     {
         if(Auth::user())

@@ -72,3 +72,7 @@ require $framework.'/Illuminate/Foundation/start.php';
 
 return $app;
 
+Blade::extend(function ($view) {
+    $html = "<div class=\"progress\"><span class=\"meter\"></span></div>";
+        return str_replace("@progressbar", $html, $view);
+});

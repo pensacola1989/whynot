@@ -91,7 +91,7 @@
           </label>
       </td>
       <td>{{ $v->username }}</td>
-      <td>{{ $v->pivot->group_id }}</td>
+      <td>{{ $groupMap[$v->pivot->group_id] }}</td>
       <td>{{ $v->mobile }}</td>
       <td>{{ $v->email }}</td>
       {{--<td>{{ $v->volunteer_interest }}</td>--}}

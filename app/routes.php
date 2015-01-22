@@ -54,6 +54,12 @@ Route::group(['before' => 'guest'], function () {
     Route::get('/org/register/{step?}/{uid?}', 'OrganizationController@register');
     Route::post('/org/register/{step?}/{uid?}', 'OrganizationController@add');
 });
+/*
+ * 签到
+ */
+Route::get('mobile/activity/sign/{orgId}', 'mobile\WcActivityController@getNeedSign');
+Route::get('mobile/activity/sign_detail/{activityId}', 'mobile\WcActivityController@getSign');
+Route::post('mobile/activity/sign', 'mobile\WcActivityController@postSign');
 //----------------------------------移动端-----------------------------------------
 Route::group(['before' => 'wechat-bind'], function() {
 

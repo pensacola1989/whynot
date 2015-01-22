@@ -35,4 +35,9 @@ class VolunteerGroupRepository extends EntityRepository {
                     ->first()
                     ->volunteerGroup;
     }
+
+    public function getGroupNameById($id)
+    {
+        return $this->model->find($id)->group_name;
+    }
 }

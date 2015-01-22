@@ -69,13 +69,25 @@ class VolunteerController extends BaseController {
         $currentUser = $this->getCurrentUser();
         $groupOfUser = $currentUser->volunteerGroup;
         $searchFieldArr = Input::query();
+        $groupMap = $this->getGroupMap();
         $query = array_except($searchFieldArr,\Illuminate\Support\Facades\Paginator::getPageName());
         $repo = App::make('Hgy\Volunteer\VolunteerSearch');
         $volunteers = $repo->searchPaginated($currentUser,$query,self::PER_PAGE_NUM);
         if($volunteers == null) {
             $volunteers = $this->volunteers->getByBisUser($currentUser);
         }
-        $this->view('volunteer.search',['volunteers' => $volunteers, 'groups' => $groupOfUser, 'query' => $searchFieldArr]);
+        $this->view('volunteer.search',
+            ['groupMap' => $groupMap, 'volunteers' => $volunteers, 'groups' => $groupOfUser, 'query' => $searchFieldArr]);
+    }
+
+    private function getGroupMap()
+    {
+        $map = [];
+        $groups = \Hgy\Volunteer\VolunteerGroup::all();
+        foreach($groups as $g) {
+            $map[$g->id] = $g->group_name;
+        }
+        return $map;
     }
 
     public function LockVolunteer()
@@ -111,10 +123,11 @@ class VolunteerController extends BaseController {
     public function GetVltDetails($vlrId)
     {
         $this->title = '查看志愿者详情';
-//        $attributes = $this->volunteers->getAttributeFieldNames($this->getCurrentUser());
         $attributes = $this->getCurrentUser()->VltAttributes;
         $values = $this->volunteers->getVltDetailById($this->getCurrentUser(),$vlrId);
-        $values = (array)json_decode($values->value);
+        if($values != null) {
+            $values = (array)json_decode($values->value);
+        }
 //        dd($values);exit();
         $this->view('volunteer.detail',compact('values','attributes'));
     }

@@ -144,4 +144,41 @@ class WcActivityController extends WechatMobileController {
         }
         return $map[$key];
     }
+
+    /**
+     * 需要签到的列表
+     */
+    public function getNeedSign($orgId)
+    {
+        // 活动没开始
+        // 用户没签到
+        $this->title = '可签到的活动';
+        $this->header = false;
+        $needSign = $this->activity->getUserNeedSignByOrgId($orgId, $this->getUid());
+
+        $this->view('mobile.activity_sign',compact('needSign', 'orgId'));
+    }
+
+    /**
+     * 签到写入
+     */
+    public function postSign()
+    {
+        $activityId = intval(Input::get('activity_id'));
+        $signCode = Input::get("sign_code");
+        if($this->activity->isSignCodeMatch($signCode, $activityId))
+            return ['errorCode'=>0, 'message'=>'签到成功'];
+        return ['errorCode'=>101, 'message'=>'操作失败'];
+    }
+
+    /**
+     * 签到页面
+     */
+    public function getSign($activityId)
+    {
+        $this->title = '签到页面';
+        $this->header = false;
+
+        $this->view('mobile.sign_detail', compact('activityId'));
+    }
 }

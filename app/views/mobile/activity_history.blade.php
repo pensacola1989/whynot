@@ -4,7 +4,7 @@
             <a href="{{ URL::action('mobile\WcActivityController@latest', $orgId) }}">最新活动</a>
         </li>
         <li>
-            <a href="">活动签到</a>
+            <a href="{{ URL::action('mobile\WcActivityController@getNeedSign', $orgId) }}">活动签到</a>
         </li>
         <li class="current">
             <a href="">活动历史</a>
@@ -12,15 +12,6 @@
     </ul>
     <ul class="ui-tab-content">
         <li>
-            {{--<h2 class="hgy-mobile-header">--}}
-
-                {{--<div class="ui-avatar-one">--}}
-                    {{--<span style="background-image:url(http://icase.tencent.com/vlabs/img/?128*128)"></span>--}}
-                {{--</div>--}}
-                {{--<span style="font-size: .8em;">爱心社活动历史</span>--}}
-
-            {{--</h2>--}}
-
             <div class="ui-scroller">
             <ul class="ui-list ui-border-tb">
                 @if(count($atHistory))

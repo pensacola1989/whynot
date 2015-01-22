@@ -252,4 +252,35 @@ class ActivityRepository extends EntityRepository
         if($activityId != null)
             return $activity->BelongOrg->id;
     }
+
+    public function getUserNeedSignByOrgId($orgId, $uid)
+    {
+        return  User::find($orgId)
+                    ->Activities()
+                    ->where('start_time', '>', date('Y-m-d H:i', time()))
+                    ->whereHas('ActivitySigns', function ($q) use ($uid) {
+                        $q->where('sign_vlt_id', '!=', $uid);
+                    })->get();
+    }
+
+    /** 用户输入的签到码是否正确
+     * @param $inputCode
+     * @param $activityId
+     * @return bool
+     */
+    public function isSignCodeMatch($inputCode, $activityId)
+    {
+        $trueCode = $this->model->find($activityId)->sign_code;
+        return $inputCode == $trueCode;
+    }
+
+    public function isSigned($uid, $activityId)
+    {
+
+    }
+
+    public function signActivity($uid, ActivityId)
+    {
+        
+    }
 }
