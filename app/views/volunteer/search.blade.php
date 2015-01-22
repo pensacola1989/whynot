@@ -7,27 +7,27 @@
 <form method="GET" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">
   <div class="form-group">
     <div class="input-group">
-      <input type="email" class="form-control" name="volunteer_email" id="volunteer_email" placeholder="email">
+      <input type="email" class="form-control" name="email" id="volunteer_email" placeholder="email">
     </div>
   </div>
   <div class="form-group">
       <div class="input-group">
-        <input type="text" class="form-control" name="volunteer_name" id="volunteer_name" placeholder="姓名">
+        <input type="text" class="form-control" name="username" id="volunteer_name" placeholder="姓名">
       </div>
     </div>
     <div class="form-group">
     <div class="input-group">
-      <input type="text" class="form-control" name="volunteer_mobile" id="volunteer_mobile" placeholder="电话">
+      <input type="text" class="form-control" name="mobile" id="volunteer_mobile" placeholder="电话">
     </div>
     </div>
+    {{--<div class="form-group">--}}
+        {{--<div class="input-group">--}}
+          {{--<input type="text" class="form-control" name="volunteer_interest" id="volunteer_interest" placeholder="兴趣">--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control" name="volunteer_interest" id="volunteer_interest" placeholder="兴趣">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="input-group">
-          <select class="form-control" name="groupd_id" id="groupd_id" placeholder="分组">
+          <select class="form-control" name="group_id" id="group_id" placeholder="分组">
             <option value="-1">不限</option>
             @if(count($groups))
             @foreach($groups as $g)
@@ -76,7 +76,7 @@
       <th>分组</th>
       <th>手机</th>
       <th>邮箱</th>
-      <th>兴趣</th>
+      {{--<th>兴趣</th>--}}
       <th>状态</th>
       <th>操作</th>
     </tr>
@@ -90,16 +90,18 @@
             <input id="{{ $v->id }}" type="checkbox" class="list-check">
           </label>
       </td>
-      <td>{{ $v->volunteer_name }}</td>
-      <td>{{ $v->groupd_id }}</td>
-      <td>{{ $v->volunteer_mobile }}</td>
-      <td>{{ $v->volunteer_email }}</td>
-      <td>{{ $v->volunteer_interest }}</td>
-      <td>{{ $v->is_verify }}</td>
+      <td>{{ $v->username }}</td>
+      <td>{{ $v->pivot->group_id }}</td>
+      <td>{{ $v->mobile }}</td>
+      <td>{{ $v->email }}</td>
+      {{--<td>{{ $v->volunteer_interest }}</td>--}}
       <td>
-        <a href="javascript:void (null);" id="{{ $v->id }}"
-            class="{{ !$v->isLock ? 'lock-vlt' : 'unlock-vlt'}} fa {{ !$v->isLock ? 'fa-lock' : 'fa-unlock' }}"
-            data-toggle="tooltip" data-placement="top" title="{{!$v->isLock ? '锁定' : '解锁'}}"></a>
+        {{ $v->pivot->is_verify == 1 ? '<em style="color:green">已审核</em>' :'<em style="color:orange;">未审核</em>'}}
+      </td>
+      <td>
+        <a href="javascript:void (null);" id="{{ $v->pivot->vol_id }}"
+            class="{{ !$v->pivot->is_lock ? 'lock-vlt' : 'unlock-vlt'}} fa {{ $v->pivot->is_lock != 1 ? 'fa-lock' : 'fa-unlock' }}"
+            data-toggle="tooltip" data-placement="top" title="{{!$v->pivot->is_lock ? '锁定' : '解锁'}}"></a>
         <a href="{{ route('vltdtl',['vlrid' => $v->id]) }}" id="{{ $v->id }}" class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="查看"></a>
       </td>
     </tr>
@@ -173,7 +175,7 @@ function lockVtl(e) {
     $.post('{{ route('lockvlt') }}', { type: e.data.lock, id: id })
     .success(function(data) {
         if(data.errorCode == 0) {
-            history.go(0);
+//            history.go(0);
         }
     })
     .error(function(){

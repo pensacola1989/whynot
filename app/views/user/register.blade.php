@@ -50,7 +50,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">
+            <button id="first-step" type="submit" class="btn btn-primary" onclick="javascript:void(null);">
             <i class="hgy-icon glyphicon glyphicon-user"></i>  下一步  </button>
             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
@@ -151,3 +151,21 @@
         @endif
 
 </div>
+
+@section('scripts')
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#first-step').on('click', function(e) {
+        var _isAgree = $('input[name=agree]').is(':checked');
+        if(_isAgree) {
+            $('form').submit();
+        }
+        else {
+            alert('点同意后可以提交!');
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+</script>
+@endsection

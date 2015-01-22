@@ -132,16 +132,16 @@ var button =  {
                    {
                         "name":"菜单",
                         "sub_button":[
-                        {
-                            "type":"view",
-                            "name":"搜索",
-                            "url":"http://www.soso.com/"
-                         },
-                         {
-                            "type":"view",
-                            "name":"视频",
-                            "url":"http://v.qq.com/"
-                         },
+//                        {
+//                            "type":"view",
+//                            "name":"搜索",
+//                            "url":"http://www.soso.com/"
+//                         },
+//                         {
+//                            "type":"view",
+//                            "name":"视频",
+//                            "url":"http://v.qq.com/"
+//                         },
                          {
                             "type":"click",
                             "name":"赞一下我们",
@@ -181,6 +181,9 @@ page.factory('helper', function($http) {
         },
         getMenu: function() {
             return $http.get('{{ URL::action('MenuController@getMenu')  }}');
+        },
+        generateMenu: function() {
+            return $http.post('{{ URL::action('MenuController@generateMenu')  }}')
         }
     };
 });
@@ -189,8 +192,8 @@ page.controller('myCtrl',function($scope, helper) {
     helper.getMenu()
             .success(function(data) {
                 if(data) {
-                    data = JSON.parse(data);
-                    $scope.menu = data.menu_str;
+                    data = JSON.parse(data.menu_str);
+                    $scope.menu = data;
                 }
             });
 
@@ -219,13 +222,16 @@ page.controller('myCtrl',function($scope, helper) {
     };
 
     $scope.saveMenu = function() {
-        helper.saveMenu({menu_json: JSON.stringify($scope.menu)})
+        helper.saveMenu({menu_json: angular.toJson($scope.menu)})
               .success(function(data) {
-                    console.log(data);
+                    alert('操作成功')
               })
     };
     $scope.generateMenu = function() {
-
+        helper.generateMenu()
+                .success(function() {
+                    alert('操作成功')
+                });
     };
 });
 page.directive('modalBtn', function() {
