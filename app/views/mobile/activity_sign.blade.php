@@ -5,11 +5,11 @@
 @endsection
 <div class="ui-tab">
     <ul class="ui-tab-nav ui-border-b">
-        <li class="current">
-            <a href="javascript:history.go(0);">最新活动</a>
-        </li>
         <li>
-            <a href="{{ URL::action('mobile\WcActivityController@getNeedSign', $orgId) }}">活动签到</a>
+            <a href="{{ URL::action('mobile\WcActivityController@latest', $orgId) }}">最新活动</a>
+        </li>
+        <li class="current">
+            <a href="#">活动签到</a>
         </li>
         <li>
             <a href="{{ URL::action('mobile\WcActivityController@atHistory', $orgId) }}">活动历史</a>
@@ -18,10 +18,10 @@
     <ul class="ui-tab-content at-list">
         <li>
             <ul class="ui-list ui-list-text ui-list-link ui-border-tb">
-            @if(count($lastAt))
-            @foreach($lastAt as $at)
+            @if(count($needSign))
+            @foreach($needSign as $at)
                 <li class="ui-border-t">
-                    <a href="{{ URL::action('mobile\WcActivityController@atRegister', $at->id) }}">
+                    <a href="{{ URL::action('mobile\WcActivityController@getSign', $at->id) }}">
                         <p>{{ $at->title }}</p>
                     </a>
                 </li>

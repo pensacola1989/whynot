@@ -153,7 +153,7 @@ return array(
 	*/
 
 	'aliases' => array(
-
+        'QrCode'          => 'Endroid\QrCode\QrCode',
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',

@@ -13,6 +13,7 @@ class ActivitySign extends Entity implements PresenterInterface {
 
     protected $table = 'activity_sign';
 
+    protected $guarded = [];
 
     public function Activities()
     {

@@ -6,6 +6,7 @@
  * Time: 3:01 PM
  */
 
+use Hgy\Account\UserBase;
 use Hgy\Core\Entity;
 use Hgy\Account\User;
 use Hgy\Volunteer\Volunteer;
@@ -33,7 +34,7 @@ class Activities extends Entity implements PresenterInterface {
 
     public function ActivitySigns()
     {
-        return $this->belongsToMany(Volunteer::class, 'activity_sign', 'sign_activity_id',  'sign_vlt_id')
+        return $this->belongsToMany(UserBase::class, 'activity_sign', 'sign_activity_id',  'sign_vlt_id')
                     ->withPivot(['sign_des']);
     }
 

@@ -27,7 +27,11 @@ class AuthController extends BaseController {
         if($ret = Auth::validate($userCredential)) {
             $user = \Hgy\Account\UserBase::where('email', '=', $userCredential['email'])
                 ->first();
-            $isVerify = $user->Orgs()->first()->is_verify;
+            if($user->Orgs()->count() == 0) {
+                $isVerify = false;
+            } else {
+                $isVerify = $user->Orgs()->first()->is_verify;
+            }
             if($isVerify) {
                 Auth::login(UserBase::find($user->id));
                 return $this->redirectIntended('user/index');

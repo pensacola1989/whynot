@@ -10,6 +10,8 @@ use Hgy\Account\User;
 use Hgy\Account\UserBase;
 use Hgy\Core\EntityRepository;
 use Auth;
+use App;
+use Illuminate\Support\Facades\DB;
 
 class ActivityRepository extends EntityRepository
 {
@@ -251,5 +253,57 @@ class ActivityRepository extends EntityRepository
         $activity = $this->model->find($activityId);
         if($activityId != null)
             return $activity->BelongOrg->id;
+    }
+
+    public function getUserNeedSignByOrgId($orgId, $uid)
+    {
+        return  User::find($orgId)
+                    ->Activities()
+                    ->where('start_time', '>', date('Y-m-d H:i', time()))
+                    ->whereHas('ActivitySigns', function ($q) use ($uid) {
+                        $q->where('sign_vlt_id', '<>', $uid);
+                    })->get();
+    }
+
+    /** 用户输入的签到码是否正确
+     * @param $inputCode
+     * @param $activityId
+     * @return bool
+     */
+    public function isSignCodeMatch($inputCode, $activityId)
+    {
+        $trueCode = $this->model->find($activityId)->sign_code;
+        return $inputCode == $trueCode;
+    }
+
+    /** 是否已经签到
+     * @param $uid
+     * @param $activityId
+     * @return bool
+     */
+    public function isSigned($uid, $activityId)
+    {
+        $count = $this->model->find($activityId)
+                            ->ActivitySigns()
+                            ->where('sign_vlt_id', '=', $uid)
+                            ->count();
+        return $count > 0;
+    }
+
+    /** 对一个活动签到
+     * @param $uid
+     * @param $activityId
+     */
+    public function signActivity($uid, $activityId)
+    {
+        $repo = App::make('\Hgy\Activity\AtSignRepository');
+        $newModel = $repo->getNew([
+            'sign_vlt_id' => $uid,
+            'sign_activity_id'  =>  $activityId
+        ]);
+
+        $this->model->find($activityId)
+                            ->ActivitySigns()
+                            ->attach($uid);
     }
 }

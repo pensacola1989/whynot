@@ -120,6 +120,7 @@ class UserController extends BaseController {
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $input = Input::except('step');
+            $input = Input::except('agree');
             $newUser = $this->userBase->storeData($input);
             if($newUser)
                 return $this->redirectAction('UserController@register',['step' =>2,'uid' => $newUser->id]);

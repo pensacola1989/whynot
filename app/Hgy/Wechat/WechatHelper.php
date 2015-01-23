@@ -95,4 +95,9 @@ class WechatHelper {
         $repo = App::make('\Hgy\Account\UserRepository');
         return $repo->getOrgWechatCredentail($orgId);
     }
+
+    public function generateMenu($menuJson)
+    {
+        $this->wechatClient->setMenu($menuJson);
+    }
 }

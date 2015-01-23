@@ -6,7 +6,7 @@
 </div>
 <div class="container">
     <form action="" class="hgy-form form-horizontal">
-    @if($attributes)
+    @if($attributes && $values)
     @foreach($attributes as $attr)
     <div class="form-group">
         <label for="" class="col-sm-2 control-label">{{ $attr->attr_name }}</label>

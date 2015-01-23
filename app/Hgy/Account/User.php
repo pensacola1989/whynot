@@ -12,6 +12,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Entrust\HasRole;
+use McCool\LaravelAutoPresenter\PresenterInterface;
 
 class User extends Entity implements UserInterface, RemindableInterface {
 
@@ -85,8 +86,8 @@ class User extends Entity implements UserInterface, RemindableInterface {
 
     public function CVolunteers()
     {
-        return $this->belongsToMany(Volunteer::class,'user_volunteer','org_id','vol_id')
-                    ->withPivot(['group_id']);
+        return $this->belongsToMany(UserBase::class,'user_volunteer','org_id','vol_id')
+                    ->withPivot(['group_id', 'is_verify', 'is_lock']);
     }
 
     /**
@@ -108,30 +109,35 @@ class User extends Entity implements UserInterface, RemindableInterface {
         return 'remember_token';
     }
 
-//    public function beforeSave()
-//    {
-//        // if there's a new password, hash it
+    public function beforeSave()
+    {
+        // if there's a new password, hash it
 //        if($this->isDirty('password')) {
 //            $this->password = \Hash::make($this->password);
 //        }
-//
-//        if($this->_isUserExist($this->email,$this->orgName)) {
-//            $this->errors()->add('account_error','该用户已经被注册');
-//            return false;
-//        }
-//        return true;
-//        //or don't return nothing, since only a boolean false will halt the operation
-//    }
-//
-//
-//    private function _isUserExist($email,$orgName)
-//    {
-//        return self::Where(function($query) use ($email,$orgName)
-//        {
-//            $query->where('email','=',$email)
-//                ->orWhere('orgName','=',$orgName);
-//        })->first();
-//    }
+
+        if($this->_isUserExist($this->email,$this->orgName)) {
+            $this->errors()->add('account_error','该用户已经被注册');
+            return false;
+        }
+        return true;
+        //or don't return nothing, since only a boolean false will halt the operation
+    }
+
+    private function _setDefaultRole(User $user)
+    {
+        $role = \App::make('Hgy\ACL\Role')->getDefaultRole();
+        $user->attachRole($role);
+    }
+
+
+    private function _isUserExist($orgName)
+    {
+        return self::Where(function($query) use ($orgName)
+        {
+            $query->Where('orgName','=',$orgName);
+        })->first();
+    }
 
     /**
      * 管理员
@@ -151,4 +157,35 @@ class User extends Entity implements UserInterface, RemindableInterface {
         return $this->hasOne(Menu::class, 'org_id');
     }
 
+//
+
+    /**
+     * Get the e-mail address where password reminders are sent.
+     *
+     * @return string
+     */
+//    public function getReminderEmail()
+//    {
+//        // TODO: Implement getReminderEmail() method.
+//    }
+//
+//    /**
+//     * Get the unique identifier for the user.
+//     *
+//     * @return mixed
+//     */
+//    public function getAuthIdentifier()
+//    {
+//        // TODO: Implement getAuthIdentifier() method.
+//    }
+//
+//    /**
+//     * Get the password for the user.
+//     *
+//     * @return string
+//     */
+//    public function getAuthPassword()
+//    {
+//        // TODO: Implement getAuthPassword() method.
+//    }
 }
