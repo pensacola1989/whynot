@@ -59,6 +59,7 @@ Route::group(['before' => 'guest'], function () {
  */
 Route::get('mobile/activity/sign/{orgId}', 'mobile\WcActivityController@getNeedSign');
 Route::get('mobile/activity/sign_detail/{activityId}', 'mobile\WcActivityController@getSign');
+Route::get('mobile/qrcode/sign_activity/{activityId}', 'mobile\WcActivityController@qrSign');
 Route::post('mobile/activity/sign', 'mobile\WcActivityController@postSign');
 //----------------------------------移动端-----------------------------------------
 Route::group(['before' => 'wechat-bind'], function() {
@@ -457,4 +458,17 @@ Route::get('testopenid', function() {
 //    return \Hgy\Account\UserBase::find(20)->JoinedOrgs;
     $obj = new \Hgy\WechatBind\UserWehatRepository(new \Hgy\WechatBind\UserWechatBind());
     return $obj->UserBindOrg('open234ijdf0', 1);
+});
+
+Route::get('qrcode', function(){
+    $size = Input::get('size');
+    $text = Input::get('text');
+    if(!$size || !$text) return '';
+    $qrCode = new QrCode();
+    $qrCode->setText($text);
+    $qrCode->setSize($size);
+    $qrCode->setPadding(10);
+    $response = Response::make($qrCode->get(), 200);
+    $response->header('content-type', 'image/png');
+    return $response;
 });

@@ -1,6 +1,7 @@
 <?php namespace mobile;
 
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Hgy\Activity\ActivityAttributeRepository;
 use Hgy\Activity\ActivityRepository;
@@ -152,10 +153,9 @@ class WcActivityController extends WechatMobileController {
     {
         // 活动没开始
         // 用户没签到
-        $this->title = '可签到的活动';
+        $this->title = '签到';
         $this->header = false;
         $needSign = $this->activity->getUserNeedSignByOrgId($orgId, $this->getUid());
-
         $this->view('mobile.activity_sign',compact('needSign', 'orgId'));
     }
 
@@ -166,9 +166,12 @@ class WcActivityController extends WechatMobileController {
     {
         $activityId = intval(Input::get('activity_id'));
         $signCode = Input::get("sign_code");
-        if($this->activity->isSignCodeMatch($signCode, $activityId))
+        if($this->activity->isSignCodeMatch($signCode, $activityId)) {
+            $this->activity->signActivity($this->getUid(), $activityId);
             return ['errorCode'=>0, 'message'=>'签到成功'];
-        return ['errorCode'=>101, 'message'=>'操作失败'];
+        } else {
+            return ['errorCode'=>101, 'message'=>'操作失败'];
+        }
     }
 
     /**
@@ -179,6 +182,16 @@ class WcActivityController extends WechatMobileController {
         $this->title = '签到页面';
         $this->header = false;
 
-        $this->view('mobile.sign_detail', compact('activityId'));
+        $isSign = $this->activity->isSigned($this->getUid(), $activityId);
+        $this->view('mobile.sign_detail', compact('activityId', 'isSign'));
+    }
+
+    /**
+     * 二维码签到
+     */
+    public function qrSign($activityId)
+    {
+        $this->activity->signActivity($this->getUid(), $activityId);
+        return '签到成功';
     }
 }

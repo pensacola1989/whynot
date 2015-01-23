@@ -194,6 +194,7 @@ h3:before {
 @endsection
 
 <div class="ui-form ui-border-t" style="margin:20px 0;">
+@if(!$isSign)
     <form action="#" >
         <div class="ui-form-item ui-border-b">
             <label for="#">签到码</label>
@@ -202,12 +203,19 @@ h3:before {
         </div>
     </form>
 </div>
+
 <div class="container">
 <div class="ui-btn-wrap">
     <button class="btn btn_primary" id="signByCode">签到</button>
     <button class="ui-btn-lg" style="color:#04be02;">扫码签到</button>
 </div>
 </div>
+@else
+<section class="ui-notice">
+      <i></i>
+      <p>您已经签过到</p>
+</section>
+@endif
 @section('scripts')
 <script type="text/javascript">
 
@@ -227,7 +235,7 @@ function postSign(signCode, activityId) {
         },500);
         if(data && data.errorCode == 0) {
             alert('签到成功');
-            window.location.href = '';
+//            window.location.href = '';
         }
     });
 }

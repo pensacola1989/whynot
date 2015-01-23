@@ -10,6 +10,8 @@ use Hgy\Account\User;
 use Hgy\Account\UserBase;
 use Hgy\Core\EntityRepository;
 use Auth;
+use App;
+use Illuminate\Support\Facades\DB;
 
 class ActivityRepository extends EntityRepository
 {
@@ -259,7 +261,7 @@ class ActivityRepository extends EntityRepository
                     ->Activities()
                     ->where('start_time', '>', date('Y-m-d H:i', time()))
                     ->whereHas('ActivitySigns', function ($q) use ($uid) {
-                        $q->where('sign_vlt_id', '!=', $uid);
+                        $q->where('sign_vlt_id', '<>', $uid);
                     })->get();
     }
 
@@ -274,13 +276,34 @@ class ActivityRepository extends EntityRepository
         return $inputCode == $trueCode;
     }
 
+    /** 是否已经签到
+     * @param $uid
+     * @param $activityId
+     * @return bool
+     */
     public function isSigned($uid, $activityId)
     {
-
+        $count = $this->model->find($activityId)
+                            ->ActivitySigns()
+                            ->where('sign_vlt_id', '=', $uid)
+                            ->count();
+        return $count > 0;
     }
 
-    public function signActivity($uid, ActivityId)
+    /** 对一个活动签到
+     * @param $uid
+     * @param $activityId
+     */
+    public function signActivity($uid, $activityId)
     {
-        
+        $repo = App::make('\Hgy\Activity\AtSignRepository');
+        $newModel = $repo->getNew([
+            'sign_vlt_id' => $uid,
+            'sign_activity_id'  =>  $activityId
+        ]);
+
+        $this->model->find($activityId)
+                            ->ActivitySigns()
+                            ->attach($uid);
     }
 }
