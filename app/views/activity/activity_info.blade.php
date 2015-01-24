@@ -90,8 +90,11 @@
   @endforeach
   @endif
 </ul>
-
-</div>
+<a href="{{ URL::action('ActivityController@publishChannel', [$uid, $orgId]) }}" class="btn btn-primary">
+    <i class="fa fa-arrow-right"></i>
+    &nbsp;
+    下一步
+</a>
 </form>
 @section('scripts')
 {{ HTML::script('http://libs.baidu.com/jqueryui/1.10.2/jquery-ui.min.js') }}
