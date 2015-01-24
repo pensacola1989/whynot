@@ -88,7 +88,7 @@
     @if(Auth::check())
     <div class="tree_bar">
        <ul class="tree_container">
-        <li class="tree_item open">
+        <li id="mod_org_card" class="tree_item open">
           <a><i class="glyphicon glyphicon-phone"></i>组织名片</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('＃','名片版式') }}</li>
@@ -98,30 +98,29 @@
 
           </ul>
         </li>
-        <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
+        <li id="mod_setting" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/channel/index','互联网渠道设置') }}</li>
             <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
           </ul>
         </li>
-        @if(Auth::user()->Orgs()->first()->can('manage_platform')))
-         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
+        @if(Auth::user()->Orgs()->first()->can('manage_platform'))
+         <li id="mod_platform" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/pfmanager/activity','活动审核') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/org','组织审核') }}</li>
           </ul>
         </li>
         @endif
-        <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
+        <li id="mod_volunteer" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/volteer_s','志愿者查找') }}</li>
             <li class="child_item">{{ HTML::link('/volgroup','组别设置') }}</li>
             <li class="child_item">{{ HTML::link('/volteer/info','信息设置') }}</li>
           </ul>
         </li>
-        <li class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
+        <li id="mod_activity" class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
           <ul class="tree_child">
-{{--            <li class="child_item">{{ HTML::link('/activity/index','活动情况') }}</li>--}}
             <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
             <li class="child_item">{{ HTML::link('/activity/manage','活动管理') }}</li>
             <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
@@ -140,6 +139,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 {{ HTML::script('http://libs.baidu.com/jquery/2.0.0/jquery.js') }}
+{{ HTML::script('scripts/jquery-cookie.js') }}
 {{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
 {{ HTML::script('scripts/bootbox.min.js') }}
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
@@ -147,8 +147,37 @@
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
 <script type="text/javascript">
+var COOKIE_MOD_KEY = 'current_mod_name';
+var COOKIE_MOD_CHILD_INDEX_KEY = 'current_mod_child_index';
+
+function setTreeStatus(modName, index) {
+//    $.removeCookie(COOKIE_MOD_KEY,{ path: '/' });
+//    $.removeCookie(COOKIE_MOD_CHILD_INDEX_KEY,{ path: '/' });
+    $.cookie(COOKIE_MOD_KEY, modName, { path: '/' });
+    $.cookie(COOKIE_MOD_CHILD_INDEX_KEY, index, { path: '/' });
+}
+
+function initTreeStatus() {
+    var _currentMod = $.cookie()[COOKIE_MOD_KEY];
+    var _currentModIndex = $.cookie()[COOKIE_MOD_CHILD_INDEX_KEY];
+
+    $('.tree_item').removeClass('open');
+    $('#' + _currentMod).addClass('open');
+    $('#' + _currentMod + '> ul').addClass('active').slideDown();
+    $('#' + _currentMod + '> ul').find('li').eq(_currentModIndex).addClass('current');
+}
+
 $(function() {
+    $.cookie.path = '/';
+    initTreeStatus();
     $('[data-toggle="tooltip"]').tooltip();
+    $('.child_item').on('click', function(e) {
+        e.preventDefault();
+        var _id = $(this).parents('li.tree_item').attr('id');
+        var _index = $(this).index();
+        setTreeStatus(_id, _index);
+        window.location.href = $(this).find('a').attr('href');
+    });
 });
 </script>
 @yield('scripts')
