@@ -61,6 +61,8 @@ Route::get('mobile/activity/sign/{orgId}', 'mobile\WcActivityController@getNeedS
 Route::get('mobile/activity/sign_detail/{activityId}', 'mobile\WcActivityController@getSign');
 Route::get('mobile/qrcode/sign_activity/{activityId}', 'mobile\WcActivityController@qrSign');
 Route::post('mobile/activity/sign', 'mobile\WcActivityController@postSign');
+
+
 //----------------------------------移动端-----------------------------------------
 Route::group(['before' => 'wechat-bind'], function() {
 
@@ -79,12 +81,8 @@ Route::group(['before' => 'wechat-bind'], function() {
     Route::get('mobile/activity/at_history/{orgId}', ['uses'    =>  'mobile\WcActivityController@atHistory']);
 
     Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
-//    Route::get('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@commentDetail']);
-//    Route::post('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@postComment']);
 });
 
-//Route::get('mobile/home/modify_volInfo/{orgId}',['uses'    =>  'mobile\HomeController@modifyVolInfo']);
-//Route::post('mobile/home/modify_volInfo/{orgId}', ['uses'   =>  'mobile\HomeController@postModifyVolInfo']);
 /**
  * 加入组织
  */
@@ -95,24 +93,6 @@ Route::group(['before'  =>  'bind-page'], function() {
 });
 
 
-/**
- * 加入组织post请求
- */
-//Route::post('mobile/home/join/{orgId}', ['as'=>'join_org', 'uses'=>'mobile\HomeController@postJoinOrg']);
-/**
- * 活动
- */
-
-//Route::get('mobile/vlt/wc_index/{orgId}', ['uses'=>'mobile\WcVltController@index']);
-//Route::get('mobile/vlt/history/user_attend/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
-//Route::get('mobile/vlt/history/user_comment/{orgId}/{type}', ['uses'=>'mobile\WcVltController@userActivityHistory']);
-//Route::get('mobile/vlt/u_attend_history/{orgId}', ['uses'=>'mobile\WcVltController@userAttendHistory']);
-//Route::get('mobile/activity/latest/{orgId}',['uses'    =>  'mobile\WcActivityController@latest']);
-//Route::get('mobile/activity/at_register/{activity_id}',['uses'    =>  'mobile\WcActivityController@atRegister']);
-//Route::post('mobile/activity/at_register/{activity_id}',['as'=>'mobile_regat', 'uses'    =>  'mobile\WcActivityController@postAtRegister']);
-//Route::get('mobile/activity/at_history/{orgId}', ['uses'    =>  'mobile\WcActivityController@atHistory']);
-//Route::get('mobile/vlt/index', ['as'    =>  'hgy_index', 'uses'  =>  'mobile\VolunteerController@index']);
-//Route::get('mobile/vlt/comment_at', ['uses' =>  'mobile\VolunteerController@commentAt']);
 Route::get('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@commentDetail']);
 Route::post('mobile/vlt/comment_detail/{activityId}', ['uses' =>  'mobile\VolunteerController@postComment']);
 /**
@@ -197,6 +177,8 @@ Route::group(['before'  =>  'auth'], function () {
 //    Route::get('/activity/release','ActivityController@release');
     Route::get('/activity/publish/{step?}/{uid?}', 'ActivityController@publish');
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
+    Route::get('/activity/pub_channel/{activityId?}/{orgId?}', 'ActivityController@publishChannel');
+    Route::get('activity/get_sign_code/{activityId?}/{orgId?}','ActivityController@getSignQrCodeImg');
     Route::any('/upload/images','UploadController@uploadFile');
 
 //    Route::get('/activity/summary','ActivityController@summary');
@@ -288,23 +270,8 @@ Route::get('testpivot', function() {
                 ->where('org_id', Auth::user()->id)
                 ->first();
     return $user->CVolunteers->pivot->group_id;
-//    $ret = \Hgy\Account\User::find(1)->CVolunteers;
-//    foreach($ret as $r) {
-//        return $r->pivot->group_id;
-//    }
-//    return \Hgy\Account\User::find(1)->CVolunteers;
 });
-Route::get('/testuser', function() {
-//    foreach(range(1,4) as $index) {
-//        \Hgy\Account\User::find(1)->CVolunteers()->updateExistingPivot($index,['group_id'   =>  3]);
-//    }
-//    \Hgy\Account\User::find(1)->CVolunteers()->attachNew(['group_id' =>  6],[1,2,3,4]);
-//    return 'done';
-//    return \Hgy\Account\User::find(1)->CVolunteers()->updateExistingPivot([1,2,3],['group_id' =>  3]);
-//    return \Hgy\Account\User::find(1)->CVolunteers()->whereIn('vol_id',[1,2,3])->get();
-//    return \Hgy\Volunteer\::find()
-//    return \Hgy\Account\User::find(1)->CVolunteers;
-});
+
 //Route::get('/seedACL', function() {
 //
 ////    add role
@@ -460,15 +427,20 @@ Route::get('testopenid', function() {
     return $obj->UserBindOrg('open234ijdf0', 1);
 });
 
-Route::get('qrcode', function(){
-    $size = Input::get('size');
-    $text = Input::get('text');
-    if(!$size || !$text) return '';
-    $qrCode = new QrCode();
-    $qrCode->setText($text);
-    $qrCode->setSize($size);
-    $qrCode->setPadding(10);
-    $response = Response::make($qrCode->get(), 200);
+Route::get('sign_qrcode', function(){
+    $Qr = new \Hgy\Wechat\QrCodeHelper();
+    $ret = $Qr->generateQrCode(URL::action('mobile\WcActivityController@getSign', 17), 200);
+    $response = Response::make($ret, 200);
     $response->header('content-type', 'image/png');
     return $response;
+//    $size = Input::get('size');
+//    $text = URL::action('mobile\WcActivityController@getSign', 17);
+//    if(!$size || !$text) return '';
+//    $qrCode = new QrCode();
+//    $qrCode->setText($text);
+//    $qrCode->setSize($size);
+//    $qrCode->setPadding(10);
+//    $response = Response::make($qrCode->get(), 200);
+//    $response->header('content-type', 'image/png');
+//    return $response;
 });

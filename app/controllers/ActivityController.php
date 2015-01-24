@@ -9,6 +9,7 @@
 use Hgy\Activity\ActivityPresenter;
 use Hgy\Activity\ActivityRepository;
 use Hgy\Activity\ActivityAttributeRepository;
+use Hgy\Wechat\QrCodeHelper;
 
 class ActivityController extends BaseController {
 
@@ -16,6 +17,7 @@ class ActivityController extends BaseController {
 
     private $activityRepo;
     private $attributeRepo;
+    private $qrHelper;
 
     private $fieldTypeMap = [
         'datetime'  =>  '日期类型',
@@ -26,10 +28,13 @@ class ActivityController extends BaseController {
         'image'     =>  '图片'
     ];
 
-    public function __construct(ActivityRepository $repo,ActivityAttributeRepository $attrRepo)
+    public function __construct(ActivityRepository $repo,
+                                ActivityAttributeRepository $attrRepo,
+                                QrCodeHelper $qrCodeHelper)
     {
         $this->activityRepo = $repo;
         $this->attributeRepo = $attrRepo;
+        $this->qrHelper = $qrCodeHelper;
     }
 
     public function index()
@@ -114,6 +119,8 @@ class ActivityController extends BaseController {
 
     /**
      * publish page
+     * @param null $step
+     * @param null $uid
      */
     public function publish($step=null,$uid=null)
     {
@@ -125,8 +132,9 @@ class ActivityController extends BaseController {
         } elseif($step == 2 && $uid != null) {
             Session::put('currentActivityId', $uid);
             $attrs = $this->activityRepo->getAttrByOrderNum($uid);
+            $orgId = Auth::user()->Orgs()->first()->id;
             $this->title = '报名信息设计';
-            $this->view('activity.activity_info', compact('attrs'));
+            $this->view('activity.activity_info', compact('attrs', 'uid', 'orgId'));
         } elseif($step == 3 && $uid != null) {
 //            $isVerify = $this->_isUserVery($uid);
             $this->title = '发布渠道选择';
@@ -184,5 +192,24 @@ class ActivityController extends BaseController {
 
     }
 
+    /**
+     * @param $activityId
+     * @param $orgId
+     */
+    public function publishChannel($activityId, $orgId)
+    {
+        $this->title = '活动发布渠道';
+        $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, 0]);
+        $this->view('activity.activity_pub_channel', compact('getQrImgUrl'));
+    }
+
+    public function getSignQrCodeImg($activityId, $orgId)
+    {
+        $signUrl = URL::action('mobile\WcActivityController@qrSign', $activityId);
+        $qrImg = $this->qrHelper->generateQrCode($signUrl, 200);
+        $response = Response::make($qrImg, 200);
+        $response->header('content-type', 'image/png');
+        return $response;
+    }
 
 }
