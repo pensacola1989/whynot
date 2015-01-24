@@ -59,7 +59,7 @@ Route::group(['before' => 'guest'], function () {
  */
 Route::get('mobile/activity/sign/{orgId}', 'mobile\WcActivityController@getNeedSign');
 Route::get('mobile/activity/sign_detail/{activityId}', 'mobile\WcActivityController@getSign');
-Route::get('mobile/qrcode/sign_activity/{activityId}', 'mobile\WcActivityController@qrSign');
+Route::get('mobile/qrcode/sign_activity/{activityId}/{orgId}', 'mobile\WcActivityController@qrSign');
 Route::post('mobile/activity/sign', 'mobile\WcActivityController@postSign');
 
 

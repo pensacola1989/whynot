@@ -2,7 +2,7 @@
     @if(count($activities))
     @foreach($activities as $at)
     <li class="ui-border-t ui-list-item-link">
-        <a href="{{ $type == 1 ? URL::action('mobile\ActivityController@atRegister', $at->Activity->id)
+        <a href="{{ $type == 1 ? URL::action('mobile\WcActivityController@atRegister', $at->Activity->id)
             : URL::action('mobile\VolunteerController@commentDetail', $at->Activity->id)
         }}">
         <div class="ui-list-info">
