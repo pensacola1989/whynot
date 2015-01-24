@@ -75,7 +75,6 @@ class WechatHelper {
             return Session::get('current_org_id');
 
         $parameters = Route::current()->parameters();
-        // dd($parameters);exit();
         if(isset($parameters['orgId'])) {
             Session::put('current_org_id', $parameters['orgId']);
             return $parameters['orgId'];
