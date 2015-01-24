@@ -199,13 +199,13 @@ class ActivityController extends BaseController {
     public function publishChannel($activityId, $orgId)
     {
         $this->title = '活动发布渠道';
-        $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, 0]);
+        $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, $orgId]);
         $this->view('activity.activity_pub_channel', compact('getQrImgUrl'));
     }
 
     public function getSignQrCodeImg($activityId, $orgId)
     {
-        $signUrl = URL::action('mobile\WcActivityController@qrSign', $activityId);
+        $signUrl = URL::action('mobile\WcActivityController@qrSign', [$activityId, $orgId]);
         $qrImg = $this->qrHelper->generateQrCode($signUrl, 200);
         $response = Response::make($qrImg, 200);
         $response->header('content-type', 'image/png');
