@@ -79,7 +79,6 @@ var jiathis_config = {
     }
 }
 function testShare(e) {
-    alert('fuck');
     return false;
 }
 $(document).ready(function() {
