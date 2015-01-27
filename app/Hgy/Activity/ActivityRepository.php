@@ -20,11 +20,13 @@ class ActivityRepository extends EntityRepository
     const AT_COMPLETE = 3;
 
     private $currentUser;
+    private $currentOrg;
 
     public function __construct(Activities $model)
     {
         $this->model = $model;
         $this->currentUser = Auth::user();
+        $this->currentOrg = Auth::user()->Orgs()->first();
     }
 
     /**
@@ -305,5 +307,17 @@ class ActivityRepository extends EntityRepository
         $this->model->find($activityId)
                             ->ActivitySigns()
                             ->attach($uid);
+    }
+
+    public function isActicityVerified($activityId)
+    {
+        $activity = $this->currentOrg
+                            ->Activities()
+                            ->where('id', '=', $activityId)
+                            ->first();
+        return $activity->is_verify != 0;
+
+
+
     }
 }

@@ -199,11 +199,17 @@ class ActivityController extends BaseController {
     public function publishChannel($activityId, $orgId)
     {
         $this->title = '活动发布渠道';
+        $isActivityVerified = $this->activityRepo->isActicityVerified($activityId);
         $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, $orgId]);
-        $this->view('activity.activity_pub_channel', compact('getQrImgUrl'));
+        $this->view('activity.activity_pub_channel', compact('getQrImgUrl', 'isActivityVerified'));
     }
 
-    public function getSignQrCodeImg($activityId, $orgId)
+    /** 浏览器端图片的src地址，动态生成二维码
+     * @param $activityId
+     * @param $orgId
+     * @return mixed
+     */
+    public function getSignQrCodeImg($orgId, $activityId)
     {
         $signUrl = URL::action('mobile\WcActivityController@qrSign', [$activityId, $orgId]);
         $qrImg = $this->qrHelper->generateQrCode($signUrl, 200);
@@ -212,4 +218,39 @@ class ActivityController extends BaseController {
         return $response;
     }
 
+    public function atDetail($activityId, $orgId)
+    {
+        $this->title = '活动详情';
+        $activities = $this->activityRepo->requireById($activityId);
+        $activityAttr = $activities->Attributes;
+        $this->view('activity.at_detail', compact('activities', 'activityAttr'));
+    }
+
+    /** 修改活动基本信息
+     * @param $activityId
+     */
+    public function getModifyActvityInfo($activityId)
+    {
+        $this->title = '修改活动基本信息';
+        $activity = $this->activityRepo->requireById($activityId);
+        $this->view('activity.modify_activity', compact('activity'));
+    }
+
+    /** 编辑活动基本信息
+     * @param $activityId
+     * @return array
+     */
+    public function postActivityEdit($activityId)
+    {
+        $activity = $this->activityRepo->requireById($activityId);
+        $ret = $activity->update(\Illuminate\Support\Facades\Input::all());
+        if ($ret) {
+            return $this->redirectAction('ActivityController@atDetail',
+                [Auth::user()->Orgs()->first()->id, $activityId]);
+        }
+        else {
+            return $this->redirectAction('ActivityController@atDetail',
+                [Auth::user()->Orgs()->first()->id, $activityId]);
+        }
+    }
 }

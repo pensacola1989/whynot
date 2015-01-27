@@ -19,7 +19,11 @@
         @if(count($activities))
         @foreach($activities as $at)
         <tr>
-            <td>{{ $at->title }}</td>
+            <td>
+                <a href="{{ URL::action('ActivityController@atDetail', [Auth::User()->Orgs()->first()->id, $at->id]) }}">
+                    {{ $at->title }}
+                </a>
+            </td>
             <td>{{ $at->content }}</td>
             <td>{{ $at->area }}</td>
             <td>{{ $at->status }}</td>

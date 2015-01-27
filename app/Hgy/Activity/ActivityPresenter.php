@@ -8,6 +8,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Hgy\Image\ImageRepository;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 class ActivityPresenter extends BasePresenter {
@@ -141,6 +142,15 @@ class ActivityPresenter extends BasePresenter {
         return $isRegister != null;
     }
 
+    public function cover()
+    {
+        $imageRepo = App::make('\Hgy\Image\ImageRepository');
+        return $imageRepo->getImageUrlById($this->resource->cover);
+    }
 
+    public function cover_id()
+    {
+        return $this->resource->cover;
+    }
 
 }
