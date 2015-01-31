@@ -100,13 +100,14 @@
         </li>
         <li id="mod_setting" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('/channel/index','互联网渠道设置') }}</li>
+            <li class="child_item">{{ HTML::link('/channel/index','微信接口配置') }}</li>
             <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
           </ul>
         </li>
         @if(Auth::user()->Orgs()->first()->can('manage_platform'))
          <li id="mod_platform" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
           <ul class="tree_child">
+            <li class="child_item">{{ HTML::link('/channel/sns','其他渠道配置') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/activity','活动审核') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/org','组织审核') }}</li>
           </ul>

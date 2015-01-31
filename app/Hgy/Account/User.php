@@ -1,5 +1,6 @@
 <?php namespace Hgy\Account;
 
+use Hgy\Platform\SnsInfo;
 use Hgy\Wechat\Menu;
 use Hgy\Activity\Activities;
 use Hgy\Core\Entity;
@@ -157,6 +158,10 @@ class User extends Entity implements UserInterface, RemindableInterface {
         return $this->hasOne(Menu::class, 'org_id');
     }
 
+    public function SnsInfo()
+    {
+        return $this->hasOne(SnsInfo::class, 'org_id');
+    }
 //
 
     /**

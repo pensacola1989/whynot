@@ -131,9 +131,14 @@ Route::group(['before'  =>  'auth'], function () {
     Route::post('/wechatMenu/edit', 'MenuController@postEditMenu');
     Route::post('/wechatMenu/generate', 'MenuController@generateMenu');
     /**
-     * Channel
+     * Channel 微信
      */
     Route::get('/channel/index', 'ChannelController@index');
+    /**
+     * Channel 其他
+     */
+    Route::get('/channel/sns', 'ChannelController@others');
+    Route::post('/channel/others', 'ChannelController@postEditOthers');
     Route::post('/channel/new/{channelId?}', 'ChannelController@postChannelEdit');
     /*
      * Platform

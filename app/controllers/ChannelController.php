@@ -43,4 +43,30 @@ class ChannelController extends BaseController {
 
         if($ret) return $this->redirectBack(['success'=>1]);
     }
+
+    public function others()
+    {
+        if(Session::get('success') == 1)
+            echo '<script type="text/javascript">alert("保存成功");</script>';
+
+        $sns = $this->channel->getSnsKeyInfo();
+        if($sns->sns_key_info == null) {
+            $snsKeyInfo = null;
+        } else {
+            $snsKeyInfo = json_decode($sns->sns_key_info);
+        }
+        $this->view('channel.others', compact('snsKeyInfo'));
+    }
+
+    public function postEditOthers()
+    {
+        $inputs = Input::all();
+        $snsInfo = $this->channel->getSnsKeyInfo();
+        if($snsInfo != null) {
+            $ret = $this->channel->updateSnsKeyInfo($inputs);
+        } else {
+            $ret = $this->channel->saveSnsKeyInfo($inputs);
+        }
+        return $this->redirectBack(['success'=>1]);
+    }
 }

@@ -166,7 +166,7 @@ class ActivityRepository extends EntityRepository
     public function publishAt($activityId)
     {
         return $this->model->find($activityId)
-                            ->update(['is_verify'  =>  2]);
+                            ->update(['is_published'  =>  1]);
     }
 
     /**
@@ -316,8 +316,11 @@ class ActivityRepository extends EntityRepository
                             ->where('id', '=', $activityId)
                             ->first();
         return $activity->is_verify != 0;
+    }
 
-
-
+    public function isActivityPublished($activityId)
+    {
+        $activity = $this->requireById($activityId);
+        return $activity->is_published == 1;
     }
 }

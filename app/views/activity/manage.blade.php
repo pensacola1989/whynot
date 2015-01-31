@@ -29,7 +29,7 @@
             <td>{{ $at->status }}</td>
             <td>
             @if($at->is_verify == 1)
-                <a class="publish-btn" id="{{ $at->id }}" href="javascript:void(null);"
+                <a class="publish-btn" id="{{ $at->id }}" href="{{ URL::action('ActivityController@publishChannel', [$at->id, Auth::user()->Orgs()->first()->id]) }}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="发布">
                     <i class="fa fa-send"></i>
                 </a>
@@ -64,10 +64,10 @@ function publish($activityId) {
     .error();
 }
 $(function() {
-    $('.publish-btn').on('click', function() {
-        var _id = parseInt($(this).attr('id'));
-        publish(_id);
-    });
+//    $('.publish-btn').on('click', function() {
+//        var _id = parseInt($(this).attr('id'));
+//        publish(_id);
+//    });
 });
 </script>
 @endsection

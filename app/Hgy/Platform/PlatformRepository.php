@@ -95,4 +95,5 @@ class PlatformRepository extends EntityRepository {
     {
         return $this->model->where('is_verify', '=', 1)->count();
     }
+
 }

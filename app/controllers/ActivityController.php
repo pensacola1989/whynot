@@ -10,6 +10,7 @@ use Hgy\Activity\ActivityPresenter;
 use Hgy\Activity\ActivityRepository;
 use Hgy\Activity\ActivityAttributeRepository;
 use Hgy\Wechat\QrCodeHelper;
+use Hgy\Wechat\ChannelRepository;
 
 class ActivityController extends BaseController {
 
@@ -18,6 +19,7 @@ class ActivityController extends BaseController {
     private $activityRepo;
     private $attributeRepo;
     private $qrHelper;
+    private $channelRepo;
 
     private $fieldTypeMap = [
         'datetime'  =>  '日期类型',
@@ -30,11 +32,13 @@ class ActivityController extends BaseController {
 
     public function __construct(ActivityRepository $repo,
                                 ActivityAttributeRepository $attrRepo,
-                                QrCodeHelper $qrCodeHelper)
+                                QrCodeHelper $qrCodeHelper,
+                                ChannelRepository $channelRepository)
     {
         $this->activityRepo = $repo;
         $this->attributeRepo = $attrRepo;
         $this->qrHelper = $qrCodeHelper;
+        $this->channelRepo = $channelRepository;
     }
 
     public function index()
@@ -201,7 +205,16 @@ class ActivityController extends BaseController {
         $this->title = '活动发布渠道';
         $isActivityVerified = $this->activityRepo->isActicityVerified($activityId);
         $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, $orgId]);
-        $this->view('activity.activity_pub_channel', compact('getQrImgUrl', 'isActivityVerified'));
+        $isPublished = $this->activityRepo->isActivityPublished($activityId);
+        $sns = $this->channelRepo->getSnsKeyInfo();
+        if($sns != null && $sns->sns_key_info != null) {
+            $snsKeyInfo = json_decode($sns->sns_key_info);
+        }
+        else {
+            $snsKeyInfo = null;
+        }
+        $this->view('activity.activity_pub_channel',
+            compact('getQrImgUrl', 'isPublished', 'isActivityVerified', 'activityId', 'snsKeyInfo'));
     }
 
     /** 浏览器端图片的src地址，动态生成二维码

@@ -49,6 +49,18 @@
       </div>
       @endif
     </div>
+
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4">
+        <button id="{{ $activityId }}" {{ $isPublished ? 'disabled' : ''}} class="publish-btn btn btn-primary">
+            <i class="fa fa-send"></i>
+            &nbsp;
+            {{ $isPublished ? '已发布到哈公益' : '发布到哈公益' }}
+
+        </button>
+      </div>
+    </div>
 </div>
 @section('scripts')
 <script type="text/javascript">
@@ -66,9 +78,9 @@ var jiathis_config = {
     pic:"自定义分享的图片连接地址",
     data_track_clickback:true,
     appkey:{
-        "tsina":"您网站的新浪微博APPKEY",
-        "tqq":"您网站的腾讯微博APPKEY",
-         "tpeople":"您网站的人民微博APPKEY"
+        "tsina":"{{ $snsKeyInfo->tsina }}",
+        "tqq":" {{ $snsKeyInfo->tqq }}",
+        "tpeople":"您网站的人民微博APPKEY"
     },
     ralateuid:{
         "tsina":"您的新浪微博UID"
@@ -85,7 +97,22 @@ $(document).ready(function() {
     $('.sns-btn a').on('click', function(e) {
         e.preventDefault();
     });
+    $('.publish-btn').on('click', function() {
+        var _id = parseInt($(this).attr('id'));
+        publish(_id);
+    });
 });
+
+function publish($activityId) {
+    $.post('{{ route('atpub') }}', { activityId: $activityId })
+    .success(function(data) {
+        if(!data.errorCode) {
+            alert(data.message);
+            history.go(0);
+        }
+    })
+    .error();
+}
 </script>
 <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
 @endsection

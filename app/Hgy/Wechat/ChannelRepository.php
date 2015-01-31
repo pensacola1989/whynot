@@ -2,6 +2,7 @@
 
 use Auth;
 use Hgy\Core\EntityRepository;
+use Hgy\Platform\SnsInfo;
 use Illuminate\Support\Facades\URL;
 
 /**
@@ -67,6 +68,38 @@ class ChannelRepository extends EntityRepository {
         $urlBase = URL::route('wechatEnter');
         return ['callback_url'   =>  $urlBase . '/' . $orgId, 'token'    =>  '1989'];
     }
+
+    public function saveSnsKeyInfo($inputs)
+    {
+        $data = json_encode($inputs);
+        $newSnsInfo = new SnsInfo();
+        $newSnsInfo->sns_key_info = $data;
+
+        return $this->currentUser
+                    ->Orgs()
+                    ->first()
+                    ->SnsInfo()
+                    ->save($newSnsInfo);
+    }
+
+    public function updateSnsKeyInfo($inputs)
+    {
+        $data = json_encode($inputs);
+        return $this->currentUser
+                    ->Orgs()
+                    ->first()
+                    ->SnsInfo()
+                    ->update([
+                        'sns_key_info'  =>  $data
+                    ]);
+    }
+
+    public function getSnsKeyInfo()
+    {
+        $org = $this->currentUser->Orgs()->first();
+        return $org->SnsInfo;
+    }
+
     // --------------------- for wechat frontend--------------------
 
 }
