@@ -15,6 +15,7 @@
             @if($attr->attr_type == 'text')
             {{ $values[$attr->attr_field_name]}}
             @elseif($attr->attr_type == 'image')
+            {{ $values[$attr->attr_field_name]}}
             @elseif($attr->attr_type == 'textarea')
             @elseif($attr->attr_type == 'datetime')
             @endif

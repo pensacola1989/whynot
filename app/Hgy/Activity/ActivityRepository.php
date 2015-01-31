@@ -68,6 +68,9 @@ class ActivityRepository extends EntityRepository
     public function getSummaryPaginate(User $orgUser)
     {
         return $orgUser->Activities()
+                        ->where('end_time', '<', date('Y-m-d H:i:s',time()))
+                        ->where('is_verify', '=', 1)
+                        ->where('is_published', '=', 1)
                         ->orderBy('created_at','desc')
                         ->paginate(self::AT_PER_PAGE_NUM);
     }

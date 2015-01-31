@@ -43,7 +43,7 @@ class ActivityPresenter extends BasePresenter {
     {
         if($this->is_verify == 0)
             return '<label class="label label-default">等待审核</label>';
-        if($this->is_verify == 1)
+        if($this->is_verify == 1 && $this->is_published == 0)
             return '<label class="label label-warning">未发布</label>';
         $endTimestamp = intval(strtotime($this->resource->end_time));
         if(time() < $this->resource->start_time)

@@ -79,8 +79,10 @@ class VolunteerRepository extends EntityRepository {
 
     public function getVltDetailById(User $bisUser,$id)
     {
-        return $bisUser->volunteers()->where('id', '=', $id)->first()->VolunteerAttrValues;
+        $valueRecord = $bisUser->VltValues()->where('vol_id', '=', $id)->first();
+        return $valueRecord != null ? $valueRecord->pivot->value : null;
     }
+
 
     public function getCurrentOrgVltCount()
     {
@@ -92,10 +94,6 @@ class VolunteerRepository extends EntityRepository {
 
     public function getVltByGroupId($groupid)
     {
-//        return $this->_getOrg()
-//                    ->volunteerGroup()
-//                    ->find($groupid)
-//                    ->Volunteers;
         return $this->_getOrg()
                     ->volunteerGroup()
                     ->with('Volunteers')

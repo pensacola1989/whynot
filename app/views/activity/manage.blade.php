@@ -12,7 +12,7 @@
             <th>活动内容简介</th>
             <th>活动地点</th>
             <th>活动状态</th>
-            <th>查看报名</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
             <td>{{ $at->area }}</td>
             <td>{{ $at->status }}</td>
             <td>
-            @if($at->is_verify == 1)
+            @if($at->is_verify == 1 && $at->is_published == 0)
                 <a class="publish-btn" id="{{ $at->id }}" href="{{ URL::action('ActivityController@publishChannel', [$at->id, Auth::user()->Orgs()->first()->id]) }}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="发布">
                     <i class="fa fa-send"></i>
