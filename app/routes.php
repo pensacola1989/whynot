@@ -174,6 +174,7 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Activity
      */
+    Route::get('/activity_filter', 'ActivityController@filter');
     Route::get('/activity/activityDetail/{orgId}/{activityId}', 'ActivityController@atDetail');
     Route::post('/atpublish', ['as'  =>  'atpub',    'uses'  =>  'ActivityController@publishActivity']);
     Route::get('/activitysign/index/{activityId}', 'AtSignController@index');

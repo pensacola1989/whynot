@@ -5,6 +5,40 @@
     </h2>
 </div>
 <div class="container">
+<form method="get" action="{{ URL::action('ActivityController@filter') }}">
+<div class="row">
+    <div class="col-md-2">
+          <input type="radio" name="filter" value="complete">
+          已完成
+    </div>
+    <div class="col-md-2">
+        <input type="radio" name="filter" value="during">
+        正在进行
+    </div>
+    <div class="col-md-2">
+        <input type="radio" name="filter" value="finish">
+        已结束
+    </div>
+    <div class="col-md-2">
+        <input type="radio" name="filter" value="unbegin">
+        未开始
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-success">
+            <i class="fa fa-filter"></i>
+            &nbsp;
+            筛选
+        </button>
+        <a href="{{ URL::action('ActivityController@filter') }}" class="btn btn-default">
+            <i class="fa fa-close"></i>
+            &nbsp;
+            取消筛选
+        </a>
+    </div>
+</div>
+</form>
+</div>
+<div class="container">
 <table class="table-list table table-hover">
         <thead>
         <tr>
@@ -46,13 +80,17 @@
         </tbody>
     </table>
     <nav class="pager-container">
-
-      {{ $activities->links() }}
+        {{ $activities ? $activities->appends($searchFieldArr)->links() : '' }}
+      {{--{{ $activities->links() }}--}}
     </nav>
 </div>
 
 @section('scripts')
 <script type="text/javascript">
+function queryParams(key) {
+    var svalue = location.search.match(new RegExp("[\?\&]" + key + "=([^\&]*)(\&?)","i"));
+    return svalue ? svalue[1] : svalue;
+}
 function publish($activityId) {
     $.post('{{ route('atpub') }}', { activityId: $activityId })
     .success(function(data) {
@@ -64,6 +102,11 @@ function publish($activityId) {
     .error();
 }
 $(function() {
+    var filter = queryParams('filter');
+    if(filter != '') {
+        $('input[value=' + filter + ']').attr('checked', true);
+    }
+//    $('input').iCheck();
 //    $('.publish-btn').on('click', function() {
 //        var _id = parseInt($(this).attr('id'));
 //        publish(_id);

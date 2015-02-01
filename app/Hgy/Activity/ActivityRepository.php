@@ -310,6 +310,7 @@ class ActivityRepository extends EntityRepository
         $this->model->find($activityId)
                             ->ActivitySigns()
                             ->attach($uid);
+        $this->updateAttendNum($activityId);
     }
 
     public function isActicityVerified($activityId)
@@ -325,5 +326,93 @@ class ActivityRepository extends EntityRepository
     {
         $activity = $this->requireById($activityId);
         return $activity->is_published == 1;
+    }
+
+    /** 修改报名数
+     * @param $activityId
+     */
+    public function updateRequestNumbers($activityId)
+    {
+        $activity = $this->getActivityOfOrgByActivityId($activityId);
+        $oldValue = $activity->request_num;
+        $activity->request_num = ++$oldValue;
+        $activity->save();
+    }
+
+    /** 修改参加数
+     * @param $activityId
+     */
+    public function updateAttendNum($activityId)
+    {
+        $activity = $this->getActivityOfOrgByActivityId($activityId);
+        $oldValue = $activity->attend_num;
+        $activity->attend_num = ++$oldValue;
+        $activity->save();
+    }
+
+    /** 修改审核志愿者数目
+     * @param $activityId
+     */
+    public function updateApproveNum($activityId)
+    {
+        $activity = $this->getActivityOfOrgByActivityId($activityId);
+        $oldValue = $activity->approve_num;
+        $activity->approve_num = ++$oldValue;
+        $activity->save();
+    }
+
+
+
+    private function getActivityOfOrgByActivityId($activityId)
+    {
+        return $this->currentOrg->Activities()
+                                    ->where('id', '=', $activityId)
+                                    ->first();
+    }
+
+    /**
+     * @param $bisUser
+     * @param $searchFieldArr
+     * @param $perPageNum
+     */
+    public function searchPaginated($bisUser,$searchFieldArr,$perPageNum)
+    {
+        $query = $bisUser->Activities();
+
+        $query = $query->where('is_verify', '=', 1)
+                        ->where('is_published', '=', 1);
+
+        $filterField = $searchFieldArr['filter'];
+        if($filterField == 'unbegin') {
+            //未开始
+            $query = $query->where('start_time', '>', date('Y-m-d H:i:s',time()));
+
+        }
+        if($filterField == 'complete') {
+            // 已完成
+            $query = $query->where('end_time', '<', date('Y-m-d H:i:s',time()));
+        }
+        if($filterField == 'finish') {
+            // 时间上的结束
+            $query = $query->where('end_time', '<', date('Y-m-d H:i:s',time()));
+        }
+        if($filterField == 'during') {
+            // 正在进行
+            $query = $query->where('start_time', '<', date('Y-m-d H:i:s',time()))
+                            ->where('end_time', '>', date('Y-m-d H:i:s',time()));
+        }
+
+        return $query->orderBy('updated_at','desc')
+                    ->paginate($perPageNum);
+//        if(count($searchFieldArr)) {
+//            foreach ($searchFieldArr as $k => $v) {
+//                if($v != '' && $v != '-1') {
+//                    $query = $query->where($k, '=', $v);
+//                }
+//            }
+//            return $query->orderBy('updated_at','desc')
+//                ->paginate($perPageNum);
+//        }
+//        return [];
     }
 }

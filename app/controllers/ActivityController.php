@@ -266,4 +266,19 @@ class ActivityController extends BaseController {
                 [Auth::user()->Orgs()->first()->id, $activityId]);
         }
     }
+
+    public function filter()
+    {
+        $this->title = '活动管理';
+        $searchFieldArr = Input::query();
+        if(count($searchFieldArr) == 0 || empty($searchFieldArr['filter'])) {
+            $activities = $this->activityRepo->getActivities($this->getCurrentUser());
+        } else {
+            $query = array_except($searchFieldArr,\Illuminate\Support\Facades\Paginator::getPageName());
+
+            $activities = $this->activityRepo->searchPaginated($this->getCurrentUser(), $query, 5);
+        }
+
+        $this->view('activity.manage', compact('activities', 'searchFieldArr'));
+    }
 }
