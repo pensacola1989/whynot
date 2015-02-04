@@ -132,7 +132,7 @@ class ActivityController extends BaseController {
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $this->title = '基本信息';
-            $this->view('Activity.publish',['step' => $step, 'uid'  =>  $uid]);
+            $this->view('activity.publish',['step' => $step, 'uid'  =>  $uid]);
         } elseif($step == 2 && $uid != null) {
             Session::put('currentActivityId', $uid);
             $attrs = $this->activityRepo->getAttrByOrderNum($uid);
