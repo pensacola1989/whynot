@@ -142,11 +142,11 @@ class ActivityController extends BaseController {
         } elseif($step == 3 && $uid != null) {
 //            $isVerify = $this->_isUserVery($uid);
             $this->title = '发布渠道选择';
-            $this->view('Activity.publish',['step' => $step]);
+            $this->view('activity.publish',['step' => $step]);
         }
         else {
             $this->title = '基本信息';
-            $this->view('Activity.publish',['step' => 1]);
+            $this->view('activity.publish',['step' => 1]);
         }
 
     }
