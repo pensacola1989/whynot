@@ -1,6 +1,9 @@
 <div class="page-header">
     <h2>
         活动管理
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>活动列表</small>
     </h2>
 </div>
@@ -8,23 +11,39 @@
 <form method="get" action="{{ URL::action('ActivityController@filter') }}">
 <div class="row">
     <div class="col-md-2">
-          <input type="radio" name="filter" value="complete">
-          已完成
+        <div class="radio radio-material-amber">
+            <label>
+              <input type="radio" name="filter" value="complete">
+              已完成
+            </label>
+        </div>
     </div>
     <div class="col-md-2">
-        <input type="radio" name="filter" value="during">
-        正在进行
+        <div class="radio radio-material-amber">
+            <label>
+            <input type="radio" name="filter" value="during">
+            正在进行
+            </label>
+        </div>
     </div>
     <div class="col-md-2">
-        <input type="radio" name="filter" value="finish">
-        已结束
+        <div class="radio radio-material-amber">
+            <label>
+            <input type="radio" name="filter" value="finish">
+            已结束
+            </label>
+        </div>
     </div>
     <div class="col-md-2">
+        <div class="radio radio-material-amber">
+        <label>
         <input type="radio" name="filter" value="unbegin">
         未开始
+        </label>
+        </div>
     </div>
     <div class="col-md-4">
-        <button class="btn btn-success">
+        <button class="btn btn-material-amber">
             <i class="fa fa-filter"></i>
             &nbsp;
             筛选

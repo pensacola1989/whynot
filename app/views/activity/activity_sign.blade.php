@@ -1,6 +1,10 @@
 <div class="page-header">
     <h2>
-        志愿者签名
+        志愿者签到
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>签到信息</small>
     </h2>
 </div>
 <div class="container">

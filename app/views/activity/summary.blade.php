@@ -2,6 +2,9 @@
 <div class="page-header">
     <h2>
         活动总结
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>请填写活动相关得总结信息</small>
     </h2>
 </div>

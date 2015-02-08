@@ -4,6 +4,9 @@
 <div class="page-header">
     <h2>
         审核报名
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>审核已经报名的志愿者</small>
     </h2>
 </div>

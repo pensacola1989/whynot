@@ -1,7 +1,11 @@
 {{ HTML::style('/styles/activity.css') }}
 <div class="page-header">
     <h2>
-        活动基本信息修改
+        活动基本信息
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>修改</small>
     </h2>
 </div>
 <div class="container">

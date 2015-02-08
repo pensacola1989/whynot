@@ -1,7 +1,10 @@
 <div class="page-header">
     <h2>
         志愿者自定义信息详情
-        <small>...</small>
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+
     </h2>
 </div>
 <div class="container">

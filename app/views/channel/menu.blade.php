@@ -12,8 +12,11 @@
 </style>
 @endsection
 <div class="page-header">
-    <h2>
+     <h2>
         微信自定义菜单配置
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>配置微信自定义菜单</small>
     </h2>
 </div>
@@ -60,7 +63,7 @@
         <i class="fa fa-plus"></i>
         添加
     </button>
-    <button ng-click="saveMenu()" class="btn btn-success">
+    <button ng-click="saveMenu()" class="btn btn-material-amber">
         <i class="fa fa-check"></i>
         保存
     </button>

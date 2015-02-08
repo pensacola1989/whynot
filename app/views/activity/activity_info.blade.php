@@ -12,11 +12,14 @@
 <div class="page-header">
     <h2>
         活动信息编辑
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>设置活动报名的字段信息</small>
     </h2>
 </div>
 <div class="container hgy-form-control">
-<a href="{{ action('ActivityController@editAtInfo') }}" class="btn btn-primary">
+<a href="{{ action('ActivityController@editAtInfo') }}" class="btn btn-default">
     <i class="fa fa-plus"></i>
     &nbsp;&nbsp;添加
 </a>
@@ -90,7 +93,7 @@
   @endforeach
   @endif
 </ul>
-<a href="{{ URL::action('ActivityController@publishChannel', [$uid, $orgId]) }}" class="btn btn-primary">
+<a href="{{ URL::action('ActivityController@publishChannel', [$uid, $orgId]) }}" class="btn btn-material-amber">
     <i class="fa fa-arrow-right"></i>
     &nbsp;
     下一步

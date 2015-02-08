@@ -12,6 +12,8 @@
 
     {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    {{ HTML::style('/material/css/ripples.min.css') }}
+    {{ HTML::style('/material/css/material-wfont.min.css') }}
     {{ HTML::style('/styles/global.css') }}
     {{ HTML::style('/styles/register.css')  }}
     {{ HTML::style('/styles/tree.css') }}
@@ -23,12 +25,13 @@
 	 <div class="navbar navbar-fixed-top mynav" role="navigation">
       <div class="pull-left">
         <div class="navbar-header">
+        @if(Auth::check())
+        <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="navbar-brand glyphicon glyphicon-align-justify"></a>
+        @endif
           <a class="myhover navbar-brand" href="#">
             <img id="logo" src="{{ URL::asset('images/home/hagongyi-3.png') }}">
           </a>
-          @if(Auth::check())
-          <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="glyphicon glyphicon-align-justify"></a>
-          @endif
+
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -62,22 +65,22 @@
                   <span class="glyphicon glyphicon-off" style="margin-right:5px;color:#ea6153;"></span>
                 </a>                
               </li>
-              <li class="dropdown">
+              {{--<li class="dropdown">--}}
 
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-cog" style="margin-right:10px;"></span>
+                {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
+                  {{--<span class="glyphicon glyphicon-cog" style="margin-right:10px;"></span>--}}
                   {{--<span href="javascript:void(null);">{{ Auth::user()->username }}</span>--}}
-                </a>
+                {{--</a>--}}
 
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <!-- <li><a href="#" id="logout">注销</a></li> -->
-                  <li>{{ HTML::link('user/logout','注销',array('id'=>'logout')) }}</li>
-                </ul>
-              </li>
+                {{--<ul class="dropdown-menu">--}}
+                  {{--<li><a href="#">Action</a></li>--}}
+                  {{--<li><a href="#">Another action</a></li>--}}
+                  {{--<li><a href="#">Something else here</a></li>--}}
+                  {{--<li class="divider"></li>--}}
+                  {{--<!-- <li><a href="#" id="logout">注销</a></li> -->--}}
+                  {{--<li>{{ HTML::link('user/logout','注销',array('id'=>'logout')) }}</li>--}}
+                {{--</ul>--}}
+              {{--</li>--}}
               <li>
 
               </li>
@@ -88,24 +91,36 @@
     @if(Auth::check())
     <div class="tree_bar">
        <ul class="tree_container">
+       <li id="mod_activity" class="tree_item"><a><i class="fa fa-heart-o"></i>&nbsp;活动</a>
+         <ul class="tree_child">
+           <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
+           <li class="child_item">{{ HTML::link('/activity_filter','活动管理') }}</li>
+           <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
+         </ul>
+       </li>
         <li id="mod_org_card" class="tree_item open">
-          <a><i class="glyphicon glyphicon-phone"></i>组织名片</a>
+          <a>
+            <i class="fa fa-bullseye"></i>
+            &nbsp;
+            组织名片
+          </a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('＃','名片版式') }}</li>
+            {{--<li class="child_item">{{ HTML::link('＃','名片版式') }}</li>--}}
             <li class="child_item">{{ HTML::link('/wechatMenu/index','菜单设置') }}</li>
-            <li class="child_item">{{ HTML::link('＃','细节设置') }}</li>
+            {{--<li class="child_item">{{ HTML::link('＃','细节设置') }}</li>--}}
             <!-- <li class="child_item"><a>分类页面</a></li> -->
 
           </ul>
         </li>
-        <li id="mod_setting" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
+        <li id="mod_setting" class="tree_item"><a><i class="fa fa-gears"></i>&nbsp;设置</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/channel/index','微信接口配置') }}</li>
-            <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
+{{--            <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>--}}
           </ul>
         </li>
         @if(Auth::user()->Orgs()->first()->can('manage_platform'))
-         <li id="mod_platform" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
+         <li id="mod_platform" class="tree_item"><a><i class="fa fa-sliders"></i>
+            &nbsp;平台管理</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/channel/sns','其他渠道配置') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/activity','活动审核') }}</li>
@@ -120,13 +135,7 @@
             <li class="child_item">{{ HTML::link('/volteer/info','信息设置') }}</li>
           </ul>
         </li>
-        <li id="mod_activity" class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
-          <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
-            <li class="child_item">{{ HTML::link('/activity_filter','活动管理') }}</li>
-            <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
-          </ul>
-        </li>
+
 
       </ul>
     </div>
@@ -140,6 +149,14 @@
 
 <!-- Latest compiled and minified JavaScript -->
 {{ HTML::script('http://libs.baidu.com/jquery/2.0.0/jquery.js') }}
+{{ HTML::script('material/js/ripples.min.js')}}
+  {{ HTML::script('material/js/material.min.js')}}
+  <script>
+      $(document).ready(function() {
+          $.material.ripples(".child_item");
+          $.material.init();
+      });
+  </script>
 {{ HTML::script('scripts/jquery-cookie.js') }}
 {{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
 {{ HTML::script('scripts/bootbox.min.js') }}

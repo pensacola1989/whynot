@@ -1,7 +1,13 @@
 {{ HTML::style('/styles/vol.css') }}
 <div class="container">
 <div class="page-header">
-    <h2>志愿者列表</h2>
+    <h2>
+        志愿者列表
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>志愿者列表</small>
+    </h2>
 </div>
 <div class="container search-panel">
 <form method="GET" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">
@@ -68,9 +74,11 @@
   <thead>
     <tr>
       <th>
+        <div class="checkbox checkbox-material-amber">
         <label>
           <input type="checkbox" class="list-check" id="checkall">
         </label>
+        </div>
       </th>
       <th>姓名</th>
       <th>分组</th>
@@ -86,9 +94,11 @@
 {{--    {{ dd($v->orgGroup);exit(); }}--}}
     <tr>
       <td>
+        <div class="checkbox checkbox-material-amber">
           <label>
             <input id="{{ $v->id }}" type="checkbox" class="list-check">
           </label>
+        </div>
       </td>
       <td>{{ $v->username }}</td>
       <td>{{ $groupMap[$v->pivot->group_id] }}</td>

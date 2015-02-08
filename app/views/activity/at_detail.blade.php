@@ -6,6 +6,10 @@
 <div class="page-header">
     <h2>
         活动详情
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>活动详情</small>
     </h2>
 </div>
 <div class="container">

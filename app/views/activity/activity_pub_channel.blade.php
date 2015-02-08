@@ -4,8 +4,11 @@
 </style>
 @endsection
 <div class="page-header">
-    <h2>
+     <h2>
         渠道发布
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>签到二维码，SNS</small>
     </h2>
 </div>

@@ -26,7 +26,7 @@ class ActivityRepository extends EntityRepository
     {
         $this->model = $model;
         $this->currentUser = Auth::user();
-        $this->currentOrg = Auth::user()->Orgs()->first();
+        $this->currentOrg = $this->currentUser != null ? Auth::user()->Orgs()->first() : null;
     }
 
     /**
