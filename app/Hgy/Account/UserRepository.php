@@ -21,6 +21,8 @@ class UserRepository extends EntityRepository {
     {
         $user = $this->getNew($data);
         $ret = $this->save($user);
+//        header("Content-type: text/html; charset=utf-8");
+//        dd($user->errors());exit();
         if(!$ret)  {
             $this->errorMessage = $user->errors();
         } else {

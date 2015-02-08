@@ -117,10 +117,10 @@ class User extends Entity implements UserInterface, RemindableInterface {
 //            $this->password = \Hash::make($this->password);
 //        }
 
-        if($this->_isUserExist($this->email,$this->orgName)) {
-            $this->errors()->add('account_error','该用户已经被注册');
-            return false;
-        }
+//        if($this->_isUserExist($this->email,$this->orgName)) {
+//            $this->errors()->add('account_error','该用户已经被注册');
+//            return false;
+//        }
         return true;
         //or don't return nothing, since only a boolean false will halt the operation
     }

@@ -136,6 +136,7 @@ class UserController extends BaseController {
                     return $this->redirectBack(['errors'=>$userinfo->errors()]);
                 $tempOrgData = [
                     'is_verify' =>  0
+//                    'orgName'   =>  Input::get('u_cp_unit')
                 ];
                 $ret = $this->userRepo->storeData($tempOrgData);
                 $org = $this->userRepo->requireById($ret->id);

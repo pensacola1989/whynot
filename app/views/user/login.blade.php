@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin: auto; width: 600px; margin-top: 100px;">
     {{ Form::open(array('action'    =>  'AuthController@login','method'  =>  'post','class'=>'hgy-form form-horizontal','role'=>'form')) }}
       <div class="form-group">
         {{ Form::label('email','Email',array('class'   =>  'col-sm-2 control-label')) }}
