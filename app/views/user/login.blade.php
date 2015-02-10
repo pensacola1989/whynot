@@ -30,4 +30,5 @@
           </div>
         </div>
     {{ Form::close() }}
+    {{ HTML::link('/user/register','内测注册') }}
 </div>
