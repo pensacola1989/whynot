@@ -1,14 +1,35 @@
 @section('styles')
 <style type="text/css">
 .menu-container{width:300px;}
-.menu-ul{}
-.menu-ul li{
-    background-color:#009688;
-    color:#FFF;
-    padding: 5px;
-    margin: 10px;
+.menu-ul{
+    /*border: 1px solid;*/
+    display: inline-block;
+    width: 600px;
+    padding: 0;
+    height: 300px;
 }
-.sub-li{color:#FFF;background-color: #B2DFDB !important;}
+.menu-ul li{
+    border: 1px solid gray;
+    color: #FFF;
+    text-align: center;
+    /*margin: 10px;*/
+    float: left;
+    position: relative;
+    width: 150px;
+    height: 50px;
+}
+li p {color:gray;}
+.sub-li{margin: 0 !important;background-color: #B2DFDB !important;}
+.sub-ul{
+    display: inline-block;
+    /*border: 1px solid #333;*/
+    padding: 0;
+    margin: 0;
+    top: 50px;
+    position: absolute;
+    left: 0;
+}
+
 </style>
 @endsection
 <div class="page-header">
@@ -59,7 +80,7 @@
         {{--</li>--}}
     {{--</ul>--}}
 
-    <button modal-btn class="btn btn-primary">
+    <button modal-btn class="btn btn-success">
         <i class="fa fa-plus"></i>
         添加
     </button>

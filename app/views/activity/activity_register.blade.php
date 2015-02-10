@@ -15,9 +15,11 @@
         <thead>
         <tr>
             <th>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="checkall">
                 </label>
+                </div>
             </th>
             <th>姓名</th>
             <th>电话</th>
@@ -31,9 +33,11 @@
         @foreach($registers as $reg)
         <tr>
             <td>
+              <div class="checkbox checkbox-material-amber">
               <label>
                 <input id="{{ $reg->id }}" type="checkbox" class="list-check"/>
               </label>
+              </div>
             </td>
             <td>{{ $reg->volunteer_name }}</td>
             <td>{{ $reg->volunteer_mobile }}</td>

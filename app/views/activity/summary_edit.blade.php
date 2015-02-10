@@ -60,8 +60,8 @@ padding-bottom: 10px;
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">
-            <i class="hgy-icon glyphicon glyphicon-hand-right"></i>  下一步  </button>
+            <button type="submit" class="btn btn-material-amber">
+            <i class="hgy-icon fa fa-arrow-right"></i>  下一步  </button>
             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
         </div>

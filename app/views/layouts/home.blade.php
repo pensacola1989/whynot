@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>{{ $title }}</title>
+	<linke href="{{ URL::asset('favicon.ico') }}" type="image/x-icon" rel="icon shortcut">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,7 +30,7 @@
         <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="navbar-brand glyphicon glyphicon-align-justify"></a>
         @endif
           <a class="myhover navbar-brand" href="#">
-            <img id="logo" src="{{ URL::asset('images/home/hagongyi-3.png') }}">
+            <img id="logo" src="{{ URL::asset('images/hagongyi_logo.png') }}">
           </a>
 
         </div>

@@ -428,7 +428,7 @@ label{
     margin-top:60px;
 }
 .pager-container{
-    text-align: center;
+    /*text-align: center;*/
 }
 select {
     border-radius: 0;
@@ -464,3 +464,7 @@ h3.hgy-header{
 
 .pagination{border-color: #ffc107;}
 .content_container.home{background-color: #F5A614;}
+.navbar .navbar-nav>li>a {
+    height:100%;
+    margin-right: 15px;
+}

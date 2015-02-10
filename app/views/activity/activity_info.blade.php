@@ -7,6 +7,10 @@
 .field-input{width:70px;}
 .delete-link{display: block;color: #E74C3C;width: 70px;line-height: 19px;}
 .edit-link{display: block;width: 70px;line-height: 19px;}
+.row{line-height: 40px;}
+.drg-handler{margin-top:10px;}
+.sorted-item{border:1px dotted #ddd !important;}
+.sorted-item:hover{border:1px dotted orange;}
 </style>
 @endsection
 <div class="page-header">

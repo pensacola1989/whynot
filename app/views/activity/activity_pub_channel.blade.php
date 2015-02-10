@@ -56,7 +56,7 @@
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-4">
-        <button id="{{ $activityId }}" {{ $isPublished ? 'disabled' : ''}} class="publish-btn btn btn-primary">
+        <button id="{{ $activityId }}" {{ $isPublished ? 'disabled' : ''}} class="publish-btn btn btn-success">
             <i class="fa fa-send"></i>
             &nbsp;
             {{ $isPublished ? '已发布到哈公益' : '发布到哈公益' }}

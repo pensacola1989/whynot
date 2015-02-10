@@ -54,3 +54,13 @@
     width: 50%;
 }
 
+#uploadImg{
+    width: 350px;
+    border: 1px solid #ddd;
+    position: absolute;
+    right: 100px;
+    height: 200px;
+}
+.drg-handler{
+    margin-top: 10px;
+}

@@ -1,5 +1,6 @@
 {{ HTML::style('/styles/activity.css') }}
 {{ HTML::style('/scripts/uploadify/uploadify.css') }}
+{{ HTML::style('/scripts/datetimepicker/css/bootstrap-datetimepicker.min.css') }}
 <div class="container">
     <div class="register_step row">
       <div class="col-md-4 step_item {{ $step == 1 ? 'current' :'' }}">第一步：基本内容  <i class="glyphicon glyphicon-chevron-right"></i></div>
@@ -27,10 +28,12 @@
         <input type="hidden" name="approve_num" value="0"/>
         <input type="hidden" name="request_num" value="0"/>
         <input type="hidden" name="status" value="0"/>
-        <img class="col-sm-10" id="uploadImg" style="height: 50px;">
+        <img class="col-sm-10" id="uploadImg">
         <div class="col-sm-10">
 {{--            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}--}}
-            <botton type="botton" id="btnImg" class="btn btn-info">上传</botton>
+            <botton type="botton" id="btnImg" class="btn btn-info">
+                <i class="fa fa-upload"></i>
+            </botton>
         </div>
       </div>
         <div class="form-group form-group-material-amber">
@@ -40,16 +43,16 @@
             </div>
         </div>
         <div class="form-group form-group-material-amber">
-                    {{ Form::label('end_time','结束时间',array('class'   =>  'col-sm-2 control-label ')) }}
-                    <div class="col-sm-10">
-                    {{ Form::text('end_time','',array('class'=>'form-control datetimepicker','readonly'=>'readonly',"id"=>"inputEndTime", "placeholder"=>"结束时间")) }}
-                    </div>
+        {{ Form::label('end_time','结束时间',array('class'   =>  'col-sm-2 control-label ')) }}
+        <div class="col-sm-10">
+        {{ Form::text('end_time','',array('class'=>'form-control datetimepicker','readonly'=>'readonly',"id"=>"inputEndTime", "placeholder"=>"结束时间")) }}
+        </div>
         </div>
         <div class="form-group form-group-material-amber">
-                            {{ Form::label('area','活动地点',array('class'   =>  'col-sm-2 control-label')) }}
-                            <div class="col-sm-10">
-                            {{ Form::text('area','',array('class'=>'form-control',"id"=>"inputArea", "placeholder"=>"活动地点")) }}
-                            </div>
+            {{ Form::label('area','活动地点',array('class'   =>  'col-sm-2 control-label')) }}
+            <div class="col-sm-10">
+            {{ Form::text('area','',array('class'=>'form-control',"id"=>"inputArea", "placeholder"=>"活动地点")) }}
+            </div>
         </div>
         <div class="form-group form-group-material-amber">
              {{ Form::label('content','活动内容',array('class'   =>  'col-sm-2 control-label')) }}
