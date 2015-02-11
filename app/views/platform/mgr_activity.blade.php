@@ -110,7 +110,12 @@ background-color: #FFF;
             {{ $at->area }}
             </td>
             <td>
-            <input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify"/>
+                {{--<input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify"/>--}}
+                <div class="togglebutton togglebutton-material-amber">
+                    <label>
+                      <input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify">
+                    </label>
+                 </div>
             </td>
         </tr>
         @endforeach
@@ -146,7 +151,7 @@ function setCheckedState(ids, state) {
         $(_$checkedItems[_i])
             .parents('tr')
             .find('input[name=verify]')
-            .bootstrapSwitch('state', state,1);
+            .attr('checked' ,state);
     }
     $('.list-check:checked').eq(0).parents('tr').find('input[name=verify]')
 //    $('input[name="my-checkbox"]').bootstrapSwitch('state', true, true);
@@ -182,10 +187,20 @@ function getSelectedData() {
     return ret;
 }
 
+
+
 function confirmToUpdateStatus() {
-    $('input[name=verify]').on('switchChange.bootstrapSwitch', function(event, state) {
-        var _type = state ? 1 : 0;
-        postToUpdate(_type, [parseInt($(this).attr('id'))]);
+    $('input[name=verify]').on('click', function(event) {
+        var _type = $(this).attr('checked') == "checked" ? 0 : 1;
+        var _ids = [parseInt($(this).attr('id'))];
+        $.post('{{ route('verifyat') }}',{ type: _type, ids: _ids })
+         .success(function(data) {
+            alert(data.message);
+            setCheckedState(_ids,_type == 1 ? true : false);
+         })
+         .error(function() {
+
+         })
 
     });
     $('#approve-btn,#reject-btn').on('click', function() {
@@ -219,7 +234,7 @@ function initCheckboxClick() {
 
 $(function() {
     initCheckboxClick();
-    initCheckbox();
+//    initCheckbox();
     initBatch();
     confirmToUpdateStatus();
 })
