@@ -48,7 +48,7 @@ class ActivityRepository extends EntityRepository
 
     public function getActivities(User $user)
     {
-        return $user->Activities()->paginate(self::AT_PER_PAGE_NUM);
+        return $user->Activities()->orderBy('updated_at', 'desc')->paginate(self::AT_PER_PAGE_NUM);
     }
 
     public function getError()

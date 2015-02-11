@@ -39,9 +39,9 @@
               </label>
               </div>
             </td>
-            <td>{{ $reg->volunteer_name }}</td>
-            <td>{{ $reg->volunteer_mobile }}</td>
-            <td>{{ $reg->volunteer_email }}</td>
+            <td>{{ $reg->username }}</td>
+            <td>{{ $reg->mobile }}</td>
+            <td>{{ $reg->email }}</td>
             <td>
             </td>
             <td>

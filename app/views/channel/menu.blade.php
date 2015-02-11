@@ -46,13 +46,13 @@ li p {color:gray;}
     <ul class="menu-ul">
         <li ng-repeat="m in menu.button">
             <p ng-show="<%!m.sub_button%>">
-                <%m.name%>
+                <%m.name%> <a ng-click="deleteItem($index)" style="color:red;">删除</a>
                 <div class="help-block">
                     <%(m.type=='view') ? m.url : m.type%>
                 </div>
             </p>
             <p ng-show="<%m.sub_button%>">
-                <%m.name%>
+                <%m.name%>  <a ng-click="deleteSubItem($parent.$index, $index)" style="color:red;">删除</a>
                 <ul class="sub-ul">
                     <li class="sub-li" ng-repeat="s in m.sub_button">
                         <%s.name%>
@@ -257,6 +257,13 @@ page.controller('myCtrl',function($scope, helper) {
                     alert('操作成功')
                 });
     };
+
+    $scope.deleteItem = function(index) {
+         $scope.menu.button.splice(index, 1);
+    };
+    $scope.deleteSubItem = function (parentIndex, index) {
+         $scope.menu.button[parentIndex].sub_button.splice(index, 1);
+    }
 });
 page.directive('modalBtn', function() {
     return {

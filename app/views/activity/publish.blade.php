@@ -62,7 +62,8 @@
         </div>
 
         <div class="form-group form-group-material-amber">
-          <div class="col-sm-offset-2 col-sm-10">
+        {{ Form::label('','',array('class'   =>  'col-sm-2 control-label')) }}
+          <div class="col-sm-10">
             <button type="submit" class="btn btn-material-amber">
             <i class="hgy-icon fa fa-arrow-right"></i>  下一步  </button>
             <p style="color:red;">{{ $errors->first() }}</p>

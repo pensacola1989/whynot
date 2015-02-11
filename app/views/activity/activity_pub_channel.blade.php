@@ -43,11 +43,16 @@
        <a class="jiathis_button_tqq" style="color:#B3E5FC;" data-toggle="tooltip" data-placement="bottom" title="分享到腾讯微博">
         <i class="fa fa-tencent-weibo"></i>
        </a>
-       <a href="#">
+       <a class="jiathis_button_weixin" href="#">
         <i class="fa fa-weixin" style="color:#04be02;"></i>
        </a>
        </div>
 
+        {{--<div id="ckepop">--}}
+           {{--<span class="jiathis_txt">分享到：</span>--}}
+             {{--<a class="jiathis_button_weixin">微信</a>--}}
+                {{--<a class="jiathis_counter_style"></a> </div>--}}
+               {{--</div>--}}
         <!-- JiaThis Button END -->
       </div>
       @endif
@@ -56,12 +61,12 @@
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-4">
-        <button id="{{ $activityId }}" {{ $isPublished ? 'disabled' : ''}} class="publish-btn btn btn-success">
-            <i class="fa fa-send"></i>
-            &nbsp;
-            {{ $isPublished ? '已发布到哈公益' : '发布到哈公益' }}
+        {{--<button id="{{ $activityId }}" {{ $isPublished ? 'disabled' : ''}} class="publish-btn btn btn-success">--}}
+            {{--<i class="fa fa-send"></i>--}}
+            {{--&nbsp;--}}
+            {{--{{ $isPublished ? '已发布到哈公益' : '发布到哈公益' }}--}}
 
-        </button>
+        {{--</button>--}}
       </div>
     </div>
 </div>
@@ -75,7 +80,7 @@ var jiathis_config = {
     imageUrl:"http://v2.jiathis.com/code/images/r5.gif",
     imageWidth:26,
     marginTop:150,
-    url:"http://www.jiathis.com",
+    url:"",
     title:"自定义TITLE #微博话题#",
     summary:"分享的文本摘要",
     pic:"自定义分享的图片连接地址",

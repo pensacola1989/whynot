@@ -1,4 +1,4 @@
-<p class="container">请填写组织用户自定信息</p>
+吕tinfo<p class="container">请填写组织用户自定信息</p>
 <div class="ui-form ui-border-t">
     @if(count($vltAttributes))
     @foreach($vltAttributes as $attr)
@@ -8,7 +8,7 @@
         <input name="{{ $attr->attr_field_name }}"
                type="text"
                placeholder="{{ $attr->attr_name }}"
-               value="{{ $vltValue[$attr->attr_field_name] }}">
+               value="{{ !empty($vltValue[$attr->attr_field_name]) ? $vltValue[$attr->attr_field_name] : '' }}">
         <a href="#" class="ui-icon-close"></a>
     </div>
     @elseif($attr->attr_type == 'enum')
@@ -49,8 +49,12 @@ var el;
 var cmzDataGenerator = {};
 cmzDataGenerator.getText = function(obj) {
     if(!$('.customizeText')) return;
-    var $textInputs = $('.customizeText').find('input').first();
-    obj[$textInputs.attr('name')] = $textInputs.val();
+    var $textInputs = $('.customizeText');
+    if($textInputs.length) {
+        $.each($textInputs, function() {
+            obj[$(this).find('input').attr('name')] = $(this).find('input').val();
+        });
+    }
     return obj;
 };
 cmzDataGenerator.getEnum = function(obj) {

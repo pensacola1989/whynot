@@ -81,17 +81,26 @@
             <td>{{ $at->area }}</td>
             <td>{{ $at->status }}</td>
             <td>
-            @if($at->is_verify == 1 && $at->is_published == 0)
+            <a class="publish-btn" id="{{ $at->id }}" href="{{ URL::action('ActivityController@publishChannel', [$at->id, Auth::user()->Orgs()->first()->id]) }}"
+                       data-toggle="tooltip" data-placement="top" title="" data-original-title="分享">
+                <i class="fa fa-share-square-o"></i>
+            </a>
+            @if($at->is_published == 0)
                 <a class="publish-btn" id="{{ $at->id }}" href="{{ URL::action('ActivityController@publishChannel', [$at->id, Auth::user()->Orgs()->first()->id]) }}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="发布">
                     <i class="fa fa-send"></i>
                 </a>
-            @elseif($at->is_verify >= 1 && $at->isBegin)
+            @elseif($at->isBegin)
                 <a class="modify-time" id="" href="{{ route('approve',$at->id )}}"
                     data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
                     <i class="fa fa-eye"></i>
                 </a>
             </td>
+            @else
+            <a class="modify-time" id="" href="{{ route('approve',$at->id )}}"
+                data-toggle="tooltip" data-placement="top" title="" data-original-title="查看">
+                <i class="fa fa-eye"></i>
+            </a>
             @endif
         </tr>
         @endforeach
