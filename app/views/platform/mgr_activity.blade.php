@@ -95,7 +95,9 @@ background-color: #FFF;
                 </div>
             </td>
             <td>
+            <a href="{{ URL::action('ActivityController@atDetail', [Auth::User()->Orgs()->first()->id, $at->id]) }}">
             {{ $at->title }}
+            </a>
             </td>
             <td>
             {{ $at->content }}

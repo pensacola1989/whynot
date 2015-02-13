@@ -29,7 +29,7 @@
         @if(Auth::check())
         <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="navbar-brand glyphicon glyphicon-align-justify"></a>
         @endif
-          <a class="myhover navbar-brand" href="#">
+          <a class="myhover navbar-brand" href="{{ URL::action('UserController@index')}}">
             <img id="logo" src="{{ URL::asset('images/hagongyi_logo.png') }}">
           </a>
 

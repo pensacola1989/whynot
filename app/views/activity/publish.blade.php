@@ -10,7 +10,7 @@
 
       @if($step == 1)
       {{ Form::open(array('action'    =>  'ActivityController@publish','method'  =>  'post','class'=>'container form-horizontal','role'=>'form','files'=>'true')) }}
-
+      {{--<input type="text" name="my_token" value="{{ $myToken }}"/>--}}
       <div class="form-group form-group-material-amber">
         {{ Form::label('title','活动名称',array('class'   =>  'col-sm-2 control-label')) }}
         <div class="col-sm-10">
@@ -64,7 +64,7 @@
         <div class="form-group form-group-material-amber">
         {{ Form::label('','',array('class'   =>  'col-sm-2 control-label')) }}
           <div class="col-sm-10">
-            <button type="submit" class="btn btn-material-amber">
+            <button type="submit" onclick="javascript:return false;" class="btn btn-material-amber">
             <i class="hgy-icon fa fa-arrow-right"></i>  下一步  </button>
             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
@@ -140,59 +140,6 @@
         @endif
 
 </div>
-
-<!-- 自定义字段 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">自定义字段</h4>
-      </div>
-      <div class="modal-body">
-            <div class="form-group clearfix">
-                <label class="col-sm-2 control-label">字段名</label>
-                <div class="col-sm-10">
-                   <input type="text" id="m_attr_name" class="form-control" placeholder="字段名" >
-                </div>
-            </div>
-            <div class="form-group clearfix">
-                <label class="col-sm-2 control-label">字段标题</label>
-                <div class="col-sm-10">
-                   <input type="text" id="m_attr_title" class="form-control" placeholder="字段标题" >
-                </div>
-            </div>
-            {{--<div class="clearfix"></div>--}}
-            <div class="form-group clearfix">
-                <label class="col-sm-2 control-label">字段类型</label>
-                <div class="col-sm-10">
-                   <select class="form-control" id="m_attr_type">
-                     <option value="string">单行文本框</option>
-                     <option value="number">数字</option>
-                     <option value="time">日期</option>
-                     <option value="email">邮箱</option>
-                   </select>
-                </div>
-            </div>
-            <div class="form-group clearfix">
-                 <label class="col-sm-2 control-label">是否必填</label>
-                 <div class="col-sm-10">
-                     <select class="form-control" id="m_attr_istrue">
-                       <option value="">否</option>
-                       <option value="checked">是</option>
-                     </select>
-                 </div>
-            </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="attr_add">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 @section('scripts')
@@ -363,10 +310,48 @@ $(function() {
     add();
     formSend();
     attrMove();
-    $('.datetimepicker').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii'
+    var START_TIME, END_TIME;
+
+//    $('.datetimepicker').datetimepicker({
+//            format: 'yyyy-mm-dd hh:ii'
+//    });
+    $('#inputStartTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        startDate: new Date(),
+        autoclose: true,
+        pickDate: false
+    }).on('changeDate', function(ev) {
+        START_TIME = ev.date.valueOf();
     });
+    $('#inputEndTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        startDate: new Date(),
+        autoclose: true
+    }).on('changeDate', function(ev) {
+        END_TIME = ev.date.valueOf();
+        if(END_TIME <= START_TIME) {
+            alert('结束时间不能小于开始时间');
+            $('#inputEndTime').focus();
+        }
+    })
+//    $('.datetimepicker')
+//    .datetimepicker()
+//    .on('changeDate', function(ev) {
+//        alert('fuck');
+////        $('#inputEndTime').datetimepicker('setStartDate', ev.date.valueOf());
+//    });
     uploadImg();
+
+    $('button[type=submit]').on('click', function(e) {
+        if(START_TIME >= END_TIME) {
+            alert('结束时间不能小于开始时间');
+            $('#inputEndTime').focus();
+            e.preventDefault();
+            return false;
+        }
+        location.replace(this.href);
+        $('form').submit();
+    });
 });
 
 </script>

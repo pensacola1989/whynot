@@ -39,6 +39,7 @@ class ActivityController extends BaseController {
         $this->attributeRepo = $attrRepo;
         $this->qrHelper = $qrCodeHelper;
         $this->channelRepo = $channelRepository;
+//        $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
     public function index()
@@ -128,11 +129,16 @@ class ActivityController extends BaseController {
      */
     public function publish($step=null,$uid=null)
     {
+//        echo Form::token() . '....' . \Illuminate\Support\Facades\Session::get('_token');
+//        exit();
+//        echo csrf_token();exit();
 //        if(!$step) return $this->redirectAction('ActivityController@publish');
+        $myToken = sha1(microtime());
+        \Illuminate\Support\Facades\Session::put('myToken', $myToken);
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $this->title = '基本信息';
-            $this->view('activity.publish',['step' => $step, 'uid'  =>  $uid]);
+            $this->view('activity.publish',['step' => $step, 'uid'  =>  $uid, 'myToken'=>$myToken]);
         } elseif($step == 2 && $uid != null) {
             Session::put('currentActivityId', $uid);
             $attrs = $this->activityRepo->getAttrByOrderNum($uid);
@@ -156,44 +162,18 @@ class ActivityController extends BaseController {
      */
     public function add($step=null,$uid=null)
     {
-        if (Request::ajax()) {
-            $jsonStr = Input::get('attrJson');
-            $activityId = Input::get('activityId');
-            if($obj = json_decode($jsonStr, true)) {
-                $this->attributeRepo->saveAttributes($activityId, $obj);
-            }
-
-
-        }else{
-            if (Input::hasFile('imgFile'))
-            {
-                $file = Input::file('imgFile');
-            }
-            $step = Input::get('step');
-            $step = !empty($step) ? $step : 1;
-            if ($step == 1) {
-                $input = Input::except('step');
-                $newActivity = $this->activityRepo->saveNewActivity($this->getCurrentUser(), $input);
-                if ($newActivity) {
-                    return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
-                }else {
-                    return $this->redirectBack(['errors' => $this->activityRepo->getError()]);
-                }
+        $step = Input::get('step');
+        $step = !empty($step) ? $step : 1;
+        if ($step == 1) {
+            $input = Input::except('step','my_token');
+            $newActivity = $this->activityRepo->saveNewActivity($this->getCurrentUser(), $input);
+            if ($newActivity) {
+//                \Illuminate\Support\Facades\Session::put('_token', sha1(microtime()));
+                return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
+            }else {
+                return $this->redirectBack(['errors' => $this->activityRepo->getError()]);
             }
         }
-        if($step == 2) {
-
-//            if($uid == null)
-//                return $this->redirectAction('ActivityController@publish');
-//            if($user = $this->userRepo->requireById($uid)) {
-//                $userinfo = $this->userInfo->getNew(Input::except('step'));
-//                if(!$userinfo->validate())
-//                    return $this->redirectBack(['errors'=>$userinfo->errors()]);
-//                $user->userinfos()->save($userinfo);
-//                return $this->redirectAction('ActivityController@publish',['step'=>3,'uid'=>$user->id]);
-//            }
-        }
-
     }
 
     /**

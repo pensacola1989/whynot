@@ -60,9 +60,10 @@
         </div>
 
         <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">
-            <i class="hgy-icon glyphicon glyphicon-hand-right"></i>  保存  </button>
+            {{ Form::label('','',array('class'   =>  'col-sm-2 control-label')) }}
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">
+            <i class="hgy-icon fa fa-check"></i>  保存  </button>
             <p style="color:red;">{{ $errors->first() }}</p>
           </div>
         </div>

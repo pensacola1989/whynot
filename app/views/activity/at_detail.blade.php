@@ -73,7 +73,7 @@
     </div>
     <div class="row">
       <div class="col-md-2">
-        <a href="{{ URL::action('ActivityController@getModifyActvityInfo', $activities->id) }}" class="btn btn-primary">
+        <a href="{{ URL::action('ActivityController@getModifyActvityInfo', $activities->id) }}" class="btn btn-material-amber">
             <i class="fa fa-pencil"></i>
             &nbsp;
             修改
