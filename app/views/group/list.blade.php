@@ -36,8 +36,8 @@
   </tbody>
 </table>
 <div class="container">
-<a href="{{ URL::action('VolgroupController@PostGroup') }}" class="btn btn-primary">
-    <i class="glyphicon glyphicon-plus"></i>
+<a href="{{ URL::action('VolgroupController@PostGroup') }}" class="btn btn-material-amber">
+    <i class="fa fa-plus"></i>
     &nbsp;添加分组
 </a>
 </div>

@@ -73,12 +73,11 @@ footer {border-top: 1px solid #CACACA;width: 70%;margin: auto;margin-top: 100px;
 .tree_bar{	position: absolute;	top: 0;	left: 0;	bottom: 0;	background-color: #efefef;}
 
 #toggleBar{
-
     display: block;
-    height: 40px;
-    width: 40px;
     text-align: center;
-    line-height: 40px;
+    line-height: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .radio{font-size: 12px;font-weight:normal;}
 .glyphicon{margin-right: 10px;}
@@ -116,7 +115,7 @@ footer {border-top: 1px solid #CACACA;width: 70%;margin: auto;margin-top: 100px;
 .navbar-inner-sm .nav.pull-right {margin-left: 10px;margin-right: 0;}
 .tnav .navbar .container { height: 28px; }
 
-.navbar{min-height: 40px;background-color: #FFF;border-bottom: 1px solid #ddd;}
+.navbar{min-height: 40px;background-color: #666;border-bottom: 1px solid #ddd;}
 .navbar-right{height:40px;}
 .navbar > .container .navbar-brand{height:40px;}
 .navbar-brand{line-height: 10px;}
@@ -388,7 +387,7 @@ textarea{
 }
 
 #logo{
-    height: 24px;
+    height: 40px;
     float: left;
     margin: 8px;
     margin-left: 20px;
@@ -429,7 +428,7 @@ label{
     margin-top:60px;
 }
 .pager-container{
-    text-align: center;
+    /*text-align: center;*/
 }
 select {
     border-radius: 0;
@@ -438,3 +437,35 @@ select {
 h3.hgy-header{
     color:#34495E;
 }
+
+.page-header h2{
+    font-weight: normal;
+    padding:10px;
+    padding-bottom: 0;
+}
+.page-header{margin-left: 20px;}
+.navbar.navbar, .navbar-default.navbar {
+    background-color: #666666;
+}
+
+.form-horizontal .control-label{color:#666666;}
+.checkbox{margin:5px;}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus
+{
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+.pagination>li>a, .pagination>li>span {
+    color: #ffc107;
+}
+.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus {
+    color: #ffc107;
+}
+
+.pagination{border-color: #ffc107;}
+.content_container.home{background-color: #F5A614;}
+.navbar .navbar-nav>li>a {
+    height:100%;
+    margin-right: 15px;
+}
+select.form-control {border-bottom: none;}

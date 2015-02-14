@@ -126,9 +126,8 @@ class VolunteerController extends BaseController {
         $attributes = $this->getCurrentUser()->VltAttributes;
         $values = $this->volunteers->getVltDetailById($this->getCurrentUser(),$vlrId);
         if($values != null) {
-            $values = (array)json_decode($values->value);
+            $values = (array)json_decode($values);
         }
-//        dd($values);exit();
         $this->view('volunteer.detail',compact('values','attributes'));
     }
 

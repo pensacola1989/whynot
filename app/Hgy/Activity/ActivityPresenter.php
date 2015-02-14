@@ -8,6 +8,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Hgy\Image\ImageRepository;
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 class ActivityPresenter extends BasePresenter {
@@ -42,7 +43,7 @@ class ActivityPresenter extends BasePresenter {
     {
         if($this->is_verify == 0)
             return '<label class="label label-default">等待审核</label>';
-        if($this->is_verify == 1)
+        if($this->is_verify == 1 && $this->is_published == 0)
             return '<label class="label label-warning">未发布</label>';
         $endTimestamp = intval(strtotime($this->resource->end_time));
         if(time() < $this->resource->start_time)
@@ -141,6 +142,29 @@ class ActivityPresenter extends BasePresenter {
         return $isRegister != null;
     }
 
+    public function cover()
+    {
+        $imageRepo = App::make('\Hgy\Image\ImageRepository');
+        return $imageRepo->getImageUrlById($this->resource->cover);
+    }
 
+    public function cover_id()
+    {
+        return $this->resource->cover;
+    }
 
+    public function area()
+    {
+        $jsonValue = $this->resource->area;
+        $obj = json_decode($jsonValue, true);
+        return $obj['province'] . '&nbsp;' . $obj['distinct'];
+    }
+
+    /**
+     * 在视图获取地点的json数据，供前端脚本调用
+     */
+    public function pureAreaJson()
+    {
+        return $this->resource->area;
+    }
 }

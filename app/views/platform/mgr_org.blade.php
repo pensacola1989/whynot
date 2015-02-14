@@ -24,45 +24,77 @@ background-color: #FFF;
 <div class="page-header">
     <h2>
         管理组织
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>平台方管理组织</small>
     </h2>
-    <div class="row org_des">
-        <div class="col-md-4 org_des_item">
-            <i class="fa fa-line-chart"></i>
-            &nbsp;
-            总组织数:
-            <a href="#"><span class="badge">{{ $totalCount }}</span></a>
-        </div>
-        <div class="col-md-4 org_des_item">
-            <i class="fa fa-check"></i>
-            &nbsp;
-            已审核数:
-            <a href="#"><span class="badge">{{ $verifyCount }}</span></a>
-        </div>
-        <div class="col-md-4 org_des_item">
-            <i class="fa fa-exclamation-triangle"></i>
-            &nbsp;
-            未审核数:
-            <a href="#"><span class="badge">{{ $totalCount - $verifyCount }}</span></a>
-        </div>
-    </div>
+    {{--<div class="row org_des">--}}
+        {{--<div class="col-md-4 org_des_item">--}}
+            {{--<i class="fa fa-line-chart"></i>--}}
+            {{--&nbsp;--}}
+            {{--总组织数:--}}
+            {{--<a href="#"><span class="badge">{{ $totalCount }}</span></a>--}}
+        {{--</div>--}}
+        {{--<div class="col-md-4 org_des_item">--}}
+            {{--<i class="fa fa-check"></i>--}}
+            {{--&nbsp;--}}
+            {{--已审核数:--}}
+            {{--<a href="#"><span class="badge">{{ $verifyCount }}</span></a>--}}
+        {{--</div>--}}
+        {{--<div class="col-md-4 org_des_item">--}}
+            {{--<i class="fa fa-exclamation-triangle"></i>--}}
+            {{--&nbsp;--}}
+            {{--未审核数:--}}
+            {{--<a href="#"><span class="badge">{{ $totalCount - $verifyCount }}</span></a>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 </div>
 <div class="container">
-<ul class="nav nav-pills">
-<li><label>筛选条件：</label></li>
-  <li role="presentation" class="{{ $isVerify == null ? 'active' : '' }}">
-    <a href="{{ action('PlatformController@orgmanager') }}">无</a>
-    </li>
-  <li role="presentation" class="{{ $isVerify == 1 ? 'active' : '' }}"><a href="{{ action('PlatformController@orgmanager', 1) }}">已审核</a></li>
-  <li role="presentation" class="{{ $isVerify == 0 && $isVerify != null ? 'active' : '' }}"><a href="{{ action('PlatformController@orgmanager', 0) }}">未审核</a></li>
+<div class="row" style="width:550px;">
+    <div class="col-md-3" style="line-height: 35px;padding-left: 20px;">
+    筛选条件
+    </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@orgmanager') }}" type="checkbox" {{ $isVerify == null ? 'checked' : '' }}> 无
+        </label>
+      </div>
+  </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@orgmanager', 1) }}" type="checkbox" {{ $isVerify == 1 ? 'checked' : '' }}> 已审核
+        </label>
+      </div>
+  </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@orgmanager', 0) }}" type="checkbox" {{ $isVerify == 0 && $isVerify != null ? 'checked' : '' }}> 未审核
+        </label>
+      </div>
+  </div>
+</div>
+{{--<div class="container">--}}
+{{--<ul class="nav nav-pills">--}}
+{{--<li><label>筛选条件：</label></li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == null ? 'active' : '' }}">--}}
+    {{--<a href="{{ action('PlatformController@orgmanager') }}">无</a>--}}
+    {{--</li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == 1 ? 'active' : '' }}"><a href="{{ action('PlatformController@orgmanager', 1) }}">已审核</a></li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == 0 && $isVerify != null ? 'active' : '' }}"><a href="{{ action('PlatformController@orgmanager', 0) }}">未审核</a></li>--}}
 </ul>
     <table class="table-list table table-hover">
         <thead>
         <tr>
             <th>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="checkall">
                 </label>
+                </div>
             </th>
             <th>组织名称</th>
             <th>行业性质</th>
@@ -77,9 +109,11 @@ background-color: #FFF;
         @foreach($Orgs as $o)
         <tr>
             <td>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="{{ $o->id }}">
                 </label>
+                </div>
             </td>
             <td>
             {{ $o->userinfos ? $o->userinfos->u_username : '' }}
@@ -108,12 +142,12 @@ background-color: #FFF;
         {{ $Orgs->links() }}
     </nav>
     <div class="control-pannel" style="">
-        <a href="javascript:void(null);" class="btn btn-success" id="approve-btn">
+        <a href="javascript:void(null);" class="btn btn-material-amber" id="approve-btn">
             <i class="fa fa-check"></i>
             &nbsp;
             审核选中
         </a>
-        <a href="javascript:void(null);" class="btn btn-danger" id="reject-btn">
+        <a href="javascript:void(null);" class="btn btn-default" id="reject-btn">
             <i class="fa fa-close"></i>
             &nbsp;
             否决选中
@@ -195,8 +229,14 @@ function initCheckbox() {
     $.fn.bootstrapSwitch.defaults.offText = '否决';
     $("[name='verify']").bootstrapSwitch();
 }
-
+function initCheckboxClick() {
+    $('.chk-filter ').on('click', function(e) {
+        var url = $(this).find('input[type=checkbox]').attr('url');
+        location.href = url;
+    });
+}
 $(function() {
+    initCheckboxClick();
     initCheckbox();
     initBatch();
     confirmToUpdateStatus();

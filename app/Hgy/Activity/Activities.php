@@ -52,7 +52,7 @@ class Activities extends Entity implements PresenterInterface {
      */
     public function Attendees()
     {
-        return $this->belongsToMany(Volunteer::class,'activity_attrvalue','activity_id','uid')
+        return $this->belongsToMany(UserBase::class,'activity_attrvalue','activity_id','uid')
                     ->withPivot(['is_verify', 'value', 'vol_duration', 'vol_reply', 'at_reply']);
     }
 
@@ -82,6 +82,19 @@ class Activities extends Entity implements PresenterInterface {
         return ActivityPresenter::class;
     }
 
+    public function beforeSave()
+    {
+//        dd($this->getDirty());exit();
+//        if(count($this->getDirty()) < 0) {
+//            return false;
+//        }
 
+//        if($this->_isUserExist($this->email,$this->orgName)) {
+//            $this->errors()->add('account_error','该用户已经被注册');
+//            return false;
+//        }
+        return true;
+        //or don't return nothing, since only a boolean false will halt the operation
+    }
 
 }

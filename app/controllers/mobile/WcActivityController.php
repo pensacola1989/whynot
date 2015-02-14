@@ -94,6 +94,7 @@ class WcActivityController extends WechatMobileController {
         $obj['value'] = $data;
 
         $this->activityAttrValue->storeData($obj);
+        $this->activity->updateRequestNumbers($activity_id);
         return $this->redirectBack(['msg'=>'报名成功！']);
     }
 

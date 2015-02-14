@@ -10,6 +10,7 @@ use Hgy\Activity\ActivityPresenter;
 use Hgy\Activity\ActivityRepository;
 use Hgy\Activity\ActivityAttributeRepository;
 use Hgy\Wechat\QrCodeHelper;
+use Hgy\Wechat\ChannelRepository;
 
 class ActivityController extends BaseController {
 
@@ -18,6 +19,7 @@ class ActivityController extends BaseController {
     private $activityRepo;
     private $attributeRepo;
     private $qrHelper;
+    private $channelRepo;
 
     private $fieldTypeMap = [
         'datetime'  =>  '日期类型',
@@ -30,11 +32,14 @@ class ActivityController extends BaseController {
 
     public function __construct(ActivityRepository $repo,
                                 ActivityAttributeRepository $attrRepo,
-                                QrCodeHelper $qrCodeHelper)
+                                QrCodeHelper $qrCodeHelper,
+                                ChannelRepository $channelRepository)
     {
         $this->activityRepo = $repo;
         $this->attributeRepo = $attrRepo;
         $this->qrHelper = $qrCodeHelper;
+        $this->channelRepo = $channelRepository;
+//        $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
     public function index()
@@ -124,11 +129,16 @@ class ActivityController extends BaseController {
      */
     public function publish($step=null,$uid=null)
     {
+//        echo Form::token() . '....' . \Illuminate\Support\Facades\Session::get('_token');
+//        exit();
+//        echo csrf_token();exit();
 //        if(!$step) return $this->redirectAction('ActivityController@publish');
+        $myToken = sha1(microtime());
+        \Illuminate\Support\Facades\Session::put('myToken', $myToken);
         $step = !empty($step) ? $step : 1;
         if($step == 1) {
             $this->title = '基本信息';
-            $this->view('Activity.publish',['step' => $step, 'uid'  =>  $uid]);
+            $this->view('activity.publish',['step' => $step, 'uid'  =>  $uid, 'myToken'=>$myToken]);
         } elseif($step == 2 && $uid != null) {
             Session::put('currentActivityId', $uid);
             $attrs = $this->activityRepo->getAttrByOrderNum($uid);
@@ -138,11 +148,11 @@ class ActivityController extends BaseController {
         } elseif($step == 3 && $uid != null) {
 //            $isVerify = $this->_isUserVery($uid);
             $this->title = '发布渠道选择';
-            $this->view('Activity.publish',['step' => $step]);
+            $this->view('activity.publish',['step' => $step]);
         }
         else {
             $this->title = '基本信息';
-            $this->view('Activity.publish',['step' => 1]);
+            $this->view('activity.publish',['step' => 1]);
         }
 
     }
@@ -152,44 +162,18 @@ class ActivityController extends BaseController {
      */
     public function add($step=null,$uid=null)
     {
-        if (Request::ajax()) {
-            $jsonStr = Input::get('attrJson');
-            $activityId = Input::get('activityId');
-            if($obj = json_decode($jsonStr, true)) {
-                $this->attributeRepo->saveAttributes($activityId, $obj);
-            }
-
-
-        }else{
-            if (Input::hasFile('imgFile'))
-            {
-                $file = Input::file('imgFile');
-            }
-            $step = Input::get('step');
-            $step = !empty($step) ? $step : 1;
-            if ($step == 1) {
-                $input = Input::except('step');
-                $newActivity = $this->activityRepo->saveNewActivity($this->getCurrentUser(), $input);
-                if ($newActivity) {
-                    return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
-                }else {
-                    return $this->redirectBack(['errors' => $this->activityRepo->getError()]);
-                }
+        $step = Input::get('step');
+        $step = !empty($step) ? $step : 1;
+        if ($step == 1) {
+            $input = Input::except('step','my_token');
+            $newActivity = $this->activityRepo->saveNewActivity($this->getCurrentUser(), $input);
+            if ($newActivity) {
+//                \Illuminate\Support\Facades\Session::put('_token', sha1(microtime()));
+                return $this->redirectAction('ActivityController@publish', ['step' => 2, 'uid' => $newActivity->id]);
+            }else {
+                return $this->redirectBack(['errors' => $this->activityRepo->getError()]);
             }
         }
-        if($step == 2) {
-
-//            if($uid == null)
-//                return $this->redirectAction('ActivityController@publish');
-//            if($user = $this->userRepo->requireById($uid)) {
-//                $userinfo = $this->userInfo->getNew(Input::except('step'));
-//                if(!$userinfo->validate())
-//                    return $this->redirectBack(['errors'=>$userinfo->errors()]);
-//                $user->userinfos()->save($userinfo);
-//                return $this->redirectAction('ActivityController@publish',['step'=>3,'uid'=>$user->id]);
-//            }
-        }
-
     }
 
     /**
@@ -199,11 +183,26 @@ class ActivityController extends BaseController {
     public function publishChannel($activityId, $orgId)
     {
         $this->title = '活动发布渠道';
+        $isActivityVerified = $this->activityRepo->isActicityVerified($activityId);
         $getQrImgUrl = URL::action('ActivityController@getSignQrCodeImg', [$activityId, $orgId]);
-        $this->view('activity.activity_pub_channel', compact('getQrImgUrl'));
+        $isPublished = $this->activityRepo->isActivityPublished($activityId);
+        $sns = $this->channelRepo->getSnsKeyInfo();
+        if($sns != null && $sns->sns_key_info != null) {
+            $snsKeyInfo = json_decode($sns->sns_key_info);
+        }
+        else {
+            $snsKeyInfo = null;
+        }
+        $this->view('activity.activity_pub_channel',
+            compact('getQrImgUrl', 'isPublished', 'isActivityVerified', 'activityId', 'snsKeyInfo'));
     }
 
-    public function getSignQrCodeImg($activityId, $orgId)
+    /** 浏览器端图片的src地址，动态生成二维码
+     * @param $activityId
+     * @param $orgId
+     * @return mixed
+     */
+    public function getSignQrCodeImg($orgId, $activityId)
     {
         $signUrl = URL::action('mobile\WcActivityController@qrSign', [$activityId, $orgId]);
         $qrImg = $this->qrHelper->generateQrCode($signUrl, 200);
@@ -212,4 +211,54 @@ class ActivityController extends BaseController {
         return $response;
     }
 
+    public function atDetail($activityId, $orgId)
+    {
+        $this->title = '活动详情';
+        $activities = $this->activityRepo->requireById($orgId);
+        $activityAttr = $activities->Attributes;
+        $this->view('activity.at_detail', compact('activities', 'activityAttr'));
+    }
+
+    /** 修改活动基本信息
+     * @param $activityId
+     */
+    public function getModifyActvityInfo($activityId)
+    {
+        $this->title = '修改活动基本信息';
+        $activity = $this->activityRepo->requireById($activityId);
+        $this->view('activity.modify_activity', compact('activity'));
+    }
+
+    /** 编辑活动基本信息
+     * @param $activityId
+     * @return array
+     */
+    public function postActivityEdit($activityId)
+    {
+        $activity = $this->activityRepo->requireById($activityId);
+        $ret = $activity->update(\Illuminate\Support\Facades\Input::all());
+        if ($ret) {
+            return $this->redirectAction('ActivityController@atDetail',
+                [Auth::user()->Orgs()->first()->id, $activityId]);
+        }
+        else {
+            return $this->redirectAction('ActivityController@atDetail',
+                [Auth::user()->Orgs()->first()->id, $activityId]);
+        }
+    }
+
+    public function filter()
+    {
+        $this->title = '活动管理';
+        $searchFieldArr = Input::query();
+        if(count($searchFieldArr) == 0 || empty($searchFieldArr['filter'])) {
+            $activities = $this->activityRepo->getActivities($this->getCurrentUser());
+        } else {
+            $query = array_except($searchFieldArr,\Illuminate\Support\Facades\Paginator::getPageName());
+
+            $activities = $this->activityRepo->searchPaginated($this->getCurrentUser(), $query, 5);
+        }
+
+        $this->view('activity.manage', compact('activities', 'searchFieldArr'));
+    }
 }

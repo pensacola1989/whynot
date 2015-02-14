@@ -112,9 +112,10 @@ class HomeController extends WechatMobileController {
         $orgModel = $this->orgRepository->requireById($orgId);
         $vltAttributes = $orgModel ? $orgModel->VltAttributes : null;
         $jsonVltValues = $this->orgRepository->getVolValueByOrgIdAndUid($orgId, $uid);
-//        $vltValue = json_decode($jsonVltValues->pivot->value, true);
-        $vltValue = $jsonVltValues;
-        $this->view('mobile.vltinfo_org', compact('orgId', 'vltValue', 'vltAttributes'));
+        $vltValue = $jsonVltValues->pivot->value;
+        $vltValue = json_decode($vltValue, true);
+
+        $this->view('mobile.vltinfo_org', compact('orgId', 'vltValue', 'vltAttributes', 'value'));
     }
 
 

@@ -1,19 +1,43 @@
 @section('styles')
 <style type="text/css">
 .menu-container{width:300px;}
-.menu-ul{}
-.menu-ul li{
-    background-color:#009688;
-    color:#FFF;
-    padding: 5px;
-    margin: 10px;
+.menu-ul{
+    /*border: 1px solid;*/
+    display: inline-block;
+    width: 600px;
+    padding: 0;
+    height: 300px;
 }
-.sub-li{color:#FFF;background-color: #B2DFDB !important;}
+.menu-ul li{
+    border: 1px solid gray;
+    color: #FFF;
+    text-align: center;
+    /*margin: 10px;*/
+    float: left;
+    position: relative;
+    width: 150px;
+    height: 50px;
+}
+li p {color:gray;}
+.sub-li{margin: 0 !important;background-color: #B2DFDB !important;}
+.sub-ul{
+    display: inline-block;
+    /*border: 1px solid #333;*/
+    padding: 0;
+    margin: 0;
+    top: 50px;
+    position: absolute;
+    left: 0;
+}
+
 </style>
 @endsection
 <div class="page-header">
-    <h2>
+     <h2>
         微信自定义菜单配置
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>配置微信自定义菜单</small>
     </h2>
 </div>
@@ -22,13 +46,13 @@
     <ul class="menu-ul">
         <li ng-repeat="m in menu.button">
             <p ng-show="<%!m.sub_button%>">
-                <%m.name%>
+                <%m.name%> <a ng-click="deleteItem($index)" style="color:red;">删除</a>
                 <div class="help-block">
                     <%(m.type=='view') ? m.url : m.type%>
                 </div>
             </p>
             <p ng-show="<%m.sub_button%>">
-                <%m.name%>
+                <%m.name%>  <a ng-click="deleteSubItem($parent.$index, $index)" style="color:red;">删除</a>
                 <ul class="sub-ul">
                     <li class="sub-li" ng-repeat="s in m.sub_button">
                         <%s.name%>
@@ -56,11 +80,11 @@
         {{--</li>--}}
     {{--</ul>--}}
 
-    <button modal-btn class="btn btn-primary">
+    <button modal-btn class="btn btn-success">
         <i class="fa fa-plus"></i>
         添加
     </button>
-    <button ng-click="saveMenu()" class="btn btn-success">
+    <button ng-click="saveMenu()" class="btn btn-material-amber">
         <i class="fa fa-check"></i>
         保存
     </button>
@@ -233,6 +257,13 @@ page.controller('myCtrl',function($scope, helper) {
                     alert('操作成功')
                 });
     };
+
+    $scope.deleteItem = function(index) {
+         $scope.menu.button.splice(index, 1);
+    };
+    $scope.deleteSubItem = function (parentIndex, index) {
+         $scope.menu.button[parentIndex].sub_button.splice(index, 1);
+    }
 });
 page.directive('modalBtn', function() {
     return {

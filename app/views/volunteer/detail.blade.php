@@ -1,7 +1,10 @@
 <div class="page-header">
     <h2>
         志愿者自定义信息详情
-        <small>...</small>
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+
     </h2>
 </div>
 <div class="container">
@@ -15,6 +18,7 @@
             @if($attr->attr_type == 'text')
             {{ $values[$attr->attr_field_name]}}
             @elseif($attr->attr_type == 'image')
+            {{ $values[$attr->attr_field_name]}}
             @elseif($attr->attr_type == 'textarea')
             @elseif($attr->attr_type == 'datetime')
             @endif

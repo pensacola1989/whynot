@@ -7,16 +7,28 @@
 .field-input{width:70px;}
 .delete-link{display: block;color: #E74C3C;width: 70px;line-height: 19px;}
 .edit-link{display: block;width: 70px;line-height: 19px;}
+.row{line-height: 40px;}
+.drg-handler{margin-top:10px;}
+.sorted-item{border:1px dotted #ddd !important;}
+.sorted-item:hover{border:1px dotted orange;}
 </style>
 @endsection
-<div class="page-header">
-    <h2>
-        活动信息编辑
-        <small>设置活动报名的字段信息</small>
-    </h2>
-</div>
+{{--<div class="page-header">--}}
+    {{--<h2>--}}
+        {{--活动信息编辑--}}
+        {{--&nbsp;--}}
+        {{--<i class="fa fa-angle-double-right"></i>--}}
+        {{--&nbsp;--}}
+        {{--<small>设置活动报名的字段信息</small>--}}
+    {{--</h2>--}}
+{{--</div>--}}
+<div class="register_step row">
+      <div class="col-md-4 step_item">第一步：基本内容  <i class="fa fa-angle-double-right"></i></div>
+      <div class="col-md-4 step_item current">第二步：报名信息设计  <i class="fa fa-angle-double-right"></i></div>
+      <div class="col-md-4 step_item">第三步：发布渠道选择  <i class="fa fa-angle-double-right"></i></div>
+    </div>
 <div class="container hgy-form-control">
-<a href="{{ action('ActivityController@editAtInfo') }}" class="btn btn-primary">
+<a href="{{ action('ActivityController@editAtInfo') }}" class="btn btn-default">
     <i class="fa fa-plus"></i>
     &nbsp;&nbsp;添加
 </a>
@@ -90,7 +102,7 @@
   @endforeach
   @endif
 </ul>
-<a href="{{ URL::action('ActivityController@publishChannel', [$uid, $orgId]) }}" class="btn btn-primary">
+<a href="{{ URL::action('ActivityController@publishChannel', [$uid, $orgId]) }}" class="btn btn-material-amber">
     <i class="fa fa-arrow-right"></i>
     &nbsp;
     下一步

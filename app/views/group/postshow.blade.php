@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-top:130px;">
     @if(!$isEdit)
     {{ Form::open(array('action' =>  'VolgroupController@PostGroup','method'  =>  'post','class'=>'hgy-form form-horizontal','role'=>'form')) }}
     @else
@@ -12,8 +12,9 @@
         </div>
       </div>
         <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success">
+        {{ Form::label('','',array('class'=>'control-label col-sm-2')) }}
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-material-amber">
               <i class="hgy-icon glyphicon glyphicon-ok"></i>
               {{ $isEdit ? '更新' : '添加' }}
             </button>

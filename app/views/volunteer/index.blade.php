@@ -1,7 +1,13 @@
 {{ HTML::style('/styles/vol.css') }}
 <div class="container">
 <div class="page-header">
-    <h2>志愿者列表</h2>
+    <h2>
+        志愿者
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>列表</small>
+    </h2>
 </div>
 <div class="container search-panel">
 <form method="GET" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">

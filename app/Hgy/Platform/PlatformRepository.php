@@ -43,9 +43,9 @@ class PlatformRepository extends EntityRepository {
     public function getAllActivitiesPaginate($isVerify=null)
     {
         if($isVerify == null) {
-            return Activities::paginate(self::PER_PAGE_NUM);
+            return Activities::orderBy('updated_at', 'desc')->paginate(self::PER_PAGE_NUM);
         }
-        return Activities::where('is_verify', '=', $isVerify)->paginate(self::PER_PAGE_NUM);
+        return Activities::where('is_verify', '=', $isVerify)->orderBy('updated_at', 'desc')->paginate(self::PER_PAGE_NUM);
     }
 
     /**
@@ -95,4 +95,5 @@ class PlatformRepository extends EntityRepository {
     {
         return $this->model->where('is_verify', '=', 1)->count();
     }
+
 }

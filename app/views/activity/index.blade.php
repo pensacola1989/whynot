@@ -39,9 +39,11 @@
   <thead>
     <tr>
       <th>
+      <div class="checkbox checkbox-material-amber">
         <label>
           <input type="checkbox" class="list-check" id="checkall">
         </label>
+      </div>
       </th>
       <th>正在展开的活动</th>
       <th>报名数/审核数</th>

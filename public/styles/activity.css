@@ -54,3 +54,18 @@
     width: 50%;
 }
 
+#uploadImg{
+    width: 427px;
+    /*border: 1px solid #ddd;*/
+    position: absolute;
+    right: 100px;
+    height: 280px;
+}
+.drg-handler{
+    margin-top: 10px;
+}
+
+select.location-input{
+    /*float:left;*/
+    margin-top: 10px;
+}

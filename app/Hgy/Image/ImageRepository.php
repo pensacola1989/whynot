@@ -1,6 +1,7 @@
 <?php namespace Hgy\Image;
 
 use Hgy\Core\EntityRepository;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Created by PhpStorm.
@@ -10,6 +11,8 @@ use Hgy\Core\EntityRepository;
  */
 
 class ImageRepository extends EntityRepository {
+
+    const URL_BASE = 'uploadFile/';
 
     public function __construct(Image $model)
     {
@@ -32,5 +35,10 @@ class ImageRepository extends EntityRepository {
 //            $this->_setDefaultRole($user);
             return $user;
         }
+    }
+
+    public function getImageUrlById($imageId)
+    {
+        return URL::asset(self::URL_BASE  . $this->requireById($imageId)->filename);
     }
 }

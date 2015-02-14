@@ -7,16 +7,21 @@
 .field-input{width:70px;}
 .delete-link{display: block;color: #E74C3C;width: 70px;line-height: 19px;}
 .edit-link{display: block;width: 70px;line-height: 19px;}
+.sorted-item{line-height: 40px;}
+.sorted-item:hover{border:1px dotted #ffc107;line-height: 40px;}
 </style>
 @endsection
 <div class="page-header">
-    <h2>
+     <h2>
         志愿者信息收集
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>本设置用于志愿者加入组织填写，并且在发布活动时可通过自定义方式嵌入报名表单</small>
     </h2>
 </div>
 <div class="container hgy-form-control">
-<a href="{{ action('VlrInfoController@editShow') }}" class="btn btn-primary">
+<a href="{{ action('VlrInfoController@editShow') }}" class="btn btn-material-amber">
     <i class="fa fa-plus"></i>
     &nbsp;&nbsp;添加
 </a>

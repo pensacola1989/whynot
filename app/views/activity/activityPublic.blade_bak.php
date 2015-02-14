@@ -1,7 +1,13 @@
 {{ HTML::style('/styles/activity.css') }}
 <div class="container">
 <div class="page-header">
-    <h2>活动发布</h2>
+    <h2>
+        活动发布
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
+        <small>新增一个活动</small>
+    </h2>
 </div>
 <div class="container public-info activate">
 <form method="GET" action="" class="activity-form" role="form">

@@ -9,15 +9,15 @@
 @endsection
 <div class="ui-slider">
     <ul class="ui-slider-content">
-        <li><img src="http://i.gtimg.cn/aoi/sola/20141201154940_fXIQIADwLo.jpg"></li>
+        <li><img src="{{ $activity->cover }}"></li>
         <li><img src="http://i.gtimg.cn/aoi/sola/20141201154941_GhAN4FCMIF.jpg"></li>
         <li><img src="http://i.gtimg.cn/aoi/sola/20141201154939_LZJZBbo7ET.jpg"></li>
     </ul>
-    <ul class="ui-slider-indicators">
-        <li class="current">1</li>
-        <li>2</li>
-        <li>3</li>
-    </ul>
+    {{--<ul class="ui-slider-indicators">--}}
+        {{--<li class="current">1</li>--}}
+        {{--<li>2</li>--}}
+        {{--<li>3</li>--}}
+    {{--</ul>--}}
 </div>
 <div class="ui-scroller">
 

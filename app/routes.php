@@ -131,9 +131,14 @@ Route::group(['before'  =>  'auth'], function () {
     Route::post('/wechatMenu/edit', 'MenuController@postEditMenu');
     Route::post('/wechatMenu/generate', 'MenuController@generateMenu');
     /**
-     * Channel
+     * Channel 微信
      */
     Route::get('/channel/index', 'ChannelController@index');
+    /**
+     * Channel 其他
+     */
+    Route::get('/channel/sns', 'ChannelController@others');
+    Route::post('/channel/others', 'ChannelController@postEditOthers');
     Route::post('/channel/new/{channelId?}', 'ChannelController@postChannelEdit');
     /*
      * Platform
@@ -169,13 +174,15 @@ Route::group(['before'  =>  'auth'], function () {
     /*
      * Activity
      */
+    Route::get('/activity_filter', 'ActivityController@filter');
+    Route::get('/activity/activityDetail/{orgId}/{activityId}', 'ActivityController@atDetail');
     Route::post('/atpublish', ['as'  =>  'atpub',    'uses'  =>  'ActivityController@publishActivity']);
     Route::get('/activitysign/index/{activityId}', 'AtSignController@index');
     Route::get('/activity/index','ActivityController@index');
     Route::get('/activity/manage','ActivityController@manage');
-//  public
-//    Route::get('/activity/release','ActivityController@release');
     Route::get('/activity/publish/{step?}/{uid?}', 'ActivityController@publish');
+    Route::post('/activity/modify/{activityId}', 'ActivityController@postActivityEdit');
+    Route::get('/activity/modify_at/{activityId}', 'ActivityController@getModifyActvityInfo');
     Route::post('/activity/publish/{step?}/{uid?}', 'ActivityController@add');
     Route::get('/activity/pub_channel/{activityId?}/{orgId?}', 'ActivityController@publishChannel');
     Route::get('activity/get_sign_code/{activityId?}/{orgId?}','ActivityController@getSignQrCodeImg');

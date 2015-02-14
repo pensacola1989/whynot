@@ -54,6 +54,8 @@ class PlatformController extends BaseController {
             return ['errorCode' =>  102, 'message'  =>  '操作失败'];
 
         $this->platFormRepsitory->updateActivityStatusBatch($ids, ['is_verify'  =>  intval($type)]);
+        if(intval($type) == 1)
+            $this->platFormRepsitory->updateActivityStatusBatch($ids, ['is_published'  =>  1]);
         return ['errorCode' =>  0,  'message'   =>  '操作成功'];
     }
 

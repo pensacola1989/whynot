@@ -4,6 +4,9 @@
 <div class="page-header">
     <h2>
         审核报名
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>审核已经报名的志愿者</small>
     </h2>
 </div>
@@ -12,9 +15,11 @@
         <thead>
         <tr>
             <th>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="checkall">
                 </label>
+                </div>
             </th>
             <th>姓名</th>
             <th>电话</th>
@@ -28,13 +33,15 @@
         @foreach($registers as $reg)
         <tr>
             <td>
+              <div class="checkbox checkbox-material-amber">
               <label>
                 <input id="{{ $reg->id }}" type="checkbox" class="list-check"/>
               </label>
+              </div>
             </td>
-            <td>{{ $reg->volunteer_name }}</td>
-            <td>{{ $reg->volunteer_mobile }}</td>
-            <td>{{ $reg->volunteer_email }}</td>
+            <td>{{ $reg->username }}</td>
+            <td>{{ $reg->mobile }}</td>
+            <td>{{ $reg->email }}</td>
             <td>
             </td>
             <td>

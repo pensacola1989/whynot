@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>{{ $title }}</title>
+	<linke href="{{ URL::asset('favicon.ico') }}" type="image/x-icon" rel="icon shortcut">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -12,6 +13,8 @@
 
     {{ HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css') }}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    {{ HTML::style('/material/css/ripples.min.css') }}
+    {{ HTML::style('/material/css/material-wfont.min.css') }}
     {{ HTML::style('/styles/global.css') }}
     {{ HTML::style('/styles/register.css')  }}
     {{ HTML::style('/styles/tree.css') }}
@@ -23,12 +26,13 @@
 	 <div class="navbar navbar-fixed-top mynav" role="navigation">
       <div class="pull-left">
         <div class="navbar-header">
-          <a class="myhover navbar-brand" href="#">
-            <img id="logo" src="{{ URL::asset('images/home/hagongyi-3.png') }}">
+        @if(Auth::check())
+        <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="navbar-brand glyphicon glyphicon-align-justify"></a>
+        @endif
+          <a class="myhover navbar-brand" href="{{ URL::action('UserController@index')}}">
+            <img id="logo" src="{{ URL::asset('images/hagongyi_logo.png') }}">
           </a>
-          @if(Auth::check())
-          <a href="javascript:void(null);" id="toggleBar" style="float: left;" class="glyphicon glyphicon-align-justify"></a>
-          @endif
+
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -62,22 +66,22 @@
                   <span class="glyphicon glyphicon-off" style="margin-right:5px;color:#ea6153;"></span>
                 </a>                
               </li>
-              <li class="dropdown">
+              {{--<li class="dropdown">--}}
 
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-cog" style="margin-right:10px;"></span>
+                {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
+                  {{--<span class="glyphicon glyphicon-cog" style="margin-right:10px;"></span>--}}
                   {{--<span href="javascript:void(null);">{{ Auth::user()->username }}</span>--}}
-                </a>
+                {{--</a>--}}
 
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <!-- <li><a href="#" id="logout">注销</a></li> -->
-                  <li>{{ HTML::link('user/logout','注销',array('id'=>'logout')) }}</li>
-                </ul>
-              </li>
+                {{--<ul class="dropdown-menu">--}}
+                  {{--<li><a href="#">Action</a></li>--}}
+                  {{--<li><a href="#">Another action</a></li>--}}
+                  {{--<li><a href="#">Something else here</a></li>--}}
+                  {{--<li class="divider"></li>--}}
+                  {{--<!-- <li><a href="#" id="logout">注销</a></li> -->--}}
+                  {{--<li>{{ HTML::link('user/logout','注销',array('id'=>'logout')) }}</li>--}}
+                {{--</ul>--}}
+              {{--</li>--}}
               <li>
 
               </li>
@@ -88,45 +92,51 @@
     @if(Auth::check())
     <div class="tree_bar">
        <ul class="tree_container">
-        <li class="tree_item open">
-          <a><i class="glyphicon glyphicon-phone"></i>组织名片</a>
+       <li id="mod_activity" class="tree_item"><a><i class="fa fa-heart-o"></i>&nbsp;活动</a>
+         <ul class="tree_child">
+           <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
+           <li class="child_item">{{ HTML::link('/activity_filter','活动管理') }}</li>
+           <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
+         </ul>
+       </li>
+        <li id="mod_org_card" class="tree_item open">
+          <a>
+            <i class="fa fa-bullseye"></i>
+            &nbsp;
+            组织名片
+          </a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('＃','名片版式') }}</li>
+            {{--<li class="child_item">{{ HTML::link('＃','名片版式') }}</li>--}}
             <li class="child_item">{{ HTML::link('/wechatMenu/index','菜单设置') }}</li>
-            <li class="child_item">{{ HTML::link('＃','细节设置') }}</li>
+            {{--<li class="child_item">{{ HTML::link('＃','细节设置') }}</li>--}}
             <!-- <li class="child_item"><a>分类页面</a></li> -->
 
           </ul>
         </li>
-        <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>设置</a>
+        <li id="mod_setting" class="tree_item"><a><i class="fa fa-gears"></i>&nbsp;设置</a>
           <ul class="tree_child">
-            <li class="child_item">{{ HTML::link('/channel/index','互联网渠道设置') }}</li>
-            <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>
+            <li class="child_item">{{ HTML::link('/channel/index','微信接口配置') }}</li>
+{{--            <li class="child_item">{{ HTML::link('＃','组织邀请') }}</li>--}}
           </ul>
         </li>
-        @if(Auth::user()->Orgs()->first()->can('manage_platform')))
-         <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>平台管理</a>
+        @if(Auth::user()->Orgs()->first()->can('manage_platform'))
+         <li id="mod_platform" class="tree_item"><a><i class="fa fa-sliders"></i>
+            &nbsp;平台管理</a>
           <ul class="tree_child">
+            <li class="child_item">{{ HTML::link('/channel/sns','其他渠道配置') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/activity','活动审核') }}</li>
             <li class="child_item">{{ HTML::link('/pfmanager/org','组织审核') }}</li>
           </ul>
         </li>
         @endif
-        <li class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
+        <li id="mod_volunteer" class="tree_item"><a><i class="glyphicon glyphicon-user"></i>志愿者</a>
           <ul class="tree_child">
             <li class="child_item">{{ HTML::link('/volteer_s','志愿者查找') }}</li>
             <li class="child_item">{{ HTML::link('/volgroup','组别设置') }}</li>
             <li class="child_item">{{ HTML::link('/volteer/info','信息设置') }}</li>
           </ul>
         </li>
-        <li class="tree_item"><a><i class="glyphicon glyphicon-heart"></i>活动</a>
-          <ul class="tree_child">
-{{--            <li class="child_item">{{ HTML::link('/activity/index','活动情况') }}</li>--}}
-            <li class="child_item">{{ HTML::link('/activity/publish','活动发布') }}</li>
-            <li class="child_item">{{ HTML::link('/activity/manage','活动管理') }}</li>
-            <li class="child_item">{{ HTML::link('/activity/summary','活动总结') }}</li>
-          </ul>
-        </li>
+
 
       </ul>
     </div>
@@ -140,6 +150,15 @@
 
 <!-- Latest compiled and minified JavaScript -->
 {{ HTML::script('http://libs.baidu.com/jquery/2.0.0/jquery.js') }}
+{{ HTML::script('material/js/ripples.min.js')}}
+  {{ HTML::script('material/js/material.min.js')}}
+  <script>
+      $(document).ready(function() {
+          $.material.ripples(".child_item");
+          $.material.init();
+      });
+  </script>
+{{ HTML::script('scripts/jquery-cookie.js') }}
 {{ HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js') }}
 {{ HTML::script('scripts/bootbox.min.js') }}
 {{ HTML::script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js') }}
@@ -147,8 +166,37 @@
 {{ HTML::script('scripts/tree.js') }}
 {{ HTML::script('scripts/layout.js') }}
 <script type="text/javascript">
+var COOKIE_MOD_KEY = 'current_mod_name';
+var COOKIE_MOD_CHILD_INDEX_KEY = 'current_mod_child_index';
+
+function setTreeStatus(modName, index) {
+//    $.removeCookie(COOKIE_MOD_KEY,{ path: '/' });
+//    $.removeCookie(COOKIE_MOD_CHILD_INDEX_KEY,{ path: '/' });
+    $.cookie(COOKIE_MOD_KEY, modName, { path: '/' });
+    $.cookie(COOKIE_MOD_CHILD_INDEX_KEY, index, { path: '/' });
+}
+
+function initTreeStatus() {
+    var _currentMod = $.cookie()[COOKIE_MOD_KEY];
+    var _currentModIndex = $.cookie()[COOKIE_MOD_CHILD_INDEX_KEY];
+
+    $('.tree_item').removeClass('open');
+    $('#' + _currentMod).addClass('open');
+    $('#' + _currentMod + '> ul').addClass('active').slideDown();
+    $('#' + _currentMod + '> ul').find('li').eq(_currentModIndex).addClass('current');
+}
+
 $(function() {
+    $.cookie.path = '/';
+    initTreeStatus();
     $('[data-toggle="tooltip"]').tooltip();
+    $('.child_item').on('click', function(e) {
+        e.preventDefault();
+        var _id = $(this).parents('li.tree_item').attr('id');
+        var _index = $(this).index();
+        setTreeStatus(_id, _index);
+        window.location.href = $(this).find('a').attr('href');
+    });
 });
 </script>
 @yield('scripts')

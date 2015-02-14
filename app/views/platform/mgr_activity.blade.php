@@ -24,25 +24,56 @@ background-color: #FFF;
 <div class="page-header">
     <h2>
         管理活动
+        &nbsp;
+        <i class="fa fa-angle-double-right"></i>
+        &nbsp;
         <small>平台方审核公益组织活动</small>
     </h2>
 </div>
 <div class="container">
-<ul class="nav nav-pills">
-<li><label>筛选条件：</label></li>
-  <li role="presentation" class="{{ $isVerify == null ? 'active' : '' }}">
-    <a href="{{ action('PlatformController@activityManager') }}">无</a>
-    </li>
-  <li role="presentation" class="{{ $isVerify == 1 ? 'active' : '' }}"><a href="{{ action('PlatformController@activityManager', 1) }}">已审核</a></li>
-  <li role="presentation" class="{{ $isVerify == 0 && $isVerify != null ? 'active' : '' }}"><a href="{{ action('PlatformController@activityManager', 0) }}">未审核</a></li>
-</ul>
+<div class="row" style="width:550px;">
+    <div class="col-md-3" style="line-height: 35px;padding-left: 20px;">
+    筛选条件
+    </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@activityManager') }}" type="checkbox" {{ $isVerify == null ? 'checked' : '' }}> 无
+        </label>
+      </div>
+  </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@activityManager', 1) }}" type="checkbox" {{ $isVerify == 1 ? 'checked' : '' }}> 已审核
+        </label>
+      </div>
+  </div>
+  <div class="col-md-3">
+    <div class="chk-filter checkbox checkbox-material-amber">
+        <label>
+          <input url="{{ action('PlatformController@activityManager', 0) }}" type="checkbox" {{ $isVerify == 0 && $isVerify != null ? 'checked' : '' }}> 未审核
+        </label>
+      </div>
+  </div>
+</div>
+{{--<ul class="nav nav-pills">--}}
+{{--<li><label>筛选条件：</label></li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == null ? 'active' : '' }}">--}}
+    {{--<a href="{{ action('PlatformController@activityManager') }}">无</a>--}}
+    {{--</li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == 1 ? 'active' : '' }}"><a href="{{ action('PlatformController@activityManager', 1) }}">已审核</a></li>--}}
+  {{--<li role="presentation" class="{{ $isVerify == 0 && $isVerify != null ? 'active' : '' }}"><a href="{{ action('PlatformController@activityManager', 0) }}">未审核</a></li>--}}
+{{--</ul>--}}
     <table class="table-list table table-hover">
         <thead>
         <tr>
             <th>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="checkall">
                 </label>
+                </div>
             </th>
             <th>活动名称</th>
             <th>活动内容</th>
@@ -57,12 +88,16 @@ background-color: #FFF;
         @foreach($activityManager as $at)
         <tr>
             <td>
+                <div class="checkbox checkbox-material-amber">
                 <label>
                   <input type="checkbox" class="list-check" id="{{ $at->id }}">
                 </label>
+                </div>
             </td>
             <td>
+            <a href="{{ URL::action('ActivityController@atDetail', [Auth::User()->Orgs()->first()->id, $at->id]) }}">
             {{ $at->title }}
+            </a>
             </td>
             <td>
             {{ $at->content }}
@@ -77,7 +112,12 @@ background-color: #FFF;
             {{ $at->area }}
             </td>
             <td>
-            <input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify"/>
+                {{--<input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify"/>--}}
+                <div class="togglebutton togglebutton-material-amber">
+                    <label>
+                      <input type="checkbox" id="{{ $at->id }}" {{ $at->is_verify == 1 ? 'checked' : '' }}  name="verify">
+                    </label>
+                 </div>
             </td>
         </tr>
         @endforeach
@@ -88,12 +128,12 @@ background-color: #FFF;
     {{ $activityManager->links() }}
     </nav>
     <div class="control-pannel" style="">
-        <a href="javascript:void(null);" class="btn btn-success" id="approve-btn">
+        <a href="javascript:void(null);" class="btn btn-material-amber" id="approve-btn">
             <i class="fa fa-check"></i>
             &nbsp;
             审核选中
         </a>
-        <a href="javascript:void(null);" class="btn btn-danger" id="reject-btn">
+        <a href="javascript:void(null);" class="btn btn-default" id="reject-btn">
             <i class="fa fa-close"></i>
             &nbsp;
             否决选中
@@ -113,7 +153,7 @@ function setCheckedState(ids, state) {
         $(_$checkedItems[_i])
             .parents('tr')
             .find('input[name=verify]')
-            .bootstrapSwitch('state', state,1);
+            .attr('checked' ,state);
     }
     $('.list-check:checked').eq(0).parents('tr').find('input[name=verify]')
 //    $('input[name="my-checkbox"]').bootstrapSwitch('state', true, true);
@@ -149,10 +189,20 @@ function getSelectedData() {
     return ret;
 }
 
+
+
 function confirmToUpdateStatus() {
-    $('input[name=verify]').on('switchChange.bootstrapSwitch', function(event, state) {
-        var _type = state ? 1 : 0;
-        postToUpdate(_type, [parseInt($(this).attr('id'))]);
+    $('input[name=verify]').on('click', function(event) {
+        var _type = $(this).attr('checked') == "checked" ? 0 : 1;
+        var _ids = [parseInt($(this).attr('id'))];
+        $.post('{{ route('verifyat') }}',{ type: _type, ids: _ids })
+         .success(function(data) {
+            alert(data.message);
+            setCheckedState(_ids,_type == 1 ? true : false);
+         })
+         .error(function() {
+
+         })
 
     });
     $('#approve-btn,#reject-btn').on('click', function() {
@@ -177,8 +227,16 @@ function initCheckbox() {
     $("[name='verify']").bootstrapSwitch();
 }
 
+function initCheckboxClick() {
+    $('.chk-filter ').on('click', function(e) {
+        var url = $(this).find('input[type=checkbox]').attr('url');
+        location.href = url;
+    });
+}
+
 $(function() {
-    initCheckbox();
+    initCheckboxClick();
+//    initCheckbox();
     initBatch();
     confirmToUpdateStatus();
 })

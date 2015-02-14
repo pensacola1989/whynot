@@ -11,7 +11,7 @@ class UploadController extends BaseController {
     public function uploadFile()
     {
         @set_time_limit(5 * 60);
-        $uploadUrl = '/uploadFile/' . Date('Ymd');
+        $uploadUrl = '/uploadFile/';
         $targetDir = public_path() . $uploadUrl;
         //$targetDir = 'uploads';
         $cleanupTargetDir = true; // Remove old files

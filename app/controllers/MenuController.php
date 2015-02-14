@@ -36,6 +36,7 @@ class MenuController extends BaseController {
     {
         $menuJson = Input::get('menu_json');
         $this->menuRepository->saveMenu($menuJson);
+        $this->generateMenu();
         return ['errorCode'=>0, 'message'=>'保存成功'];
     }
 
