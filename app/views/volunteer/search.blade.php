@@ -11,17 +11,17 @@
 </div>
 <div class="container search-panel">
 <form method="GET" action="{{ action('VolunteerController@GetVolSearch') }}" class="form-inline search-form" role="form">
-  <div class="form-group">
+  <div class="form-group form-group-material-amber">
     <div class="input-group">
       <input type="email" class="form-control" name="email" id="volunteer_email" placeholder="email">
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group form-group-material-amber">
       <div class="input-group">
         <input type="text" class="form-control" name="username" id="volunteer_name" placeholder="姓名">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group form-group-material-amber">
     <div class="input-group">
       <input type="text" class="form-control" name="mobile" id="volunteer_mobile" placeholder="电话">
     </div>
@@ -31,7 +31,7 @@
           {{--<input type="text" class="form-control" name="volunteer_interest" id="volunteer_interest" placeholder="兴趣">--}}
         {{--</div>--}}
     {{--</div>--}}
-    <div class="form-group">
+    <div class="form-group form-group-material-amber">
         <div class="input-group">
           <select class="form-control" name="group_id" id="group_id" placeholder="分组">
             <option value="-1">不限</option>
@@ -43,7 +43,7 @@
           </select>
         </div>
     </div>
-  <button type="submit" class="btn btn-success">
+  <button type="submit" class="btn btn-default">
     <i class="fa fa-search"></i>&nbsp;&nbsp;搜索
   </button>
 </form>
