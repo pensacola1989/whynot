@@ -1,4 +1,9 @@
 {{ HTML::style('/styles/activity.css') }}
+@section('styles')
+<style type="text/css">
+.form-control-feedback{right:10px;}
+</style>
+@endsection
 <div class="page-header">
     <h2>
         活动基本信息
@@ -30,20 +35,23 @@
         <img class="col-sm-10" src="{{ $activity ? $activity->cover : '' }}" id="uploadImg" style="height: 50px;">
         <input type="hidden" name="cover" value="{{ $activity ? $activity->cover_id : '' }}"/>
         <div class="col-sm-10">
-{{--            {{ Form::file('img_upload','',array('class'=>'form-control','id'=>'img_upload')) }}--}}
-            <botton type="botton" id="btnImg" class="btn btn-info">上传</botton>
+            <botton type="botton" id="btnImg" class="btn btn-info">
+                <i class="fa fa-upload"></i>
+            </botton>
         </div>
       </div>
         <div class="form-group">
             {{ Form::label('start_time','开始时间',array('class'   =>  'col-sm-2 control-label')) }}
             <div class="col-sm-10">
             {{ Form::text('start_time',$activity ? $activity->start_time : '',array('class'=>'form-control datetimepicker','readonly'=>'readonly',"id"=>"inputStartTime", "placeholder"=>"开始时间")) }}
+            <span class="fa fa-calendar form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
         <div class="form-group">
             {{ Form::label('end_time','结束时间',array('class'   =>  'col-sm-2 control-label ')) }}
             <div class="col-sm-10">
             {{ Form::text('end_time',$activity ? $activity->end_time : '',array('class'=>'form-control datetimepicker','readonly'=>'readonly',"id"=>"inputEndTime", "placeholder"=>"结束时间")) }}
+            <span class="fa fa-calendar form-control-feedback" aria-hidden="true"></span>
         </div>
         </div>
         <div class="form-group">
@@ -56,6 +64,15 @@
              {{ Form::label('content','活动内容',array('class'   =>  'col-sm-2 control-label')) }}
              <div class="col-sm-10">
              {{ Form::textarea('content',$activity ? $activity->content : '',array('class'=>'form-control',"id"=>"inputContent", "placeholder"=>"活动内容")) }}
+             </div>
+        </div>
+        <div class="form-group form-group-material-amber">
+             {{ Form::label('content','活动地点',array('class'   =>  'col-sm-2 control-label')) }}
+             <div class="col-sm-10">
+                <select id="s1" class="location-input form-control"> </select>
+                <select id="s2" class="location-input form-control"> </select>
+                <select id="s3" class="location-input form-control"> </select>
+
              </div>
         </div>
 
@@ -75,6 +92,7 @@
 @section('scripts')
 {{ HTML::script('/scripts/datetimepicker/js/bootstrap-datetimepicker.min.js') }}
 {{ HTML::script('/scripts/uploadify/jquery.uploadify.min.js') }}
+{{ HTML::script('/scripts/province.js') }}
 <script type="text/javascript">
 
 
@@ -92,52 +110,63 @@ function uploadImg(){
                 extensions: 'jpg,png,gif'
             }]
         });
+    _uploader.bind('BeforeUpload',function (up,files) {
+        up.settings.file_data_name = 'chunkfile';
+        up.settings.url = "{{action('UploadController@uploadFile')}}";
+    });
 
-//						_uploader.bind('UploadProgress',function (up,files) {
-//							$('#' + btnId).siblings('.percent').html(files.percent + '%');
-//				        });
+    _uploader.bind('FileUploaded',function (up,file,info) {
+        if(info){
+            var obj = $.parseJSON(info.response);
+            uploadEnd(obj.url,obj.id);
+        }else{
+            alert("上传失败！");
+        }
+        //$('#' + btnId).siblings('img').attr('src',info.response);
 
-        _uploader.bind('BeforeUpload',function (up,files) {
-            up.settings.file_data_name = 'chunkfile';
-            up.settings.url = "{{action('UploadController@uploadFile')}}";
-        });
+    });
 
-        _uploader.bind('FileUploaded',function (up,file,info) {
-            if(info){
-                var obj = $.parseJSON(info.response);
-                uploadEnd(obj.url,obj.id);
-            }else{
-                alert("上传失败！");
-            }
-            //$('#' + btnId).siblings('img').attr('src',info.response);
+    _uploader.bind('UploadComplete',function (up,file) {
+    });
 
-        });
-
-        _uploader.bind('UploadComplete',function (up,file) {
-        });
-
-        _uploader.bind('init',function () {
-            console.log('init');
-        });
+    _uploader.bind('init',function () {
+        console.log('init');
+    });
 
 
-        _uploader.init();
+    _uploader.init();
 
-        _uploader.bind('FilesAdded',function (up,files) {
-            up.start();
-        });
-	}
-	function uploadEnd(url,id){
-	    $('input[name=cover]').val(id);
-	    $('#uploadImg').attr('src',url);
-	}
-//==================upload img=====================
+    _uploader.bind('FilesAdded',function (up,files) {
+        up.start();
+    });
+}
+
+var locationJSON = '{{ $activity ? $activity->pureAreaJson : '' }}';
+
+function uploadEnd(url,id){
+    $('input[name=cover]').val(id);
+    $('#uploadImg').attr('src',url);
+}
+function initLocationSelect() {
+    if(locationJSON == '') {
+        return false;
+    }
+    var obj = JSON.parse(locationJSON);
+    console.log(obj);
+    setup();
+    $('#s1').val(obj['country']);
+    $('#s1').change();
+    $('#s2').val(obj['province']);
+    $('#s2').change();
+    $('#s3').val(obj['distinct']);
+}
 
 $(function() {
     $('.datetimepicker').datetimepicker({
             format: 'yyyy-mm-dd hh:ii'
     });
     uploadImg();
+    initLocationSelect();
 });
 
 </script>

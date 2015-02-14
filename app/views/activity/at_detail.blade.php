@@ -73,13 +73,15 @@
     </div>
     <div class="row">
       <div class="col-md-2">
+
+      </div>
+      <div class="col-md-10">
         <a href="{{ URL::action('ActivityController@getModifyActvityInfo', $activities->id) }}" class="btn btn-material-amber">
             <i class="fa fa-pencil"></i>
             &nbsp;
             修改
         </a>
       </div>
-      <div class="col-md-10"></div>
     </div>
     @endif
 </div>

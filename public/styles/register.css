@@ -9,7 +9,8 @@
     text-align: center;
 }
 .step_item{
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ccc;
+    color: #ccc;
 }
 .step_item.current{
     border-bottom: 1px solid #666;

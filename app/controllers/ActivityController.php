@@ -214,7 +214,7 @@ class ActivityController extends BaseController {
     public function atDetail($activityId, $orgId)
     {
         $this->title = '活动详情';
-        $activities = $this->activityRepo->requireById($activityId);
+        $activities = $this->activityRepo->requireById($orgId);
         $activityAttr = $activities->Attributes;
         $this->view('activity.at_detail', compact('activities', 'activityAttr'));
     }

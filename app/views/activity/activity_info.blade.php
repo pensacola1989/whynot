@@ -13,15 +13,20 @@
 .sorted-item:hover{border:1px dotted orange;}
 </style>
 @endsection
-<div class="page-header">
-    <h2>
-        活动信息编辑
-        &nbsp;
-        <i class="fa fa-angle-double-right"></i>
-        &nbsp;
-        <small>设置活动报名的字段信息</small>
-    </h2>
-</div>
+{{--<div class="page-header">--}}
+    {{--<h2>--}}
+        {{--活动信息编辑--}}
+        {{--&nbsp;--}}
+        {{--<i class="fa fa-angle-double-right"></i>--}}
+        {{--&nbsp;--}}
+        {{--<small>设置活动报名的字段信息</small>--}}
+    {{--</h2>--}}
+{{--</div>--}}
+<div class="register_step row">
+      <div class="col-md-4 step_item">第一步：基本内容  <i class="fa fa-angle-double-right"></i></div>
+      <div class="col-md-4 step_item current">第二步：报名信息设计  <i class="fa fa-angle-double-right"></i></div>
+      <div class="col-md-4 step_item">第三步：发布渠道选择  <i class="fa fa-angle-double-right"></i></div>
+    </div>
 <div class="container hgy-form-control">
 <a href="{{ action('ActivityController@editAtInfo') }}" class="btn btn-default">
     <i class="fa fa-plus"></i>

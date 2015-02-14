@@ -153,4 +153,18 @@ class ActivityPresenter extends BasePresenter {
         return $this->resource->cover;
     }
 
+    public function area()
+    {
+        $jsonValue = $this->resource->area;
+        $obj = json_decode($jsonValue, true);
+        return $obj['province'] . '&nbsp;' . $obj['distinct'];
+    }
+
+    /**
+     * 在视图获取地点的json数据，供前端脚本调用
+     */
+    public function pureAreaJson()
+    {
+        return $this->resource->area;
+    }
 }
