@@ -72,13 +72,58 @@
         width: 20%;
         background: url('/whynot/bar_bg.jpg') no-repeat;
     }
+    .modal{
+        position: fixed;
+        background-color: rgba(0,0,0,0.7);
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 100;
+    }
+    .modal-win{
+        height: 200px;
+        width: 300px;
+        /* background: green; */
+        left: 10%;
+         position: relative; 
+    }
+    .modal-win img{
+        width:100%;
+        position: absolute;
+    }
+    .modal-win p{
+        position: absolute;
+        color: #FFF;
+        font-family: 'myfont';
+        width: 100%;
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: 48px;
+    }
+    #close{
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        right: 0;
+        z-index: 200;
+    }
     </style>    
 </head>
 <body>
+<div class="modal">
+    <div class="modal-win">
+        <a href="javascript:void(null);" id="close"></a>
+        <img src="{{ URL::asset('whynot/popup.png') }}">
+        <p>左摇摇，右摇摇
+        <br/>拿起手机尽情摇摆
+        <br/>合力将抠门老板摇晕，<br/>开年红包就是我们的啦<br/></p>
+    </div>
+</div>
 <div class="top-container container">
-<marquee id="affiche" align="left" behavior="scroll" direction="up"  hspace="50" vspace="20" loop="-1" scrollamount="10" scrolldelay="100">
+<marquee id="mq" align="left" behavior="scroll" direction="up"  hspace="50" vspace="20" loop="-1" scrollamount="10" scrolldelay="100">
 @if(count($totalUsers))
-<ul>
+<ul id="mq_ul" style="display:none;">
     @foreach($totalUsers as $user)
     <li>{{ mb_substr($user->user_name,0,8,'utf-8') }}正在努力让老王放血</li>
     @endforeach
@@ -88,6 +133,8 @@
     <img src="{{ URL::asset('whynot/marquee.jpg') }}">
 </div>
 <div class="container" style="text-align:center;">
+    <img id="gif_default" style="width:80%;" src="{{ URL::asset('whynot/static_gif.png') }}"/>
+    <div style="display:none;" id="gif_con">
 @if($percent == 25)
     <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif11.gif') }}"/>
 @elseif($percent == 75)
@@ -97,6 +144,7 @@
 @else
     <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif2.gif') }}"/>
 @endif   
+</div>
 </div>
 <div class="container" style="margin-top:10px;">
     <div class="progress-bar">
@@ -110,17 +158,13 @@
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
 <script type="text/javascript" src={{ URL::asset('scripts/shake.js') }}></script>
 <script type="text/javascript">
-!function($) {
-    // $('.nav-btn').on('tap', function() {
-    //     window.location.href = $(this).attr('url');
-    // })
-} (Zepto)
+
 
 window.onload = function() {
 
     //create a new instance of shake.js.
     var myShakeEvent = new Shake({
-        threshold: 15
+        threshold: 7
     });
 
     // start listening to device motion
@@ -132,9 +176,63 @@ window.onload = function() {
     //shake event callback
     function shakeEventDidOccur () {
         //put your own code here etc.
-        alert(shakeTimes);
+        // alert('fuck');
+        document.getElementById('mq_ul').style.display = 'block';
+        document.getElementById('gif_default').style.display = 'none';
+        document.getElementById('gif_con').style.display = 'block';
     }
+
 };
+
+var SHAKE_THRESHOLD = 3000;    
+var last_update = 0;    
+var x=y=z=last_x=last_y=last_z=0;   
+var  media; 
+
+function init(){
+    last_update = new Date().getTime();
+    media = document.getElementById("musicBox");
+    if (window.DeviceMotionEvent) { 
+        window.addEventListener('devicemotion',deviceMotionHandler, false);  
+    } else{
+        alert('not support mobile event');
+    }
+}
+
+function deviceMotionHandler(eventData) {    
+
+    var acceleration = eventData.accelerationIncludingGravity;  
+     
+    var curTime = new Date().getTime(); 
+    if ((curTime - last_update)> 100) {  
+        var diffTime = curTime -last_update;    
+        last_update = curTime;        
+        x = acceleration.x; 
+        y = acceleration.y;   
+        z = acceleration.z;   
+        var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;   
+        
+        if (speed > SHAKE_THRESHOLD) {    
+            alert("shaked");        
+            if(!media.src){
+                media.src="http://192.168.1.106/weixin_yaoyiyao.mp3"
+            }
+            media.play();
+        }    
+        last_x = x;    
+        last_y = y;    
+        last_z = z;    
+    }    
+ 
+}  
+
+// init();
+
+!function($) {
+    $('a').on('click', function() {
+        $('.modal').hide();
+    });
+} (Zepto)
 </script>
 </body>
 </html>

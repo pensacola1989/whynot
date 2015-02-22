@@ -8,6 +8,10 @@ use Redirect;
 
 class ShakeController extends Controller {
 
+	const BEGIN_TIME = '2015-02-23 10:37';
+
+	const HOUR_GAP = 0.5;
+
 	public function __construct()
 	{
 		date_default_timezone_set('Asia/Shanghai');
@@ -15,7 +19,8 @@ class ShakeController extends Controller {
 
 	public function enter()
 	{
-		if(time() > strtotime('2015-02-22 20:34')) {
+		
+		if(time() > strtotime(self::BEGIN_TIME)) {
 			return Redirect::action('whynot\ShakeController@getNickShow');
 		}
 		return View::make('mobile.whynot');
@@ -32,6 +37,9 @@ class ShakeController extends Controller {
 		date_default_timezone_set('Asia/Shanghai');
 		// echo strtotime('2015-01-28 00:30');exit();
 		$percent = $this->getPercent();
+		if($percent == 0) {
+			return Redirect::action('whynot\ShakeController@result');
+		}
 		return View::make('whynot.shake', compact('percent', 'totalUsers'));
 	}
 
@@ -44,7 +52,22 @@ class ShakeController extends Controller {
 
 	private function getPercent()
 	{
-		return 50;
+		$duration = time() - strtotime(self::BEGIN_TIME);
+		if($duration < 0) {
+			return 100;
+		}
+		if($duration > 0 && $duration < self::HOUR_GAP * 3600) {
+			return 75;
+		}
+		if($duration > 6 * 3600 && $duration < self::HOUR_GAP * 2 * 3600) {
+			return 50;
+		}
+		if($duration > 12 * 3600 && $duration < self::HOUR_GAP * 3 * 3600) {
+			return 25;
+		}
+		else {
+			return 0;		
+		}
 	}
 
 	public function postNickName()
