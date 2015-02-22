@@ -8,6 +8,23 @@ use Redirect;
 
 class ShakeController extends Controller {
 
+	public function __construct()
+	{
+		date_default_timezone_set('Asia/Shanghai');
+	}
+
+	public function enter()
+	{
+		if(time() > strtotime('2015-02-22 20:34')) {
+			return Redirect::action('whynot\ShakeController@getNickShow');
+		}
+		return View::make('mobile.whynot');
+	}
+
+	public function getNickShow()
+	{
+		return View::make('whynot.nickname');
+	}
 
 	public function index()
 	{

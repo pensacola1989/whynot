@@ -17,13 +17,9 @@
 | 平台方路由
 |
 */
-Route::get('/why', function() {
-    return View::make('mobile.whynot');
-});
+Route::get('/why', ['uses'    =>  'whynot\ShakeController@enter']);
 
-Route::get('/why/index', function () {
-    return View::make('whynot.nickname');
-});
+Route::get('/why/index', ['uses'    =>  'whynot\ShakeController@getNickShow']);
 Route::post('/why/postUser', ['uses'    =>  'whynot\ShakeController@postNickName']);
 
 Route::get('/why/shake', ['uses'    =>  'whynot\ShakeController@index']);

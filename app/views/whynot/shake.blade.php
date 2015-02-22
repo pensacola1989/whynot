@@ -35,14 +35,15 @@
 		background: url('/whynot/btn_begin.jpg') no-repeat;
     }
     marquee{
-        height: 74px;
+       height: 60px;
         margin: 20px 50px;
-        width: 200px;
+        width: 150px;
         background-color: #FFF;
         position: absolute;
-        /*border: 1px solid;*/
+        /* border: 1px solid; */
         bottom: 19px;
         left: 30px;
+        font-size: .2em;
     }
     ul{padding: 0;}
     ul li{
@@ -107,12 +108,33 @@
 </div>
 
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
+<script type="text/javascript" src={{ URL::asset('scripts/shake.js') }}></script>
 <script type="text/javascript">
 !function($) {
     // $('.nav-btn').on('tap', function() {
     //     window.location.href = $(this).attr('url');
     // })
 } (Zepto)
+
+window.onload = function() {
+
+    //create a new instance of shake.js.
+    var myShakeEvent = new Shake({
+        threshold: 15
+    });
+
+    // start listening to device motion
+    myShakeEvent.start();
+
+    // register a shake event
+    window.addEventListener('shake', shakeEventDidOccur, false);
+
+    //shake event callback
+    function shakeEventDidOccur () {
+        //put your own code here etc.
+        alert(shakeTimes);
+    }
+};
 </script>
 </body>
 </html>
