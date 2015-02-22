@@ -76,13 +76,13 @@
 <body>
 <div class="top-container container">
 <marquee id="affiche" align="left" behavior="scroll" direction="up"  hspace="50" vspace="20" loop="-1" scrollamount="10" scrolldelay="100">
+@if(count($totalUsers))
 <ul>
-    <li>fuck</li>
-    <li>fuck</li>
-    <li>fuck</li>
-    <li>fuck</li>
-    <li>fuck</li>
+    @foreach($totalUsers as $user)
+    <li>{{ mb_substr($user->user_name,0,8,'utf-8') }}正在努力让老王放血</li>
+    @endforeach
 </ul>
+@endif
 </marquee>
     <img src="{{ URL::asset('whynot/marquee.jpg') }}">
 </div>
