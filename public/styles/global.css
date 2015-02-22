@@ -1,5 +1,5 @@
 *{outline: none;}
-body,h1,h4{font-family: 'Helvetica','STHeiti';}
+body,h1,h4{font-family: '微软雅黑','黑体','Helvetica','STHeiti';}
 body{background-color: #FFF;}
 .navbar .navbar-header :hover,.navbar-nav a:hover{
      color: #ddd !important;

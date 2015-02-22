@@ -17,6 +17,9 @@
 | 平台方路由
 |
 */
+Route::get('/why', function() {
+    return View::make('mobile.whynot');
+});
 
 Route::any('/weixin',['as'=>'wechatEnter', function() {
     $wechatServer = new \Hgy\Wechat\WeChatServer(1989);
