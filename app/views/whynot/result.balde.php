@@ -9,53 +9,21 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <title></title>
     <style type="text/css">
-     @font-face{
-        font-family: myfont;
-        src: url('/Bates/font/myfont.ttf');
-    }
-    html,body,div{padding:0;margin:0;position: relative;}
+    html,body,div{padding:0;margin:0;}
     .container img{width:100%;}
     .gif-container{
         width: 60%;
         margin: auto;
-        text-align: center;
-    }
-    .container input{
-    	position: absolute;
-		bottom: 65px;
-		height: 30px;
-		left: 95px;
-		border: none;
-		background-color: transparent;
-		width: 165px;
-    }
-    #begin_game{
-    	border: none;
-		height: 58px;
-		width: 184px;
-		background: url('/whynot/btn_begin.jpg') no-repeat;
-    }
-    input{
-    	font-family: 'myfont';
-    	font-weight: bold;
-		font-size: 1em;
     }
     </style>    
 </head>
 <body>
-<form action="{{ URL::action('whynot\ShakeController@postNickName') }}" method="post">
 <div class="container">
-<input type="text" name="nickname"/>
-<img src="{{ URL::asset('whynot/nick_name.jpg') }}"/>
+<img src="{{ URL::asset('whynot/index.png') }}"/>
 </div>
-
 <div class="container gif-container">
-	<button id="begin_game">
-		
-	</button>
-    {{-- <img src="{{ URL::asset('bates/gif/bates-2years-gif1.gif') }}"/> --}}
+    <img src="{{ URL::asset('bates/gif/bates-2years-gif1.gif') }}"/>
 </div>
-</form>
 
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
 <script type="text/javascript">

@@ -24,9 +24,10 @@ Route::get('/why', function() {
 Route::get('/why/index', function () {
     return View::make('whynot.nickname');
 });
+Route::post('/why/postUser', ['uses'    =>  'whynot\ShakeController@postNickName']);
 
 Route::get('/why/shake', ['uses'    =>  'whynot\ShakeController@index']);
-
+Route::get('/why/result', ['uses'    =>  'whynot\ShakeController@result']);
 Route::any('/weixin',['as'=>'wechatEnter', function() {
     $wechatServer = new \Hgy\Wechat\WeChatServer(1989);
 //    return \Illuminate\Support\Facades\Redirect::to('/redirect');

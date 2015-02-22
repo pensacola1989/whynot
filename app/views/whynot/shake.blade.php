@@ -87,13 +87,21 @@
     <img src="{{ URL::asset('whynot/marquee.jpg') }}">
 </div>
 <div class="container" style="text-align:center;">
+@if($percent == 25)
+    <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif11.gif') }}"/>
+@elseif($percent == 75)
+    <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif5.gif') }}"/>
+@elseif($percent == 50)
+    <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif9.gif') }}"/>
+@else
     <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif2.gif') }}"/>
+@endif   
 </div>
 <div class="container" style="margin-top:10px;">
     <div class="progress-bar">
-        <span>老王已放血0%</span>
+        <span>老王已放血{{ 100-$percent }}%</span>
         <div class="bar-container">
-            <img src="{{ URL::asset('whynot/100per.jpg') }}">
+            <img src="{{ URL::asset('whynot/' . $percent . 'per.jpg') }}">
         </div>
     </div>    
 </div>
