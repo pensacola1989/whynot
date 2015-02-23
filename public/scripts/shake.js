@@ -110,7 +110,15 @@
                 window.dispatchEvent(this.event);
                 this.lastTime = new Date();
             }
+        } 
+
+        //------------------------------Daniel's Code
+        else{
+            if(this.options.notThresholdCb && typeof this.options.notThresholdCb == 'function') {
+                this.options.notThresholdCb();
+            }
         }
+        //-----------------------------------END
 
         this.lastX = current.x;
         this.lastY = current.y;

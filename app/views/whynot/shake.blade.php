@@ -133,7 +133,7 @@
     <img src="{{ URL::asset('whynot/marquee.jpg') }}">
 </div>
 <div class="container" style="text-align:center;">
-    <img id="gif_default" style="width:80%;" src="{{ URL::asset('whynot/static_gif.png') }}"/>
+    <img id="gif_default" style="width:80%;display:block;" src="{{ URL::asset('whynot/static_gif.png') }}"/>
     <div style="display:none;" id="gif_con">
 @if($percent == 25)
     <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif11.gif') }}"/>
@@ -159,12 +159,24 @@
 <script type="text/javascript" src={{ URL::asset('scripts/shake.js') }}></script>
 <script type="text/javascript">
 
+var isShaking = false;
 
 window.onload = function() {
 
+    setInterval(function() {
+        if(!isShaking) {
+            $('#gif_default').css('display', 'block');
+            $('#gif_con').css('display', 'none');
+        }
+    },2000);
+
     //create a new instance of shake.js.
     var myShakeEvent = new Shake({
-        threshold: 7
+        threshold: 10,
+        timeout: 1000, 
+        notThresholdCb: function() {
+           isShaking = false;
+        }
     });
 
     // start listening to device motion
@@ -175,58 +187,21 @@ window.onload = function() {
 
     //shake event callback
     function shakeEventDidOccur () {
+        $('#mq_ul').show();
+        $('#gif_default').css('display', 'none');
+        $('#gif_con').css('display', 'block');
+        isShaking = true;
         //put your own code here etc.
         // alert('fuck');
-        document.getElementById('mq_ul').style.display = 'block';
-        document.getElementById('gif_default').style.display = 'none';
-        document.getElementById('gif_con').style.display = 'block';
+        // document.getElementById('mq_ul').style.display = 'block';
+        // document.getElementById('gif_default').style.display = 'none';
+        // document.getElementById('gif_con').style.display = 'block';
+        // myShakeEvent.stop();
     }
 
 };
 
-var SHAKE_THRESHOLD = 3000;    
-var last_update = 0;    
-var x=y=z=last_x=last_y=last_z=0;   
-var  media; 
 
-function init(){
-    last_update = new Date().getTime();
-    media = document.getElementById("musicBox");
-    if (window.DeviceMotionEvent) { 
-        window.addEventListener('devicemotion',deviceMotionHandler, false);  
-    } else{
-        alert('not support mobile event');
-    }
-}
-
-function deviceMotionHandler(eventData) {    
-
-    var acceleration = eventData.accelerationIncludingGravity;  
-     
-    var curTime = new Date().getTime(); 
-    if ((curTime - last_update)> 100) {  
-        var diffTime = curTime -last_update;    
-        last_update = curTime;        
-        x = acceleration.x; 
-        y = acceleration.y;   
-        z = acceleration.z;   
-        var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;   
-        
-        if (speed > SHAKE_THRESHOLD) {    
-            alert("shaked");        
-            if(!media.src){
-                media.src="http://192.168.1.106/weixin_yaoyiyao.mp3"
-            }
-            media.play();
-        }    
-        last_x = x;    
-        last_y = y;    
-        last_z = z;    
-    }    
- 
-}  
-
-// init();
 
 !function($) {
     $('a').on('click', function() {

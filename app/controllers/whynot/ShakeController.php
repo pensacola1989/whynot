@@ -8,7 +8,7 @@ use Redirect;
 
 class ShakeController extends Controller {
 
-	const BEGIN_TIME = '2015-02-23 10:37';
+	const BEGIN_TIME = '2015-02-23 14:43';
 
 	const HOUR_GAP = 0.5;
 

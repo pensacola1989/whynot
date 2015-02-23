@@ -22,12 +22,15 @@
     }
     .container input{
     	position: absolute;
-		bottom: 65px;
+		bottom: 44px;
 		height: 30px;
-		left: 95px;
+		left: 100px;
 		border: none;
 		background-color: transparent;
-		width: 165px;
+		width: 50%;
+		border: 3px solid;
+		border-radius: 20px;
+		background: #EEE;
     }
     #begin_game{
     	border: none;
@@ -45,8 +48,8 @@
 <body>
 <form action="{{ URL::action('whynot\ShakeController@postNickName') }}" method="post">
 <div class="container">
-<input type="text" name="nickname"/>
-<img src="{{ URL::asset('whynot/nick_name.jpg') }}"/>
+<input type="text" name="nickname" id="nickname"/>
+<img src="{{ URL::asset('whynot/nick_name2.jpg') }}"/>
 </div>
 
 <div class="container gif-container">
@@ -60,9 +63,12 @@
 <script src="http://i.gtimg.cn/vipstyle/frozenjs/lib/zepto.min.js?_bid=304"></script>
 <script type="text/javascript">
 !function($) {
-    // $('.nav-btn').on('tap', function() {
-    //     window.location.href = $(this).attr('url');
-    // })
+	var domWith = $(document).width();
+	var inputWidth = $('#nickname').width();
+	var css = {
+		'left': (domWith - inputWidth) / 2
+	}
+    $('#nickname').css(css);
 } (Zepto)
 </script>
 </body>
