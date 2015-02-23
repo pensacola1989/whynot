@@ -8,7 +8,7 @@ use Redirect;
 
 class ShakeController extends Controller {
 
-	const BEGIN_TIME = '2015-02-23 14:43';
+	const BEGIN_TIME = '2015-02-23 15:12';
 
 	const HOUR_GAP = 0.5;
 
@@ -59,10 +59,10 @@ class ShakeController extends Controller {
 		if($duration > 0 && $duration < self::HOUR_GAP * 3600) {
 			return 75;
 		}
-		if($duration > 6 * 3600 && $duration < self::HOUR_GAP * 2 * 3600) {
+		if(self::HOUR_GAP * 3600 * 3600 && $duration < self::HOUR_GAP * 2 * 3600) {
 			return 50;
 		}
-		if($duration > 12 * 3600 && $duration < self::HOUR_GAP * 3 * 3600) {
+		if($duration > self::HOUR_GAP * 2 && $duration < self::HOUR_GAP * 3 * 3600) {
 			return 25;
 		}
 		else {

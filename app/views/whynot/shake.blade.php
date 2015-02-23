@@ -133,7 +133,7 @@
     <img src="{{ URL::asset('whynot/marquee.jpg') }}">
 </div>
 <div class="container" style="text-align:center;">
-    <img id="gif_default" style="width:80%;display:block;" src="{{ URL::asset('whynot/static_gif.png') }}"/>
+    <img id="gif_default" style="width:80%;display:block;margin:auto;" src="{{ URL::asset('whynot/static_gif.png') }}"/>
     <div style="display:none;" id="gif_con">
 @if($percent == 25)
     <img style="width:80%;" src="{{ URL::asset('Bates/gif/bates-2years-gif11.gif') }}"/>
@@ -146,7 +146,18 @@
 @endif   
 </div>
 </div>
-<div class="container" style="margin-top:10px;">
+
+<div id="current-progress" class="container" style="margin-top:10px;">
+    <div class="progress-bar">
+        <span>老王已放血{{ 100-$percent }}%</span>
+        <div class="bar-container" style="border:3px solid;border-radius:10px;overflow:hidden;">
+            <img id="pro_bg" src="{{ URL::asset('whynot/progress_bg.png') }}" 
+                style="height: 150%;margin-top: -5px;margin-left: -{{ $percent }}%;">
+        </div>
+    </div>    
+</div>
+
+<div id="total-progress" class="container" style="margin-top:10px;display:none;">
     <div class="progress-bar">
         <span>老王已放血{{ 100-$percent }}%</span>
         <div class="bar-container">
@@ -191,6 +202,9 @@ window.onload = function() {
         $('#gif_default').css('display', 'none');
         $('#gif_con').css('display', 'block');
         isShaking = true;
+
+        var proMarginLeft = $('#pro_bg').css('margin-left').split('%')[0];
+        $('#pro_bg').css('margin-left', parseInt(proMarginLeft) + 1 + '%');
         //put your own code here etc.
         // alert('fuck');
         // document.getElementById('mq_ul').style.display = 'block';
@@ -204,6 +218,12 @@ window.onload = function() {
 
 
 !function($) {
+    var domWith = $(document).width();
+    var inputWidth = $('.modal-win').width();
+    var css = {
+        'left': (domWith - inputWidth) / 2
+    }
+    $('.modal-win').css(css);
     $('a').on('click', function() {
         $('.modal').hide();
     });
