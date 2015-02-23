@@ -149,7 +149,7 @@
 
 <div id="current-progress" class="container" style="margin-top:10px;">
     <div class="progress-bar">
-        <span>老王已放血{{ 100-$percent }}%</span>
+        <span>老王已放血<em>{{ 100-$percent }}<em>%</span>
         <div class="bar-container" style="border:3px solid;border-radius:10px;overflow:hidden;">
             <img id="pro_bg" src="{{ URL::asset('whynot/progress_bg.png') }}" 
                 style="height: 150%;margin-top: -5px;margin-left: -{{ $percent }}%;">
@@ -171,6 +171,8 @@
 <script type="text/javascript">
 
 var isShaking = false;
+
+var oldPercent = {{ 100 - $percent }};
 
 window.onload = function() {
 
@@ -205,6 +207,9 @@ window.onload = function() {
 
         var proMarginLeft = $('#pro_bg').css('margin-left').split('%')[0];
         $('#pro_bg').css('margin-left', parseInt(proMarginLeft) + 1 + '%');
+
+
+        $('.progress-bar>span>em').html(++oldPercent + '%');
         //put your own code here etc.
         // alert('fuck');
         // document.getElementById('mq_ul').style.display = 'block';
