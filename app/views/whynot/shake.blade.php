@@ -35,7 +35,7 @@
 		background: url('/whynot/btn_begin.jpg') no-repeat;
     }
     marquee{
-       height: 60px;
+       height: 35px;
         margin: 20px 50px;
         width: 150px;
         background-color: #FFF;
@@ -43,7 +43,8 @@
         /* border: 1px solid; */
         bottom: 19px;
         left: 30px;
-        font-size: .2em;
+        font-size: 1.2em;
+        width:225px;
     }
     ul{padding: 0;}
     ul li{
@@ -121,7 +122,7 @@
     </div>
 </div>
 <div class="top-container container">
-<marquee id="mq" align="left" behavior="scroll" direction="up"  hspace="50" vspace="20" loop="-1" scrollamount="10" scrolldelay="100">
+<marquee id="mq" align="left" behavior="scroll" direction="up"  hspace="50" vspace="45" loop="-1" scrollamount="5" scrolldelay="100">
 @if(count($totalUsers))
 <ul id="mq_ul" style="display:none;">
     @foreach($totalUsers as $user)
@@ -172,7 +173,11 @@
 
 var isShaking = false;
 
+var percentLimit = 5;
+
 var oldPercent = {{ 100 - $percent }};
+
+var i = 0;
 
 window.onload = function() {
 
@@ -205,11 +210,18 @@ window.onload = function() {
         $('#gif_con').css('display', 'block');
         isShaking = true;
 
+
         var proMarginLeft = $('#pro_bg').css('margin-left').split('%')[0];
-        $('#pro_bg').css('margin-left', parseInt(proMarginLeft) + 1 + '%');
+        
+        if(i <= 5) {
+            $('#pro_bg').css('margin-left', parseInt(proMarginLeft) + 1 + '%');    
+            $('.progress-bar>span>em').html(++oldPercent + '%');
+            i++;
+        }
+        
 
 
-        $('.progress-bar>span>em').html(++oldPercent + '%');
+        
         //put your own code here etc.
         // alert('fuck');
         // document.getElementById('mq_ul').style.display = 'block';
